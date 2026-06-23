@@ -4,7 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <title>Ficha de Personagem - Dungeon World</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#222222" />
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('./service-worker.js');
+  </script>
   <style>
     :root {
       --border-color: #000;
@@ -779,6 +786,12 @@
     </div>
     </div>
   </article>
+
+  <footer style="text-align:center; margin-top: 24px; font-size: 12px;">
+    <p>Dungeon World é um jogo de RPG criado por <a href="https://www.dungeon-world.com/" target="_blank">Sage LaTorra e Adam Koebel</a></p>
+    <p>Ficha de personagem para Dungeon World criada a partir dos materiais oficiais disponíveis em <a href="https://www.dungeonworldsrd.com/" target="_blank">Dungeon World SRD</a></p>
+    <p>Desenvolvido por <a href="https://github.com/DennisCCunha" target="_blank">Dennis C. Cunha</a></p>
+  </footer>
 
   <script>
     // Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
