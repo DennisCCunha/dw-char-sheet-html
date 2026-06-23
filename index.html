@@ -44,6 +44,16 @@
       grid-template-columns: 2fr 1fr;
       gap: 24px;
     }
+    .equipment-sheet {
+      max-width: 1200px;
+      margin: auto;
+      background: white;
+      border: 2px solid var(--border-color);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 24px;
+    }
 
     h1,
     h2,
@@ -220,6 +230,32 @@
       accent-color: red;
     }
 
+    .addConsumable {
+      cursor:pointer;
+      color:green;
+      font-weight:bold;
+      font-size:32px;
+      line-height:1;
+      border:none;
+      background:transparent;
+      padding:0 4px;  
+    }
+
+    .removeIcon{
+      cursor:pointer;
+      color:red;
+      font-weight:bold;
+      font-size:32px;
+      line-height:1;
+      border:none;
+      background:transparent;
+      padding:0 4px;
+    }
+
+    body {
+      padding-bottom: 4rem;
+    }
+
     @media print {
       .pagina {
         background: white;
@@ -348,8 +384,9 @@
 
   <!-- Barra flutuante de código -->
   <div id="saveBar">
-    <button id="btnGerarCodigo">&#x1F4BE; Gerar código</button>
+    <button id="btnGerarCodigo">&#x1F4BE; Salvar ficha</button>
     <button id="btnRestaurar">&#x1F4E5; Restaurar ficha</button>
+    <button id="btnLimpar">&#x1FF5D1; Limpar ficha</button>
   </div>
 
   <!-- Modal: exibir código gerado -->
@@ -379,6 +416,18 @@
     </div>
   </div>
 
+  <!-- Modal: confirmar limpeza da ficha -->
+<div id="clearModal" class="dw-overlay" style="display:none">
+  <div class="dw-modal">
+    <h3>Limpar ficha</h3>
+    <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
+    <div class="dw-modal-actions">
+      <button id="btnConfirmarLimpeza">Limpar</button>
+      <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
+    </div>
+  </div>
+</div>
+
   <article class="pagina">
     <div id="1st-Page" class="sheet">
       <div>
@@ -398,15 +447,17 @@
 
             <select id="charClass">
               <option value="">Classe</option>
+              <option value="Bárbaro">Bárbaro</option>
               <option value="Bardo">Bardo</option>
               <option value="Clérigo">Clérigo</option>
               <option value="Druida">Druida</option>
               <option value="Guerreiro">Guerreiro</option>
+              <option value="Imolador">Imolador</option>
               <option value="Ladino">Ladino</option>
               <option value="Mago">Mago</option>
               <option value="Paladino">Paladino</option>
               <option value="Patrulheiro">Patrulheiro</option>
-              <option value="Bárbaro">Bárbaro</option>
+
             </select>
           </div>
         </div>
@@ -715,17 +766,17 @@
   </article>
 
   <article class="pagina">
-    <div id="2nd-Page" class="sheet">
+    <div id="2nd-Page" class="equipment-sheet">
+    <div id="equipmentpanel">
       <h2>Equipamentos</h2>
-      <button id="addEquipment">Adicionar Equipamento</button>
-      <ul>
-        <li><input type="text" value="Espada Longa" /></li>
-        <li><input type="text" value="Armadura de Couro" /></li>
-        <li><input type="text" value="Poção de Cura" /></li>
-      </ul>
-
-      <h2>História do Personagem</h2>
-      <textarea id="charHistory" rows="10" placeholder="Escreva a história do seu personagem aqui..."></textarea>
+      <button id="addEquipment" class='addConsumable'>&#x2b</button>
+      <div id="equipmentContainer"></div>
+    </div>
+    <div id="consumablePanel">
+      <h2>Consumíveis</h2>
+      <button id="addConsumable" class='addConsumable'>&#x2b</button>
+      <div id="consumablesContainer"></div>
+    </div>
     </div>
   </article>
 
@@ -1320,7 +1371,7 @@
     const saveStateToURL = autoSave;
 
       // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
-      function renderClassMoves() {
+    function renderClassMoves() {
         const container = document.getElementById('classMoves');
         if (!container) return;
         const classSelect = document.getElementById('charClass');
@@ -1378,7 +1429,7 @@
       }
 
       // Canonicalização: remove acentos e normaliza para lower-case
-      function canonical(text) {
+    function canonical(text) {
         return (text || '')
           .toString()
           .normalize('NFD')
@@ -1387,13 +1438,12 @@
           .toLowerCase();
       }
 
-      function capitalize(s) {
+    function capitalize(s) {
         if (!s) return s;
         return s[0].toUpperCase() + s.slice(1).toLowerCase();
       }
 
       // === Funções de classe/atributo (escopo de módulo) ===
-
       function findClassByName(name) {
         if (!name) return null;
         const normalized = canonical(name);
@@ -1438,6 +1488,46 @@
           if (charLoadInput) charLoadInput.value = '';
         }
         updateClassSpellsVisibility();
+      }
+
+
+      // Funções para adicionar itens, magias e movimentos à ficha
+      function addEquipmentToList(listId) {
+        const listEl = document.getElementById(listId);
+        if (!listEl) return;
+        const item = "<div class='list-item' style='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;'>"+
+                    "<input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />"+
+                    "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />"+
+                    "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button>"+
+                    "</div>";
+        listEl.insertAdjacentHTML('beforeend', item);
+      }
+
+
+      function addConsumableToList(listId) {
+        const listEl = document.getElementById(listId);
+        if (!listEl) return;
+        const item = "<div class='list-item' style='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;'>"+
+                    "<input class='spell-name' type='text' placeholder='Nome do consumível' style='flex:2' />"+
+                    "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />"+
+                    "<div class='use-boxes' style='display:flex;gap:4px;flex-wrap:wrap;align-items:center'></div>"+
+                    "<button onclick=\"addConsumableUse(this.closest('.list-item'))\" class='addConsumable'>&#x2b</button>"+
+                    "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button>"+
+                  
+                    "</div>";
+        listEl.insertAdjacentHTML('beforeend', item);
+      }
+
+      function addConsumableUse(itemEl) {
+        const useBoxes = itemEl.querySelector('.use-boxes');
+        if (!useBoxes) return;
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        useBoxes.appendChild(cb);
+      }
+
+      function addSpellToList(listId, spellName) {
+  
       }
 
       // Tabela de modificadores Dungeon World
@@ -1642,12 +1732,62 @@
       document.getElementById('restoreModal').style.display = 'none';
     });
 
-    // Fechar modais clicando no fundo escuro
-    ['codeModal', 'restoreModal'].forEach((id) => {
-      document.getElementById(id).addEventListener('click', (e) => {
-        if (e.target.id === id) document.getElementById(id).style.display = 'none';
-      });
+
+    document.getElementById('addConsumable')?.addEventListener('click', () => {
+      addConsumableToList('consumablesContainer');
     });
+
+    document.getElementById('addEquipment')?.addEventListener('click', () => {
+      addEquipmentToList('equipmentContainer');
+    });
+
+
+    // Método para limpar a ficha (retornar ao estado 0)
+    function clearSheet() {
+      // Limpar localStorage
+      try {
+        localStorage.removeItem('dw_sheet_code');
+      } catch (e) { /* silent */ }
+
+      // Limpar sessionStorage
+      try {
+        sessionStorage.removeItem('dw_sheet_code');
+      } catch (e) { /* silent */ }
+
+      // Limpar todos os inputs
+      allInputs.forEach((input) => {
+        if (input.type === 'checkbox') input.checked = false;
+        else input.value = '';
+      });
+
+      // Limpar todos os círculos de XP
+      circles.forEach((circle) => {
+        circle.classList.remove('active');
+      });
+
+      // Resetar selectboxes
+      document.getElementById('charRace').value = '';
+      document.getElementById('charClass').value = '';
+
+      // Atualizar modifiers e strikes
+      updateModifiers();
+      updateStrikethrough();
+      applyClassEffects();
+      renderClassMoves();
+    }
+
+    document.getElementById('btnLimpar').addEventListener('click', () => {
+      if (confirm('Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.')) {
+        clearSheet();
+      }
+    });
+
+    // Fechar modais clicando no fundo escuro
+    ['codeModal', 'restoreModal', 'clearModal'].forEach((id) => {
+    document.getElementById(id).addEventListener('click', (e) => {
+    if (e.target.id === id) document.getElementById(id).style.display = 'none';
+    });
+});
   </script>
 </body>
 
