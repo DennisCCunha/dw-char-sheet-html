@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+:root {
+    --border-color: #000;
+    --muted: #777;
+    --danger: rgba(90,0,10,0.9);
+}
+
+body{
+background: radial-gradient(circle at center,
+    rgba(180,140,60,1) 0%,
+    rgba(90,0,10,1) 55%,
+    rgba(10,12,15,1) 100%
+);}
+
+.pagina {
+    font-family: 'Georgia', serif;
+    margin: 25px;
+    color: #111;
+}
+
+.sheet {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    border: 2px solid var(--border-color);
+    border: 2px solid var(--border-color);
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.equipment-sheet {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    border: 2px solid var(--border-color);
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+.subtitle select option.disabled-by-race,
+.subtitle select option[disabled] {
+    color: var(--danger);
+    background: transparent;
+}
+
+.title {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+}
+
+.title input {
+    width: 100%;
+    font-size: 40px;
+    border: none;
+    outline: none;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+}
+
+.subtitle {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.subtitle input,
+.subtitle select {
+    padding: 6px;
+    width: 100%;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 24px;
+    border: none;
+    outline: none;
+    font-family: Georgia, serif;
+    font-weight: bold;
+}
+
+.portrait {
+    border: 2px dashed #aaa;
+    height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 22px;
+    text-align: center;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.card {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: center;
+}
+
+.card label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.card input {
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 24px;
+    background: transparent;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    text-align: center;
+}
+
+td input {
+    width: 100%;
+    border: none;
+    text-align: center;
+    background: transparent;
+}
+
+.xp {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.circle {
+    width: 18px;
+    height: 18px;
+    border: 2px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.circle.active {
+    background: #111;
+}
+
+.spells {
+    border-left: 2px solid var(--border-color);
+    padding-left: 20px;
+}
+
+.spell-group {
+    margin-bottom: 20px;
+}
+
+.spell-group h3 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+}
+
+.spell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
+.spell-name {
+    border: none;
+    border-bottom: 1px dashed transparent;
+    background: transparent;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.spell-name:focus {
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.spell input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.red_filling {
+    accent-color: red;
+}
+
+.addConsumable {
+    cursor: pointer;
+    color: green;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 1;
+    border: none;
+    background: transparent;
+    padding: 0 4px;
+}
+
+.removeIcon {
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 1;
+    border: none;
+    background: transparent;
+    padding: 0 4px;
+}
+
+body {
+    padding-bottom: 4rem;
+}
+
+@media print {
+    .pagina {
+        background: white;
+        padding: 0;
+    }
+
+    .sheet {
+        border: none;
+    }
+
+    #saveBar,
+    .dw-overlay {
+        display: none !important;
+    }
+}
+
+/* === Barra e modais de código === */
+#saveBar {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+}
+
+#saveBar button {
+    padding: 10px 18px;
+    background: #222;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+#saveBar button:hover {
+    background: #444;
+}
+
+.dw-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dw-modal {
+    background: #fff;
+    border: 2px solid #000;
+    padding: 28px;
+    max-width: 520px;
+    width: 92%;
+    font-family: Georgia, serif;
+}
+
+.dw-modal h3 {
+    margin: 0 0 10px;
+}
+
+.dw-modal p {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+.dw-modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 8px;
+    border: 1px solid #000;
+    resize: vertical;
+}
+
+.dw-modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    justify-content: flex-end;
+}
+
+.dw-modal-actions button {
+    padding: 8px 18px;
+    background: #222;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 14px;
+}
+
+.dw-modal-actions button:hover {
+    background: #444;
+}
+
+.dw-modal-actions button.secondary {
+    background: #888;
+}
+
+.dw-modal-actions button.secondary:hover {
+    background: #666;
+}
+
+#restoreError {
+    color: var(--danger);
+    font-size: 13px;
+    margin-top: 6px;
+    display: none;
+}
+
+.init-val.used {
+    text-decoration: line-through;
+    color: #999;
+}
+
+footer{
+    text-align:center;
+    margin-top: 24px;
+    font-size: 12px;
+    color: white;
+}
