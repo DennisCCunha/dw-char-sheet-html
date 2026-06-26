@@ -1,0 +1,1007 @@
+// Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
+const circles = Array.from(document.querySelectorAll('.circle'));
+const allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
+
+const intitialAttributesCheck = 73 // Soma de 16+15+13+12+9+8
+const initialAttributes = {
+    stat: [16, 15, 13, 12, 9, 8],
+    mod: [2, 1, 1, 0, 0, -1]
+}
+
+const classDetails = [
+    {
+        keyBytes: [0],
+        nome: 'Bárbaro',
+        racas: ['Humano', 'Elfo', 'Anão', 'Halfling'],
+        hp_base: 8,
+        dado_dano: 'd10',
+        carga_base: 8,
+        movimentos_iniciais: [
+            'Herculean Appetites',
+            'The Upper Hand',
+            'Musclebound',
+            'What Are You Waiting For?'
+        ],
+        escolha_inicial: ['Full Plate and Packing Steel', 'Unencumbered, Unharmed'],
+
+        movimentos_avancados_2_5: [
+            { id: 1, nome: 'Still Hungry' },
+            { id: 2, nome: 'Appetite for Destruction' },
+            { id: 3, nome: 'My Love For You Is Like a Truck' },
+            { id: 4, nome: 'What Is Best In Life' },
+            { id: 5, nome: 'Wide Wanderer' },
+            { id: 6, nome: 'Usurper' },
+            { id: 7, nome: 'Khan of Khans' },
+            { id: 8, nome: 'Samson' },
+            { id: 9, nome: 'Smash!' },
+            { id: 10, nome: 'Indestructible Hunger' },
+            { id: 11, nome: 'Eye for Weakness' },
+            { id: 12, nome: 'On the Move' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 13, nome: 'A Good Day to Die' },
+            { id: 14, nome: "Kill 'em All" },
+            { id: 15, nome: 'War Cry' },
+            { id: 16, nome: 'Mark of Might' },
+            { id: 17, nome: 'More! Always More!' },
+            { id: 18, nome: 'The One Who Knocks' },
+            { id: 19, nome: 'Healthy Distrust' },
+            { id: 20, nome: 'For the Blood God' }
+        ]
+    },
+    {
+        keyBytes: [1, 2, 3],
+        nome: 'Bardo',
+        racas: ['Humano', 'Elfo', 'Halfling'],
+        hp_base: 6,
+        dado_dano: 'd6',
+        carga_base: 9,
+        movimentos_raciais: {
+            Humano: ['Hospitalidade'],
+            Elfo: ['Elfo']
+        },
+        movimentos_iniciais: [
+            'Conhecimento de Bardo',
+            'Arte Arcana',
+            'Charmoso e Aberto',
+            'Um Porto na Tempestade'
+        ],
+        movimentos_avancados_2_5: [
+            { id: 21, nome: 'Canção de Cura' },
+            { id: 22, nome: 'Cacofonia Viciosa' },
+            { id: 23, nome: 'Vai Até Onze' },
+            { id: 24, nome: 'Metal Hurlant' },
+            { id: 25, nome: 'Uma Pequena Ajuda dos Meus Amigos' },
+            { id: 26, nome: 'Tons Sobrenaturais' },
+            { id: 27, nome: 'Aparar do Duelista' },
+            { id: 28, nome: 'Logro' },
+            { id: 29, nome: 'Diletante Multiclasse' },
+            { id: 30, nome: 'Iniciado Multiclasse' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 31, nome: 'Coro de Cura' },
+            { id: 32, nome: 'Explosão Viciosa' },
+            { id: 33, nome: 'Rosto Inesquecível' },
+            { id: 34, nome: 'Reputação' },
+            { id: 35, nome: 'Acorde Sobrenatural' },
+            { id: 36, nome: 'Ouvido para Magia' },
+            { id: 37, nome: 'Astuto' },
+            { id: 38, nome: 'Bloqueio do Duelista' },
+            { id: 39, nome: 'Golpe de Mestre' },
+            { id: 40, nome: 'Mestre Multiclasse' }
+        ],
+        movimentos_substituidos: {
+            'Coro de Cura': 'Canção de Cura',
+            'Explosão Viciosa': 'Cacofonia Viciosa',
+            'Acorde Sobrenatural': 'Tons Sobrenaturais',
+            'Bloqueio do Duelista': 'Aparar do Duelista',
+            'Golpe de Mestre': 'Logro'
+        }
+    },
+    {
+        keyBytes: [4, 5],
+        nome: 'Clérigo',
+        racas: ['Humano', 'Anão'],
+        hp_base: 8,
+        dado_dano: 'd6',
+        carga_base: 10,
+        movimentos_raciais: { Humano: ['Humano'], Anão: ['Anão'] },
+        movimentos_iniciais: ['Divindade', 'Comungar', 'Conjurar uma Magia'],
+        movimentos_avancados_2_5: [
+            { id: 41, nome: 'Escolhido' },
+            { id: 42, nome: 'Revigorar' },
+            { id: 43, nome: 'A Balança da Vida e da Morte' },
+            { id: 44, nome: 'Serenidade' },
+            { id: 45, nome: 'Primeiros Socorros' },
+            { id: 46, nome: 'Intervenção Divina' },
+            { id: 47, nome: 'Penitente' },
+            { id: 48, nome: 'Fortalecer' },
+            { id: 49, nome: 'Prece por Orientação' },
+            { id: 50, nome: 'Proteção Divina' },
+            { id: 51, nome: 'Curandeiro Devotado' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 52, nome: 'Ungido' },
+            { id: 53, nome: 'Apoteose' },
+            { id: 54, nome: 'Ceifador' },
+            { id: 55, nome: 'Providência' },
+            { id: 56, nome: 'Primeiros Socorros Maior' },
+            { id: 57, nome: 'Invencibilidade Divina' },
+            { id: 58, nome: 'Mártir' },
+            { id: 59, nome: 'Armadura Divina' },
+            { id: 60, nome: 'Fortalecimento Maior' },
+            { id: 61, nome: 'Diletante Multiclasse' }
+        ],
+        movimentos_substituidos: {
+            Providência: 'Serenidade',
+            'Primeiros Socorros Maior': 'Primeiros Socorros',
+            'Invencibilidade Divina': 'Intervenção Divina',
+            Mártir: 'Penitente',
+            'Armadura Divina': 'Proteção Divina',
+            'Fortalecimento Maior': 'Fortalecer'
+        }
+    },
+    {
+        keyBytes: [6, 7, 8],
+        nome: 'Druida',
+        racas: ['Humano', 'Elfo', 'Halfling'],
+        hp_base: 6,
+        dado_dano: 'd6',
+        carga_base: 6,
+        movimentos_raciais: { Humano: ['Humano'], Elfo: ['Elfo'], Halfling: ['Halfling'] },
+        movimentos_iniciais: [
+            'Nascido da Terra',
+            'Sustentado pela Natureza',
+            'Língua dos Espíritos',
+            'Metamorfo',
+            'Essência Estudada'
+        ],
+        movimentos_avancados_2_5: [
+            { id: 62, nome: 'Irmão do Caçador' },
+            { id: 63, nome: 'Vermelho de Dente e Garra' },
+            { id: 64, nome: 'Comunhão dos Sussurros' },
+            { id: 65, nome: 'Pele de Casca' },
+            { id: 66, nome: 'Olhos do Tigre' },
+            { id: 67, nome: 'Mudar de Pele' },
+            { id: 68, nome: 'Falador de Coisas' },
+            { id: 69, nome: 'Moldador de Formas' },
+            { id: 70, nome: 'Domínio Elemental' },
+            { id: 71, nome: 'Equilíbrio' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 72, nome: 'Abraçando Forma Nenhuma' },
+            { id: 73, nome: 'Dança do Doppelgänger' },
+            { id: 74, nome: 'Sangue e Trovão' },
+            { id: 75, nome: 'Sono do Druida' },
+            { id: 76, nome: 'Falador do Mundo' },
+            { id: 77, nome: 'Irmã da Perseguidora' },
+            { id: 78, nome: 'Escultor de Formas' },
+            { id: 79, nome: 'Quimera' },
+            { id: 80, nome: 'Tecelão do Clima' }
+        ],
+        movimentos_substituidos: {
+            'Sangue e Trovão': 'Vermelho de Dente e Garra',
+            'Falador do Mundo': 'Falador de Coisas',
+            'Escultor de Formas': 'Moldador de Formas'
+        }
+    },
+    {
+        keyBytes: [9, 10, 11],
+        nome: 'Guerreiro',
+        racas: ['Humano', 'Elfo', 'Anão'],
+        hp_base: 10,
+        dado_dano: 'd10',
+        carga_base: 12,
+        movimentos_raciais: { Humano: ['Humano'], Elfo: ['Elfo'], Anão: ['Anão'] },
+        movimentos_iniciais: ['Arma Assinatura', 'Dobrar Barras, Erguer Portões', 'Blindado'],
+        movimentos_avancados_2_5: [
+            { id: 81, nome: 'Sede de Sangue' },
+            { id: 82, nome: 'Armadureiro' },
+            { id: 83, nome: 'Ferrão Aprimorado' },
+            { id: 84, nome: 'Herança' },
+            { id: 85, nome: 'Tem Cheiro de Sangue' },
+            { id: 86, nome: 'Ferreiro' },
+            { id: 87, nome: 'Olho Mau' },
+            { id: 88, nome: 'Temporada de Caça' },
+            { id: 89, nome: 'Interrogador' },
+            { id: 90, nome: 'Talento para Armas' },
+            { id: 91, nome: 'Superioridade' },
+            { id: 92, nome: 'Multiclasse Diletante' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 93, nome: 'Sanguinário' },
+            { id: 94, nome: 'Mestre da Armadura' },
+            { id: 95, nome: 'Ferrão Perfeito' },
+            { id: 96, nome: 'Legado' },
+            { id: 97, nome: 'Gosto de Sangue' },
+            { id: 98, nome: 'Ferreiro Mestre' },
+            { id: 99, nome: 'Olhos da Morte' },
+            { id: 100, nome: 'Caçador Implacável' },
+            { id: 101, nome: 'Mestre Interrogador' },
+            { id: 102, nome: 'Especialista em Armas' },
+            { id: 103, nome: 'Supremacia' },
+            { id: 104, nome: 'Mestre Multiclasse' }
+        ],
+        movimentos_substituidos: {
+            Sanguinário: 'Sede de Sangue',
+            'Mestre da Armadura': 'Armadureiro',
+            'Ferrão Perfeito': 'Ferrão Aprimorado',
+            Legado: 'Herança',
+            'Gosto de Sangue': 'Tem Cheiro de Sangue',
+            'Ferreiro Mestre': 'Ferreiro',
+            'Olhos da Morte': 'Olho Mau',
+            'Caçador Implacável': 'Temporada de Caça',
+            'Mestre Interrogador': 'Interrogador',
+            'Especialista em Armas': 'Talento para Armas',
+            Supremacia: 'Superioridade',
+            'Mestre Multiclasse': 'Multiclasse Diletante'
+        }
+    },
+    {
+        keyBytes: [12, 13, 14],
+        nome: 'Imolador',
+        racas: ['Humano', 'Elfo', 'Anão'],
+        hp_base: 10,
+        dado_dano: 'd8',
+        carga_base: 9,
+        movimentos_raciais: { Humano: ['Humano'], Elfo: ['Elfo'], Anao: ['Anão'] },
+        movimentos_iniciais: ['Consumido pelo Fogo', 'Invocar Chamas', 'Zelo Fanático'],
+        movimentos_avancados_2_5: [
+            { id: 105, nome: 'Queimadura Controlada' },
+            { id: 106, nome: 'Juramento de Cinzas' },
+            { id: 107, nome: 'Fogo Purificador' },
+            { id: 108, nome: 'Forma de Chama' },
+            { id: 109, nome: 'Incendiário' },
+            { id: 110, nome: 'Marca do Fogo' },
+            { id: 111, nome: 'Alimentar as Chamas' },
+            { id: 112, nome: 'Fogo Interior' },
+            { id: 113, nome: 'Arauto da Brasa' },
+            { id: 114, nome: 'Diletante Multiclasse' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 115, nome: 'Inferno Controlado' },
+            { id: 116, nome: 'Juramento das Brasas Eternas' },
+            { id: 117, nome: 'Purificação Absoluta' },
+            { id: 118, nome: 'Avatar das Chamas' },
+            { id: 119, nome: 'Mestre Incendiário' },
+            { id: 120, nome: 'Marca Ardente' },
+            { id: 121, nome: 'Fornalha Viva' },
+            { id: 122, nome: 'Coração de Fogo' },
+            { id: 123, nome: 'Senhor das Cinzas' },
+            { id: 124, nome: 'Mestre Multiclasse' }
+        ],
+        movimentos_substituidos: {
+            'Inferno Controlado': 'Queimadura Controlada',
+            'Juramento das Brasas Eternas': 'Juramento de Cinzas',
+            'Purificação Absoluta': 'Fogo Purificador',
+            'Avatar das Chamas': 'Forma de Chama',
+            'Mestre Incendiário': 'Incendiário',
+            'Marca Ardente': 'Marca do Fogo',
+            'Fornalha Viva': 'Alimentar as Chamas',
+            'Coração de Fogo': 'Fogo Interior',
+            'Senhor das Cinzas': 'Arauto da Brasa',
+            'Mestre Multiclasse': 'Diletante Multiclasse'
+        }
+    },
+    {
+        keyBytes: [15],
+        nome: 'Paladino',
+        racas: ['Humano'],
+        hp_base: 10,
+        dado_dano: 'd10',
+        carga_base: 12,
+        movimentos_raciais: { Humano: ['Humano'] },
+        movimentos_iniciais: [
+            'Busca',
+            'Eu Sou a Lei',
+            'Armadura Completa',
+            'Braços Benditos'
+        ],
+        movimentos_avancados_2_5: [
+            { id: 125, nome: 'Voz de Autoridade' },
+            { id: 126, nome: 'Hospitaleiro' },
+            { id: 127, nome: 'Exterminador' },
+            { id: 128, nome: 'Sangue e Aço' },
+            { id: 129, nome: 'Olhos para o Mal' },
+            { id: 130, nome: 'Estabelecer Ordem' },
+            { id: 131, nome: 'Protegido' },
+            { id: 132, nome: 'Liderança' },
+            { id: 133, nome: 'Apóstolo' },
+            { id: 134, nome: 'Prova de Fé' },
+            { id: 135, nome: 'Imposição das Mãos' },
+            { id: 136, nome: 'Diletante Multiclasse' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 137, nome: 'Divina Autoridade' },
+            { id: 138, nome: 'Perfeição Hospitaleira' },
+            { id: 139, nome: 'Exterminador Maior' },
+            { id: 140, nome: 'Sangue e Fogo' },
+            { id: 141, nome: 'Visão Sagrada' },
+            { id: 142, nome: 'Perfeita Ordem' },
+            { id: 143, nome: 'Fortaleza' },
+            { id: 144, nome: 'Grande Liderança' },
+            { id: 145, nome: 'Messias' },
+            { id: 146, nome: 'Fé Inabalável' },
+            { id: 147, nome: 'Imposição das Mãos Maior' },
+            { id: 148, nome: 'Mestre Multiclasse' }
+        ],
+        movimentos_substituidos: {
+            'Divina Autoridade': 'Voz de Autoridade',
+            'Exterminador Maior': 'Exterminador',
+            'Sangue e Fogo': 'Sangue e Aço',
+            'Visão Sagrada': 'Olhos para o Mal',
+            'Perfeita Ordem': 'Estabelecer Ordem',
+            Fortaleza: 'Protegido',
+            'Grande Liderança': 'Liderança',
+            Messias: 'Apóstolo',
+            'Fé Inabalável': 'Prova de Fé',
+            'Imposição das Mãos Maior': 'Imposição das Mãos',
+            'Mestre Multiclasse': 'Diletante Multiclasse'
+        }
+    },
+    {
+        keyBytes: [16, 17, 18],
+        nome: 'Patrulheiro',
+        racas: ['Humano', 'Elfo'],
+        hp_base: 8,
+        dado_dano: 'd8',
+        carga_base: 11,
+        movimentos_raciais: { Humano: ['Humano'], Elfo: ['Elfo'] },
+        movimentos_iniciais: [
+            'Caçada e Rastreamento',
+            'Companheiro Animal',
+            'Comando',
+            'Tiro Chamado'
+        ],
+        movimentos_avancados_2_5: [
+            { id: 149, nome: 'Companheiro Selvagem' },
+            { id: 150, nome: 'Treinador de Presas' },
+            { id: 151, nome: 'Tiro Preciso' },
+            { id: 152, nome: 'Mão Segura' },
+            { id: 153, nome: 'Proteja-me' },
+            { id: 154, nome: 'Explorador' },
+            { id: 155, nome: 'Observador' },
+            { id: 156, nome: 'Atirador' },
+            { id: 157, nome: 'Mistura na Multidão' },
+            { id: 158, nome: 'Conhecimento da Natureza' },
+            { id: 159, nome: 'Companheiro Bem Treinado' },
+            { id: 160, nome: 'Diletante Multiclasse' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 161, nome: 'Companheiro de Sangue' },
+            { id: 162, nome: 'Predador Superior' },
+            { id: 163, nome: 'Tiro Mortal' },
+            { id: 164, nome: 'Duas Flechas' },
+            { id: 165, nome: 'Segurança em Primeiro Lugar' },
+            { id: 166, nome: 'Mestre Explorador' },
+            { id: 167, nome: 'Olhos de Águia' },
+            { id: 168, nome: 'Atirador de Elite' },
+            { id: 169, nome: 'Um com a Natureza' },
+            { id: 170, nome: 'Mestre da Natureza' },
+            { id: 171, nome: 'Companheiro Excepcional' },
+            { id: 172, nome: 'Mestre Multiclasse' }
+        ],
+        movimentos_substituidos: {
+            'Companheiro de Sangue': 'Companheiro Selvagem',
+            'Predador Superior': 'Treinador de Presas',
+            'Tiro Mortal': 'Tiro Preciso',
+            'Segurança em Primeiro Lugar': 'Proteja-me',
+            'Mestre Explorador': 'Explorador',
+            'Olhos de Águia': 'Observador',
+            'Atirador de Elite': 'Atirador',
+            'Um com a Natureza': 'Mistura na Multidão',
+            'Mestre da Natureza': 'Conhecimento da Natureza',
+            'Companheiro Excepcional': 'Companheiro Bem Treinado',
+            'Mestre Multiclasse': 'Diletante Multiclasse'
+        }
+    },
+    {
+        keyBytes: [19, 20],
+        nome: 'Ladino',
+        racas: ['Humano', 'Halfling'],
+        hp_base: 6,
+        dado_dano: 'd8',
+        carga_base: 9,
+        movimentos_raciais: { Humano: ['Humano'], Halfling: ['Halfling'] },
+        movimentos_iniciais: [
+            'Ataque Pelas Costas',
+            'Truques do Ofício',
+            'Moral Flexível',
+            'Armadilhas Venenosas'
+        ],
+        movimentos_avancados_2_5: [
+            { id: 173, nome: 'Venenista' },
+            { id: 174, nome: 'Envenenador' },
+            { id: 175, nome: 'Especialista em Armadilhas' },
+            { id: 176, nome: 'Disparar Primeiro' },
+            { id: 177, nome: 'Golpe Barato' },
+            { id: 178, nome: 'Conexões' },
+            { id: 179, nome: 'Mão Leve' },
+            { id: 180, nome: 'Arrombador' },
+            { id: 181, nome: 'Parede de Lâminas' },
+            { id: 182, nome: 'Esquiva' },
+            { id: 183, nome: 'Riqueza Oculta' },
+            { id: 184, nome: 'Diletante Multiclasse' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 185, nome: 'Mestre dos Venenos' },
+            { id: 186, nome: 'Assassino' },
+            { id: 187, nome: 'Especialista em Armadilhas Avançado' },
+            { id: 188, nome: 'Matar em Silêncio' },
+            { id: 189, nome: 'Golpe Mortal' },
+            { id: 190, nome: 'Influência' },
+            { id: 191, nome: 'Dedos de Seda' },
+            { id: 192, nome: 'Mestre Arrombador' },
+            { id: 193, nome: 'Tempestade de Facas' },
+            { id: 194, nome: 'Elusivo' },
+            { id: 195, nome: 'Fortuna Oculta' },
+            { id: 196, nome: 'Mestre Multiclasse' }
+        ],
+        movimentos_substituidos: {
+            'Mestre dos Venenos': 'Envenenador',
+            'Especialista em Armadilhas Avançado': 'Especialista em Armadilhas',
+            'Matar em Silêncio': 'Disparar Primeiro',
+            'Golpe Mortal': 'Golpe Barato',
+            Influência: 'Conexões',
+            'Dedos de Seda': 'Mão Leve',
+            'Mestre Arrombador': 'Arrombador',
+            'Tempestade de Facas': 'Parede de Lâminas',
+            Elusivo: 'Esquiva',
+            'Fortuna Oculta': 'Riqueza Oculta',
+            'Mestre Multiclasse': 'Diletante Multiclasse'
+        }
+    },
+    {
+        keyBytes: [21, 22],
+        nome: 'Mago',
+        racas: ['Humano', 'Elfo'],
+        hp_base: 4,
+        dado_dano: 'd4',
+        carga_base: 7,
+        movimentos_raciais: { Humano: ['Humano'], Elfo: ['Elfo'] },
+        movimentos_iniciais: ['Grimório', 'Preparar Magias', 'Conjurar uma Magia', 'Ritual'],
+        movimentos_avancados_2_5: [
+            { id: 197, nome: 'Erudito' },
+            { id: 198, nome: 'Prodígio' },
+            { id: 199, nome: 'Empoderar Magia' },
+            { id: 200, nome: 'Contramágica' },
+            { id: 201, nome: 'Conhecimento Arcano' },
+            { id: 202, nome: 'Mago Especializado' },
+            { id: 203, nome: 'Magia Expandida' },
+            { id: 204, nome: 'Encantador' },
+            { id: 205, nome: 'Mestre do Ritual' },
+            { id: 206, nome: 'Diletante Multiclasse' },
+            { id: 207, nome: 'Altas Proteções' },
+            { id: 208, nome: 'Alquimista' }
+        ],
+        movimentos_avancados_6_10: [
+            { id: 209, nome: 'Mestre Erudito' },
+            { id: 210, nome: 'Gênio' },
+            { id: 211, nome: 'Magia Potencializada' },
+            { id: 212, nome: 'Contramágica Maior' },
+            { id: 213, nome: 'Segredos Arcanos' },
+            { id: 214, nome: 'Especialização Suprema' },
+            { id: 215, nome: 'Magia Ilimitada' },
+            { id: 216, nome: 'Encantador Mestre' },
+            { id: 217, nome: 'Arquimago Ritualista' },
+            { id: 218, nome: 'Mestre Multiclasse' },
+            { id: 219, nome: 'Proteções Permanentes' },
+            { id: 220, nome: 'Mestre Alquimista' }
+        ],
+        movimentos_substituidos: {
+            'Mestre Erudito': 'Erudito',
+            Gênio: 'Prodígio',
+            'Magia Potencializada': 'Empoderar Magia',
+            'Contramágica Maior': 'Contramágica',
+            'Segredos Arcanos': 'Conhecimento Arcano',
+            'Especialização Suprema': 'Mago Especializado',
+            'Magia Ilimitada': 'Magia Expandida',
+            'Encantador Mestre': 'Encantador',
+            'Arquimago Ritualista': 'Mestre do Ritual',
+            'Mestre Multiclasse': 'Diletante Multiclasse',
+            'Proteções Permanentes': 'Altas Proteções',
+            'Mestre Alquimista': 'Alquimista'
+        }
+    }
+];
+
+// Atribui ids automáticos quando ausentes, preservando ids existentes
+allInputs.forEach((input, index) => {
+    if (!input.id) {
+        input.id = input.type === 'checkbox' ? `cb_auto_${index}` : `input_auto_${index}`;
+    }
+});
+
+circles.forEach((circle, index) => {
+    if (!circle.id) circle.id = `xp_${index}`;
+});
+
+// === Sistema de código de ficha ===
+
+function collectState() {
+    const state = {};
+    allInputs.forEach((input) => {
+        if (input.type === 'checkbox') state[input.id] = input.checked ? '1' : '0';
+        else state[input.id] = input.value;
+    });
+    circles.forEach((circle) => {
+        state[circle.id] = circle.classList.contains('active') ? '1' : '0';
+    });
+    return state;
+}
+
+function applyState(state) {
+    allInputs.forEach((input) => {
+        if (state[input.id] !== undefined) {
+            if (input.type === 'checkbox') input.checked = state[input.id] === '1';
+            else input.value = state[input.id];
+        }
+    });
+    circles.forEach((circle) => {
+        if (state[circle.id] === '1') circle.classList.add('active');
+        else circle.classList.remove('active');
+    });
+}
+
+// Cifra XOR com TextEncoder (suporte a UTF-8 e caracteres acentuados)
+function encodeState(state) {
+    const key = 'DungeonWorld2024';
+    const bytes = new TextEncoder().encode(JSON.stringify(state));
+    const keyBytes = new TextEncoder().encode(key);
+    const xored = new Uint8Array(bytes.length);
+    for (let i = 0; i < bytes.length; i++) {
+        xored[i] = bytes[i] ^ keyBytes[i % keyBytes.length];
+    }
+    let binary = '';
+    for (let i = 0; i < xored.length; i++) binary += String.fromCharCode(xored[i]);
+    return btoa(binary);
+}
+
+function decodeState(code) {
+    const key = 'DungeonWorld2024';
+    const keyBytes = new TextEncoder().encode(key);
+    const binary = atob(code);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const xored = new Uint8Array(bytes.length);
+    for (let i = 0; i < bytes.length; i++) xored[i] = bytes[i] ^ keyBytes[i % keyBytes.length];
+    return JSON.parse(new TextDecoder().decode(xored));
+}
+
+function autoSave() {
+    try {
+        localStorage.setItem('dw_sheet_code', encodeState(collectState()));
+    } catch (e) { /* silent */ }
+}
+
+function autoLoad() {
+    const saved = localStorage.getItem('dw_sheet_code');
+    if (!saved) return;
+    try {
+        applyState(decodeState(saved));
+    } catch (e) {
+        console.warn('Falha ao restaurar ficha:', e);
+    }
+}
+
+// Alias para manter compatibilidade com todas as chamadas existentes
+const saveStateToURL = autoSave;
+
+// Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
+function renderClassMoves() {
+    const container = document.getElementById('classMoves');
+    if (!container) return;
+    const classSelect = document.getElementById('charClass');
+    const raceSelect = document.getElementById('charRace');
+    const className = classSelect ? classSelect.value : '';
+    const race = raceSelect ? raceSelect.value : '';
+
+    let html = '';
+    if (!className) {
+        html = '<div style="padding:12px"><em>Selecione uma classe para ver os movimentos.</em></div>';
+        container.innerHTML = html;
+        return;
+    }
+
+    const cls = classDetails.find((cd) => canonical(cd.nome) === canonical(className));
+    if (!cls) {
+        container.innerHTML = '<div style="padding:12px"><em>Classe não encontrada em classDetails.</em></div>';
+        return;
+    }
+
+    // Cabeçalho com info básica
+    html += `<div style="padding:12px"><h2>${cls.nome}</h2>`;
+    html += `<p><strong>HP base:</strong> ${cls.hp_base ?? '-'} &nbsp; <strong>Dado de dano:</strong> ${cls.dado_dano ?? '-'} &nbsp; <strong>Carga base:</strong> ${cls.carga_base ?? '-'}</p>`;
+
+    function renderList(title, arr) {
+        if (!arr || !arr.length) return '';
+        let s = `<h3>${title}</h3><ul>`;
+        arr.forEach((it) => { s += `<li>${it?.nome ?? it}</li>`; });
+        s += '</ul>';
+        return s;
+    }
+
+    html += renderList('Movimentos iniciais', cls.movimentos_iniciais || []);
+
+    // movimentos raciais específicos para a raça selecionada
+    if (cls.movimentos_raciais && race) {
+        const keys = Object.keys(cls.movimentos_raciais || {});
+        const found = keys.find((k) => canonical(k) === canonical(race));
+        const mr = found ? cls.movimentos_raciais[found] : null;
+        if (mr && mr.length) html += renderList(`Movimentos raciais: ${race}`, mr);
+    }
+
+    html += renderList('Escolhas iniciais', cls.escolha_inicial || []);
+    html += renderList('Movimentos (níveis 2-5)', cls.movimentos_avancados_2_5 || []);
+    html += renderList('Movimentos (níveis 6-10)', cls.movimentos_avancados_6_10 || []);
+    if (cls.movimentos_substituidos) {
+        let s = '<h3>Movimentos substituídos</h3><ul>';
+        Object.entries(cls.movimentos_substituidos).forEach(([k, v]) => { s += `<li>${k} → ${v}</li>`; });
+        s += '</ul>';
+        html += s;
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+// Canonicalização: remove acentos e normaliza para lower-case
+function canonical(text) {
+    return (text || '')
+        .toString()
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .trim()
+        .toLowerCase();
+}
+
+function capitalize(s) {
+    if (!s) return s;
+    return s[0].toUpperCase() + s.slice(1).toLowerCase();
+}
+
+// === Funções de classe/atributo (escopo de módulo) ===
+function findClassByName(name) {
+    if (!name) return null;
+    const normalized = canonical(name);
+    return classDetails.find((cd) => canonical(cd.nome) === normalized) || null;
+}
+
+function updateClassSpellsVisibility() {
+    const classSelect = document.getElementById('charClass');
+    const classSpells = document.getElementById('classSpells');
+    if (!classSpells || !classSelect) return;
+    const sel = canonical(classSelect.value);
+    classSpells.style.display = (sel === 'mago' || sel === 'clerigo') ? '' : 'none';
+}
+
+function applyClassEffects() {
+    const classSelect = document.getElementById('charClass');
+    const selectedName = classSelect ? classSelect.value : '';
+    const cls = findClassByName(selectedName);
+    const charDmgInput = document.getElementById('charDmg');
+    const charPVInput = document.getElementById('charPV');
+    const conVal = parseInt((document.getElementById('valCon') || { value: '' }).value, 10);
+    const conNum = Number.isFinite(conVal) ? conVal : 0;
+
+    if (cls) {
+        if (charDmgInput) charDmgInput.value = cls.dado_dano;
+        if (charPVInput) charPVInput.value = (cls.hp_base || 0) + conNum;
+        const charLoadInput = document.getElementById('charLoad');
+        const modForEl = document.getElementById('modFor');
+        let modForNum = 0;
+        if (modForEl && modForEl.value) {
+            const parsed = parseInt(modForEl.value.replace(/[^0-9-]/g, ''), 10);
+            if (!Number.isNaN(parsed)) modForNum = parsed;
+        } else {
+            const valFor = parseInt((document.getElementById('valFor') || { value: '' }).value, 10);
+            if (Number.isFinite(valFor)) modForNum = Math.floor((valFor - 10) / 2);
+        }
+        if (charLoadInput) charLoadInput.value = (cls.carga_base || 0) + modForNum;
+    } else {
+        if (charDmgInput) charDmgInput.value = '';
+        if (charPVInput) charPVInput.value = '';
+        const charLoadInput = document.getElementById('charLoad');
+        if (charLoadInput) charLoadInput.value = '';
+    }
+    updateClassSpellsVisibility();
+}
+
+
+// Funções para adicionar itens, magias e movimentos à ficha
+function addEquipmentToList(listId) {
+    const listEl = document.getElementById(listId);
+    if (!listEl) return;
+    const item = "<div class='list-item' style='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;'>" +
+        "<input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />" +
+        "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />" +
+        "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button>" +
+        "</div>";
+    listEl.insertAdjacentHTML('beforeend', item);
+}
+
+
+function addConsumableToList(listId) {
+    const listEl = document.getElementById(listId);
+    if (!listEl) return;
+    const item = "<div class='list-item' style='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;'>" +
+        "<input class='spell-name' type='text' placeholder='Nome do consumível' style='flex:2' />" +
+        "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />" +
+        "<div class='use-boxes' style='display:flex;gap:4px;flex-wrap:wrap;align-items:center'></div>" +
+        "<button onclick=\"addConsumableUse(this.closest('.list-item'))\" class='addConsumable'>&#x2b</button>" +
+        "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button>" +
+
+        "</div>";
+    listEl.insertAdjacentHTML('beforeend', item);
+}
+
+function addConsumableUse(itemEl) {
+    const useBoxes = itemEl.querySelector('.use-boxes');
+    if (!useBoxes) return;
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    useBoxes.appendChild(cb);
+}
+
+function addSpellToList(listId, spellName) {
+
+}
+
+// Tabela de modificadores Dungeon World
+function computeModifier(val) {
+    const v = parseInt(val, 10);
+    if (!Number.isFinite(v)) return '';
+    if (v <= 3) return '-3';
+    if (v <= 5) return '-2';
+    if (v <= 8) return '-1';
+    if (v <= 11) return '+0';
+    if (v <= 15) return '+1';
+    if (v <= 17) return '+2';
+    return '+3';
+}
+
+const attrPairs = [
+    { val: 'valFor', mod: 'modFor' },
+    { val: 'valDes', mod: 'modDes' },
+    { val: 'valCon', mod: 'modCon' },
+    { val: 'valInt', mod: 'modInt' },
+    { val: 'valSab', mod: 'modSab' },
+    { val: 'valCar', mod: 'modCar' },
+];
+
+function updateModifiers() {
+    attrPairs.forEach(({ val, mod }) => {
+        const valEl = document.getElementById(val);
+        const modEl = document.getElementById(mod);
+        if (valEl && modEl) modEl.value = computeModifier(valEl.value);
+    });
+}
+
+function updateStrikethrough() {
+    const used = new Set();
+    attrPairs.forEach(({ val }) => {
+        const v = parseInt(document.getElementById(val)?.value, 10);
+        if (Number.isFinite(v) && v > 0) used.add(v);
+    });
+    document.querySelectorAll('.init-val').forEach((span) => {
+        if (used.has(parseInt(span.dataset.val, 10))) span.classList.add('used');
+        else span.classList.remove('used');
+    });
+}
+
+// Aplica restrições cruzadas entre `charRace` e `charClass`.
+function ClassSelector() {
+    const raceInput = document.getElementById('charRace');
+    const classSelect = document.getElementById('charClass');
+
+    function findAllowedClasses(race) {
+        if (!race) return null;
+        const normalized = canonical(race);
+        const allowed = classDetails
+            .filter((cd) => (cd.racas || []).some((r) => canonical(r) === normalized))
+            .map((cd) => cd.nome);
+        return allowed.length ? allowed : null;
+    }
+
+    function findAllowedRaces(className) {
+        if (!className) return null;
+        const normalized = canonical(className);
+        const cls = classDetails.find((cd) => canonical(cd.nome) === normalized);
+        return (cls && cls.racas && cls.racas.length) ? cls.racas : null;
+    }
+
+    function updateClassOptions() {
+        const race = raceInput.value;
+        const allowed = findAllowedClasses(race);
+        const allowedSet = allowed ? new Set(allowed.map((a) => canonical(a))) : null;
+        Array.from(classSelect.options).forEach((option) => {
+            if (!option.value) return;
+            const optCan = canonical(option.value);
+            const isDisabled = allowedSet === null ? false : !allowedSet.has(optCan);
+            option.disabled = isDisabled;
+            if (isDisabled) option.classList.add('disabled-by-race');
+            else option.classList.remove('disabled-by-race');
+        });
+        const selected = classSelect.value;
+        if (selected && classSelect.querySelector(`option[value="${selected}"]`).disabled) {
+            classSelect.value = '';
+        }
+        applyClassEffects();
+    }
+
+    function updateRaceOptions() {
+        const className = classSelect.value;
+        const allowedRaces = findAllowedRaces(className);
+        const allowedSet = allowedRaces ? new Set(allowedRaces.map((r) => canonical(r))) : null;
+        Array.from(raceInput.options).forEach((option) => {
+            if (!option.value) return;
+            const optCan = canonical(option.value);
+            const isDisabled = allowedSet === null ? false : !allowedSet.has(optCan);
+            option.disabled = isDisabled;
+            if (isDisabled) option.classList.add('disabled-by-race');
+            else option.classList.remove('disabled-by-race');
+        });
+        const selectedRace = raceInput.value;
+        if (selectedRace && raceInput.querySelector(`option[value="${selectedRace}"]`).disabled) {
+            raceInput.value = '';
+        }
+    }
+
+    raceInput.addEventListener('change', () => {
+        updateClassOptions();
+        saveStateToURL();
+        renderClassMoves();
+    });
+
+    classSelect.addEventListener('change', () => {
+        const opt = classSelect.selectedOptions[0];
+        if (opt && opt.disabled) classSelect.value = '';
+        updateRaceOptions();
+        applyClassEffects();
+        saveStateToURL();
+        renderClassMoves();
+    });
+
+    updateClassOptions();
+    updateRaceOptions();
+}
+
+circles.forEach((circle, index) => {
+    circle.addEventListener('click', () => {
+        const isActive = circle.classList.contains('active');
+        if (!isActive) {
+            for (let i = 0; i <= index; i++) circles[i].classList.add('active');
+        } else {
+            for (let i = index; i < circles.length; i++) circles[i].classList.remove('active');
+        }
+        saveStateToURL();
+    });
+});
+
+allInputs.forEach((input) => {
+    input.addEventListener('input', saveStateToURL);
+    input.addEventListener('change', saveStateToURL);
+});
+
+// Recalcula modificadores e risca atributos iniciais usados ao editar valor
+attrPairs.forEach(({ val }) => {
+    const el = document.getElementById(val);
+    if (el) el.addEventListener('input', () => {
+        updateModifiers();
+        updateStrikethrough();
+        applyClassEffects();
+        autoSave();
+    });
+});
+
+autoLoad();
+ClassSelector();
+updateModifiers();
+updateStrikethrough();
+// Renderiza movimentos iniciais de acordo com seleção atual
+renderClassMoves();
+
+// === Eventos dos botões de código ===
+document.getElementById('btnGerarCodigo').addEventListener('click', () => {
+    document.getElementById('codeModalText').value = encodeState(collectState());
+    document.getElementById('codeModal').style.display = 'flex';
+});
+
+document.getElementById('btnFecharModal').addEventListener('click', () => {
+    document.getElementById('codeModal').style.display = 'none';
+});
+
+document.getElementById('btnCopiarCodigo').addEventListener('click', () => {
+    const ta = document.getElementById('codeModalText');
+    ta.select();
+    try {
+        navigator.clipboard.writeText(ta.value);
+    } catch (e) {
+        document.execCommand('copy');
+    }
+    const btn = document.getElementById('btnCopiarCodigo');
+    btn.textContent = '\u2705 Copiado!';
+    setTimeout(() => { btn.textContent = '\uD83D\uDCCB Copiar'; }, 2000);
+});
+
+document.getElementById('btnRestaurar').addEventListener('click', () => {
+    document.getElementById('restoreCodeInput').value = '';
+    document.getElementById('restoreError').style.display = 'none';
+    document.getElementById('restoreModal').style.display = 'flex';
+});
+
+document.getElementById('btnConfirmarRestaurar').addEventListener('click', () => {
+    const code = document.getElementById('restoreCodeInput').value.trim();
+    try {
+        applyState(decodeState(code));
+        autoSave();
+        ClassSelector();
+        updateModifiers();
+        updateStrikethrough();
+        renderClassMoves();
+        document.getElementById('restoreModal').style.display = 'none';
+    } catch (e) {
+        document.getElementById('restoreError').style.display = 'block';
+    }
+});
+
+document.getElementById('btnCancelarRestaurar').addEventListener('click', () => {
+    document.getElementById('restoreModal').style.display = 'none';
+});
+
+
+document.getElementById('addConsumable')?.addEventListener('click', () => {
+    addConsumableToList('consumablesContainer');
+});
+
+document.getElementById('addEquipment')?.addEventListener('click', () => {
+    addEquipmentToList('equipmentContainer');
+});
+
+
+// Método para limpar a ficha (retornar ao estado 0)
+function clearSheet() {
+    // Limpar localStorage
+    try {
+        localStorage.removeItem('dw_sheet_code');
+    } catch (e) { /* silent */ }
+
+    // Limpar sessionStorage
+    try {
+        sessionStorage.removeItem('dw_sheet_code');
+    } catch (e) { /* silent */ }
+
+    // Limpar todos os inputs
+    allInputs.forEach((input) => {
+        if (input.type === 'checkbox') input.checked = false;
+        else input.value = '';
+    });
+
+    // Limpar todos os círculos de XP
+    circles.forEach((circle) => {
+        circle.classList.remove('active');
+    });
+
+    // Resetar selectboxes
+    document.getElementById('charRace').value = '';
+    document.getElementById('charClass').value = '';
+
+    // Atualizar modifiers e strikes
+    updateModifiers();
+    updateStrikethrough();
+    applyClassEffects();
+    renderClassMoves();
+}
+
+document.getElementById('btnLimpar').addEventListener('click', () => {
+    if (confirm('Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.')) {
+        clearSheet();
+    }
+});
+
+// Fechar modais clicando no fundo escuro
+['codeModal', 'restoreModal', 'clearModal'].forEach((id) => {
+    document.getElementById(id).addEventListener('click', (e) => {
+        if (e.target.id === id) document.getElementById(id).style.display = 'none';
+    });
+});
