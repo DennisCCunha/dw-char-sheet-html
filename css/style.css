@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 
+
 :root {
     --border-color: #000;
     --muted: #777;
@@ -47,6 +48,7 @@ h2,
 h3 {
     margin: 0;
     font-family: 'Cinzel', serif;
+    font-weight: 700;
 }
 
 .subtitle select option.disabled-by-race,
@@ -67,7 +69,7 @@ h3 {
     border: none;
     outline: none;
     font-family: 'Cinzel', serif;
-    font-weight: bold;
+    font-weight: 800;
 }
 
 .subtitle {
@@ -162,14 +164,14 @@ td input {
 .circle {
     width: 18px;
     height: 18px;
-    border: 2px solid rgba(90,0,10,1);
+    border: 2px solid #244256;
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .circle.active {
-    background: rgba(90,0,10,1);
+    background: #244256;
 }
 
 .spells {
@@ -218,14 +220,14 @@ td input {
 .gold_filling {
     accent-color: rgb(180,140,60);
 }
-.blue_filling{
-    accent-color: rgba(90,0,10,1);
+.red_filling{
+    accent-color: #244256;
 }
 
 
 .addConsumable {
     cursor: pointer;
-    color: green;
+    color: #27542D;
     font-weight: bold;
     font-size: 32px;
     line-height: 1;
@@ -236,7 +238,7 @@ td input {
 
 .removeIcon {
     cursor: pointer;
-    color: red;
+    color: #8F0011;
     font-weight: bold;
     font-size: 32px;
     line-height: 1;

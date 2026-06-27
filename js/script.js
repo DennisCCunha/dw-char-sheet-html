@@ -740,6 +740,7 @@ function addConsumableUse(itemEl) {
     if (!useBoxes) return;
     const cb = document.createElement('input');
     cb.type = 'checkbox';
+    cb.className = 'gold_filling';
     useBoxes.appendChild(cb);
 }
 
