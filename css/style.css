@@ -5,6 +5,12 @@
     --border-color: #000;
     --muted: #777;
     --danger: rgba(90,0,10,0.9);
+    --gold: rgba(180,140,60,1);
+    --dark: rgba(10,12,15,1);
+    --blue: #244256;
+    --green: #27542D;
+    --red: #8F0011;
+    --white: #fff;
 }
 
 body{
@@ -23,7 +29,7 @@ background: radial-gradient(circle at center,
 .sheet {
     max-width: 1200px;
     margin: auto;
-    background: white;
+    background: var(--white);
     border: 2px solid var(--border-color);
     border: 2px solid var(--border-color);
     padding: 24px;
@@ -35,7 +41,7 @@ background: radial-gradient(circle at center,
 .equipment-sheet {
     max-width: 1200px;
     margin: auto;
-    background: white;
+    background: var(--white);
     border: 2px solid var(--border-color);
     padding: 24px;
     display: grid;
@@ -152,6 +158,7 @@ td input {
     border: none;
     text-align: center;
     background: transparent;
+    font-size: 20px;
 }
 
 .xp {
@@ -164,14 +171,14 @@ td input {
 .circle {
     width: 18px;
     height: 18px;
-    border: 2px solid #244256;
+    border: 2px solid var(--blue);
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .circle.active {
-    background: #244256;
+    background: var(--blue);
 }
 
 .spells {
@@ -218,16 +225,16 @@ td input {
 }
 
 .gold_filling {
-    accent-color: rgb(180,140,60);
+    accent-color: var(--gold);
 }
 .red_filling{
-    accent-color: #244256;
+    accent-color: var(--blue);
 }
 
 
 .addConsumable {
     cursor: pointer;
-    color: #27542D;
+    color: var(--green);
     font-weight: bold;
     font-size: 32px;
     line-height: 1;
@@ -238,7 +245,7 @@ td input {
 
 .removeIcon {
     cursor: pointer;
-    color: #8F0011;
+    color: var(--red);
     font-weight: bold;
     font-size: 32px;
     line-height: 1;
@@ -253,7 +260,7 @@ body {
 
 @media print {
     .pagina {
-        background: white;
+        background: var(--white);
         padding: 0;
     }
 
@@ -280,7 +287,7 @@ body {
 #saveBar button {
     padding: 10px 18px;
     background: #222;
-    color: #fff;
+    color: var(--white);
     border: none;
     cursor: pointer;
     font-family: Georgia, serif;
@@ -304,8 +311,8 @@ body {
 }
 
 .dw-modal {
-    background: #fff;
-    border: 2px solid #000;
+    background: var(--white);
+    border: 2px solid var(--dark);
     padding: 28px;
     max-width: 520px;
     width: 92%;
@@ -328,7 +335,7 @@ body {
     font-family: monospace;
     font-size: 12px;
     padding: 8px;
-    border: 1px solid #000;
+    border: 1px solid var(--dark);
     resize: vertical;
 }
 
@@ -342,7 +349,7 @@ body {
 .dw-modal-actions button {
     padding: 8px 18px;
     background: #222;
-    color: #fff;
+    color: var(--white);
     border: none;
     cursor: pointer;
     font-family: Georgia, serif;
@@ -376,14 +383,18 @@ body {
 footer{
     text-align:center;
     margin-top: 24px;
-    font-size: 12px;
-    color: white;
+    font-size: 16px;
+    color: var(--white);
     
 }
 
 footer p a{
     text-decoration:none;
-    color: white;
+    color: var(--white);
     font-weight: 800;
+    
+}
+footer p a:hover{
+    color: var(--gold); 
     
 }
