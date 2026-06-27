@@ -15,9 +15,9 @@
 
 body{
 background: radial-gradient(circle at center,
-    rgba(180,140,60,1) 0%,
-    rgba(90,0,10,1) 55%,
-    rgba(10,12,15,1) 100%
+    var(--gold) 0%,
+    var(--danger) 55%,
+    var(--dark) 100%
 );}
 
 .pagina {
