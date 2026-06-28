@@ -7,9 +7,9 @@
     --danger: rgba(90,0,10,0.9);
     --gold: rgba(180,140,60,1);
     --dark: rgba(10,12,15,1);
-    --blue: #244256;
-    --green: #27542D;
-    --red: #8F0011;
+    --blue: rgb(36, 66, 86);
+    --green: rgb(39, 84, 45);
+    --red: rgb(143, 0, 17);
     --white: #fff;
 }
 
@@ -181,6 +181,18 @@ td input {
     background: var(--red);
 }
 
+td:has(.deb-Modifier-active){      
+    background: rgba(180,140,60,0.5);
+    padding: 2px 5px;
+}
+
+.deb-Modifier-active {
+    color: var(--white);
+    font-weight: bold;
+    background: rgba(180,140,60,0.5);
+    padding: 10px 0px;  
+}
+
 .bonds {
     margin: 20px 0;
     
@@ -226,9 +238,12 @@ td input {
 }
 
 .spell:has(.blue_filling:checked) {
-    background: var(--gold);
+    background: rgba(180,140,60,0.5);
     .spell-name{
         color: var(--white);
+        background: rgba(180,140,60,0.5);
+        border-radius: 10px;
+        padding-left: 11px;
     }
     .blue_filling, .gold_filling {
         accent-color: var(--white);
@@ -239,7 +254,6 @@ td input {
 .spell-name {
     border: none;
     border-bottom: 1px dashed transparent;
-    background: transparent;
     font-family: Georgia, serif;
     font-size: 16px;
     width: 100%;
