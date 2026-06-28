@@ -757,7 +757,7 @@ function addConsumableToList(listId) {
     if (!listEl) return;
     const item = "<div class='list-item' style='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px;'>" +
         "<input class='spell-name' type='text' placeholder='Nome do consumível' style='flex:2' />" +
-        "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />" +
+        "<input class='spell-name' type='number'  placeholder='Peso' min='0' style='width:60px' />" +
         "<div class='use-boxes' style='display:flex;gap:4px;flex-wrap:wrap;align-items:center'></div>" +
         "<button onclick=\"addConsumableUse(this.closest('.list-item'))\" class='addConsumable'>&#x2b</button>" +
         "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button>" +
@@ -771,6 +771,7 @@ function addConsumableUse(itemEl) {
     if (!useBoxes) return;
     const cb = document.createElement('input');
     cb.type = 'checkbox';
+    cb.className = 'gold_filling';
     useBoxes.appendChild(cb);
 }
 
@@ -782,7 +783,7 @@ function addBond() {
     const bond = document.getElementById('charBonds');
     const bondsArea = document.getElementById('bondsArea');
     if (!bond || !bondsArea) return;
-    const item = "<div class='list-item'><label class='spell-name' type='text'>" + bond.value + "</label>" + "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button></div>";
+    const item = "<div class='list-item'><label class='bonding-name' type='text'>" + bond.value + "</label>" + "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button></div>";
     bondsArea.insertAdjacentHTML('beforeend', item);
 }
     
@@ -1037,6 +1038,8 @@ document.getElementById('btnLimpar').addEventListener('click', () => {
         clearSheet();
     }
 });
+
+
 
 // Fechar modais clicando no fundo escuro
 ['codeModal', 'restoreModal', 'clearModal'].forEach((id) => {

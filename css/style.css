@@ -45,7 +45,7 @@ background: radial-gradient(circle at center,
     border: 2px solid var(--border-color);
     padding: 24px;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 2fr 3fr;
     gap: 24px;
 }
 
@@ -59,7 +59,7 @@ h3 {
 
 .subtitle select option.disabled-by-race,
 .subtitle select option[disabled] {
-    color: var(--danger);
+    color: red;
     background: transparent;
 }
 
@@ -171,14 +171,34 @@ td input {
 .circle {
     width: 18px;
     height: 18px;
-    border: 2px solid var(--blue);
+    border: 2px solid var(--red);
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .circle.active {
-    background: var(--blue);
+    background: var(--red);
+}
+
+.bonds {
+    margin: 20px 0;
+    
+}
+
+.bond_input {
+    width: 50%;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+    border-bottom: 0.5px dashed var(--border-color);
+    margin-bottom: 6px;
+}
+
+.bonding-name{
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 10px;
 }
 
 .spells {
@@ -202,6 +222,18 @@ td input {
     gap: 8px;
     margin-bottom: 6px;
     font-size: 16px;
+    border-radius: 10px;
+}
+
+.spell:has(.blue_filling:checked) {
+    background: var(--gold);
+    .spell-name{
+        color: var(--white);
+    }
+    .blue_filling, .gold_filling {
+        accent-color: var(--white);
+    }
+    
 }
 
 .spell-name {
@@ -379,6 +411,8 @@ body {
     text-decoration: line-through;
     color: #999;
 }
+
+/*Footer*/
 
 footer{
     text-align:center;
