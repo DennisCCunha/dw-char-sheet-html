@@ -15,46 +15,45 @@
 
   </head>
   <body>
+    <nav class="floating-nav" >
+        <div style="display:none;">
+          <button class="nav-item active" data-section="character">
+              <span>👤</span>
+              <span>Character</span>
+          </button>
 
-        <nav class="floating-nav" style="display:none">
-        <button class="nav-item active" data-section="character">
-            <span>👤</span>
-            <span>Character</span>
-        </button>
+          <button class="nav-item" data-section="attributes">
+              <span>⚔️</span>
+              <span>Attributes</span>
+          </button>
 
-        <button class="nav-item" data-section="attributes">
-            <span>⚔️</span>
-            <span>Attributes</span>
-        </button>
+          <button class="nav-item" data-section="moves">
+              <span>📜</span>
+              <span>Moves</span>
+          </button>
 
-        <button class="nav-item" data-section="moves">
-            <span>📜</span>
-            <span>Moves</span>
-        </button>
+          <button class="nav-item" data-section="equipment">
+              <span>🛡️</span>
+              <span>Equipment</span>
+          </button>
 
-        <button class="nav-item" data-section="equipment">
-            <span>🛡️</span>
-            <span>Equipment</span>
-        </button>
+          <button class="nav-item" data-section="spells">
+              <span>✨</span>
+              <span>Spells</span>
+          </button>
 
-        <button class="nav-item" data-section="spells">
-            <span>✨</span>
-            <span>Spells</span>
-        </button>
+          <button class="nav-item" data-section="notes">
+              <span>📝</span>
+              <span>Notes</span>
+          </button>
+        </div>
 
-        <button class="nav-item" data-section="notes">
-            <span>📝</span>
-            <span>Notes</span>
-        </button>
+        <div class="save_buttons">
+          <button id="btnGerarCodigo">&#x1F4BE; Salvar ficha</button>
+          <button id="btnRestaurar">&#x1F4E5; Restaurar ficha</button>
+          <button id="btnLimpar">&#x1FF5D1; Limpar ficha</button>
+        </div>
     </nav>
-
-    <!-- Barra flutuante de código -->
-    <div id="saveBar">
-      <button id="btnGerarCodigo">&#x1F4BE; Salvar ficha</button>
-      <button id="btnRestaurar">&#x1F4E5; Restaurar ficha</button>
-      <button id="btnLimpar">&#x1FF5D1; Limpar ficha</button>
-    </div>
-
     <!-- Modal: exibir código gerado -->
     <div id="codeModal" class="dw-overlay" style="display:none">
       <div class="dw-modal">
@@ -148,7 +147,7 @@
             </div>
           </div>
 
-          <div>
+          <div id="initialattributes" class="initial-attributes-container">
             <label class="initial-attributes"><strong>Atributos iniciais: </strong>
               [<span class="init-val" data-val="16">16(+2)</span>,
               <span class="init-val" data-val="15">15(+1)</span>,
@@ -158,297 +157,297 @@
               <span class="init-val" data-val="8">8(-1)</span>]</label>
           </div>
 
-
           <table id="attributesTable">
-            <thead>
-              <tr>
-                <th>Atributo</th>
-                <th>Valor</th>
-                <th>Mod</th>
-                <th>Deb</th>
-              </tr>
-            </thead>
             <tbody>
               <tr>
+                <th>Atributo</th>
                 <td>FOR</td>
-                <td><input id="valFor" value="0" /></td>
-                <td><input id="modFor" value="0" /></td>
-                <td>
-                  <input type="checkbox" class="gold_filling"/><label><em>Fraco -1</em></label>
-                </td>
-              </tr>
-              <tr>
                 <td>DES</td>
-                <td><input id="valDes" value="0" /></td>
-                <td><input id="modDes" value="0" /></td>
-                <td>
-                  <input type="checkbox" class="gold_filling"/><label><em>Trêmulo -1</em></label>
-                </td>
-              </tr>
-              <tr>
                 <td>CON</td>
-                <td><input id="valCon" value="0" /></td>
-                <td><input id="modCon" value="0" /></td>
-                <td>
-                  <input type="checkbox" class="gold_filling"/><label><em>Doente -1</em></label>
-                </td>
-              </tr>
-              <tr>
                 <td>INT</td>
-                <td><input id="valInt" value="0" /></td>
-                <td><input id="modInt" value="0" /></td>
-                <td>
-                  <input type="checkbox" class="gold_filling"/><label><em>Atordoado -1</em></label>
-                </td>
-              </tr>
-              <tr>
                 <td>SAB</td>
-                <td><input id="valSab" value="0" /></td>
-                <td><input id="modSab" value="0" /></td>
-                <td>
-                  <input type="checkbox" class="gold_filling"/><label><em>Confuso -1</em></label>
-                </td>
-              </tr>
-              <tr>
                 <td>CAR</td>
-                <td><input id="valCar" value="0" /></td>
-                <td><input id="modCar" value="0" /></td>
+              </tr>
+
+              <tr>
+                <th>Valor</th>
+                <td><input id="valFor" value="" placeholder="0" /></td>
+                <td><input id="valDes" value="" placeholder="0" /></td>
+                <td><input id="valCon" value="" placeholder="0" /></td>
+                <td><input id="valInt" value="" placeholder="0" /></td>
+                <td><input id="valSab" value="" placeholder="0" /></td>
+                <td><input id="valCar" value="" placeholder="0" /></td>
+              </tr>
+
+              <tr>
+                <th>Mod</th>
+                <td><input id="modFor" value="" placeholder="0" /></td>
+                <td><input id="modDes" value="" placeholder="0" /></td>
+                <td><input id="modCon" value="" placeholder="0" /></td>
+                <td><input id="modInt" value="" placeholder="0" /></td>
+                <td><input id="modSab" value="" placeholder="0" /></td>
+                <td><input id="modCar" value="" placeholder="0" /></td>
+              </tr>
+
+              <tr>
+                <th>Deb</th>
                 <td>
-                  <input type="checkbox" class="gold_filling"/><label><em>Marcado -1</em></label>
+                  <input type="checkbox" class="red_filling" />
+                  <label><em class="debilidade">Fraco -1</em></label>
+                </td>
+                <td>
+                  <input type="checkbox" class="red_filling" />
+                  <label><em class="debilidade">Trêmulo -1</em></label>
+                </td>
+                <td>
+                  <input type="checkbox" class="red_filling" />
+                  <label><em class="debilidade">Doente -1</em></label>
+                </td>
+                <td>
+                  <input type="checkbox" class="red_filling" />
+                  <label><em class="debilidade">Atordoado -1</em></label>
+                </td>
+                <td>
+                  <input type="checkbox" class="red_filling" />
+                  <label><em class="debilidade">Confuso -1</em></label>
+                  </td>
+                <td>
+                  <input type="checkbox" class="red_filling" />
+                  <label><em class="debilidade">Marcado -1</em></label>
                 </td>
               </tr>
             </tbody>
           </table>
-          
-          <div class="xp">
-            <strong>Nível</strong>
-            <input type="text" id="charLevel" value="1" placeholder="Nível" style="width: 50px; text-align: center;" />
-            <strong>XP</strong>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-          </div>
 
-        <div class="bonds">
-            <strong>Vínculos</strong>
-            <input class="bond_input" type="text" id="charBonds" value="" placeholder="Vínculos do personagem" /><button id="addBond" class='addConsumable'>&#x2b</button>
-            <div class="bonds_area" id="bondsArea">
-              <!-- Vínculos do personagem serão exibidos aqui -->
+          <div>
+            <div class="xp">
+              <strong>Nível</strong>
+              <input type="text" id="charLevel" value="1" placeholder="Nível" style="width: 50px; text-align: center;" />
+              <strong>XP</strong>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
             </div>
-        </div>
-
+            <div class="alignment">
+              <strong>Alinhamento</strong>
+              <input type="text" id="charAlignment" value="" placeholder="Alinhamento do personagem" />
+            </div>
+            <div class="bonds">
+              <strong>Vínculos</strong>
+                <input class="bond_input" type="" id="charBonds" value="" placeholder="Vínculos do personagem" />
+                <button id="addBond" class='addConsumable'>&#x2b</button>
+              <div class="bonds_area" id="bondsArea">
+                <!-- Vínculos do personagem serão exibidos aqui -->
+              </div>
+            </div>     
+          </div>
         </div> <!-- Fim da primeira ficha-->
-
-        <aside id="classSpells" class="spells">
-          <div id="mageSpellsSet">
-          <h2>Magias de Mago</h2>
-            <div class="spell-group">
-              <h3><input value="Truques" /></h3>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Light" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Unseen Servant" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Prestidigitation" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Detect Magic" />
-              </div>
-            </div>
-
-            <div class="spell-group">
-              <h3><input value="2º nível" /></h3>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Contact Spirits - Summoning" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Telepathy - Divination" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Charm Person - Enchantment" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Invisibility - Illusion" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Magic Missile" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Alarm" />
-              </div>
-            </div>
-
-            <div class="spell-group">
-              <h3><input value="3º nível" /></h3>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Dispel Magic" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Visions Through Time - Divination" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Fireball - Evocation" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Mimic" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Mirror Image" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Sleep - Enchantment" />
-              </div>
-            </div>
-
-            <div class="spell-group">
-              <h3><input value="5º nível" /></h3>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Cage - Evocation Ongoing" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Contact Other Plane" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Polymorph" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Summon Monster" />
-              </div>
-            </div>
-
-            <div class="spell-group">
-              <h3><input value="7º nível" /></h3>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Dominate" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="True Seeing" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Shadow Walk" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Contingency" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Cloudkill" />
-              </div>
-            </div>
-
-            <div class="spell-group">
-              <h3><input value="9º nível" /></h3>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Antipathy" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Alert" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Soul Gem" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Shelter" />
-              </div>
-              <div class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="Perfect Summons" />
-              </div>
-            </div>
-          </div>
-        </aside>
       </div>
     </article>
 
     <article class="pagina">
       <div id="Movements" class="sheet">  
-          <div id="chosenMoves" class="movement_set">
-            <h2>Movimentos</h2>
-            <div id="chosenMovesList">
-
-            </div>
-          <div id="classMoves" class="movement_availiable">
+          <aside id="classMoves" class="movement_availiable">
             <h2>Movimentos de Classe</h2>
             <div id="classMovesList">
 
             </div>
-          </div>
+          </aside>
+          <aside id="classSpells" class="spells">
+            <div id="mageSpellsSet">
+            <h2>Magias de Mago</h2>
+              <div class="spell-group">
+                <h3><input value="Truques" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Light" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Unseen Servant" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Prestidigitation" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Detect Magic" />
+                </div>
+              </div>
+
+              <div class="spell-group">
+                <h3><input value="2º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Contact Spirits - Summoning" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Telepathy - Divination" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Charm Person - Enchantment" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Invisibility - Illusion" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Magic Missile" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Alarm" />
+                </div>
+              </div>
+
+              <div class="spell-group">
+                <h3><input value="3º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Dispel Magic" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Visions Through Time - Divination" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Fireball - Evocation" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Mimic" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Mirror Image" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Sleep - Enchantment" />
+                </div>
+              </div>
+
+              <div class="spell-group">
+                <h3><input value="5º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Cage - Evocation Ongoing" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Contact Other Plane" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Polymorph" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Summon Monster" />
+                </div>
+              </div>
+
+              <div class="spell-group">
+                <h3><input value="7º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Dominate" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="True Seeing" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Shadow Walk" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Contingency" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Cloudkill" />
+                </div>
+              </div>
+
+              <div class="spell-group">
+                <h3><input value="9º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Antipathy" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Alert" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Soul Gem" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Shelter" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Perfect Summons" />
+                </div>
+              </div>
+            </div>
+          </aside>
       </div>
+
     </article>
 
     <article class="pagina">
@@ -468,9 +467,9 @@
     </article>
 
     <footer class="rodape">
-      <p>Dungeon World é um jogo de RPG criado por <a href="https://www.dungeon-world.com/" target="_blank">Sage LaTorra e Adam Koebel</a></p>
-      <p>Ficha de personagem para Dungeon World criada a partir dos materiais oficiais disponíveis em <a href="https://www.dungeonworldsrd.com/" target="_blank">Dungeon World SRD</a></p>
-      <p>Desenvolvido por <a href="https://github.com/DennisCCunha" target="_blank">Dennis C. Cunha</a></p>
+      <p><a href="https://www.dungeon-world.com/" target="_blank">Dungeon World</a> é um jogo de RPG criado por Sage LaTorra e Adam Koebel e pertence à Phinlos LLC.</p>
+      <p>Ficha de personagem para Dungeon World criada a partir dos materiais disponíveis publicamente em <a href="https://www.dungeonworldsrd.com/" target="_blank">Dungeon World SRD</a></p>
+      <p>Desenvolvido por <a href="https://github.com/DennisCCunha" target="_blank">Bocolis.ninja</a></p>
     </footer>
 
     <script src="./js/sheetFunction.js"></script>
