@@ -159,6 +159,7 @@
 
           <table id="attributesTable">
             <tbody>
+            <tbody>
               <tr>
                 <th>Atributo</th>
                 <td>FOR</td>
@@ -189,6 +190,7 @@
                 <td><input id="modCar" value="" placeholder="0" /></td>
               </tr>
 
+
               <tr>
                 <th>Deb</th>
                 <td>
@@ -212,6 +214,8 @@
                   <label><em class="debilidade">Confuso -1</em></label>
                   </td>
                 <td>
+                  <input type="checkbox" class="red_filling" />
+                  <label><em class="debilidade">Marcado -1</em></label>
                   <input type="checkbox" class="red_filling" />
                   <label><em class="debilidade">Marcado -1</em></label>
                 </td>
@@ -294,7 +298,77 @@
                   <input class="spell-name" value="Detect Magic" />
                 </div>
               </div>
+      </div>
+    </article>
 
+    <article class="pagina">
+      <div id="Movements" class="sheet">  
+          <aside id="classMoves" class="movement_availiable">
+            <h2>Movimentos de Classe</h2>
+            <div id="classMovesList">
+
+            </div>
+          </aside>
+          <aside id="classSpells" class="spells">
+            <div id="mageSpellsSet">
+            <h2>Magias de Mago</h2>
+              <div class="spell-group">
+                <h3><input value="Truques" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Light" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Unseen Servant" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Prestidigitation" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Detect Magic" />
+                </div>
+              </div>
+
+              <div class="spell-group">
+                <h3><input value="2º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Contact Spirits - Summoning" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Telepathy - Divination" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Charm Person - Enchantment" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Invisibility - Illusion" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Magic Missile" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Alarm" />
+                </div>
+              </div>
               <div class="spell-group">
                 <h3><input value="2º nível" /></h3>
                 <div class="spell">
@@ -362,6 +436,39 @@
                   <input class="spell-name" value="Sleep - Enchantment" />
                 </div>
               </div>
+              <div class="spell-group">
+                <h3><input value="3º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Dispel Magic" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Visions Through Time - Divination" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Fireball - Evocation" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Mimic" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Mirror Image" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Sleep - Enchantment" />
+                </div>
+              </div>
 
               <div class="spell-group">
                 <h3><input value="5º nível" /></h3>
@@ -386,7 +493,58 @@
                   <input class="spell-name" value="Summon Monster" />
                 </div>
               </div>
+              <div class="spell-group">
+                <h3><input value="5º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Cage - Evocation Ongoing" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Contact Other Plane" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Polymorph" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Summon Monster" />
+                </div>
+              </div>
 
+              <div class="spell-group">
+                <h3><input value="7º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Dominate" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="True Seeing" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Shadow Walk" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Contingency" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Cloudkill" />
+                </div>
+              </div>
               <div class="spell-group">
                 <h3><input value="7º nível" /></h3>
                 <div class="spell">
@@ -446,7 +604,38 @@
               </div>
             </div>
           </aside>
+              <div class="spell-group">
+                <h3><input value="9º nível" /></h3>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Antipathy" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Alert" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Soul Gem" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Shelter" />
+                </div>
+                <div class="spell">
+                  <input type="checkbox" title="No grimório" class="gold_filling" />
+                  <input type="checkbox" title="Preparada" class="blue_filling"/>
+                  <input class="spell-name" value="Perfect Summons" />
+                </div>
+              </div>
+            </div>
+          </aside>
       </div>
+
 
     </article>
 
@@ -467,6 +656,9 @@
     </article>
 
     <footer class="rodape">
+      <p><a href="https://www.dungeon-world.com/" target="_blank">Dungeon World</a> é um jogo de RPG criado por Sage LaTorra e Adam Koebel e pertence à Phinlos LLC.</p>
+      <p>Ficha de personagem para Dungeon World criada a partir dos materiais disponíveis publicamente em <a href="https://www.dungeonworldsrd.com/" target="_blank">Dungeon World SRD</a></p>
+      <p>Desenvolvido por <a href="https://github.com/DennisCCunha" target="_blank">Bocolis.ninja</a></p>
       <p><a href="https://www.dungeon-world.com/" target="_blank">Dungeon World</a> é um jogo de RPG criado por Sage LaTorra e Adam Koebel e pertence à Phinlos LLC.</p>
       <p>Ficha de personagem para Dungeon World criada a partir dos materiais disponíveis publicamente em <a href="https://www.dungeonworldsrd.com/" target="_blank">Dungeon World SRD</a></p>
       <p>Desenvolvido por <a href="https://github.com/DennisCCunha" target="_blank">Bocolis.ninja</a></p>
