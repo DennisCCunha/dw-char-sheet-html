@@ -1,3 +1,6 @@
+import { SaveAndLoad } from './saveAndLoad.js';
+import { Bond, Consumable, Equipment, Spell } from './mechanics.js';
+import { Character } from './character.js';
 // Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
 const circles = Array.from(document.querySelectorAll('.circle'));
 const allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
@@ -610,7 +613,7 @@ function autoLoad() {
 }
 
 // Alias para manter compatibilidade com todas as chamadas existentes
-const saveStateToURL = autoSave;
+
 
 function renderList(title, arr) {
     if (!arr || !arr.length) return '';
@@ -882,7 +885,7 @@ function ClassSelector() {
 
     raceInput.addEventListener('change', () => {
         updateClassOptions();
-        saveStateToURL();
+        SaveAndLoad.autoSave();
         renderClassMoves();
     });
 
@@ -891,7 +894,7 @@ function ClassSelector() {
         if (opt && opt.disabled) classSelect.value = '';
         updateRaceOptions();
         applyClassEffects();
-        saveStateToURL();
+        SaveAndLoad.autoSave();
         renderClassMoves();
     });
 
