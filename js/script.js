@@ -1,6 +1,8 @@
 import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 
 // Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
+import SaveAndLoad from './saveAndLoad.js';
+
 const circles = Array.from(document.querySelectorAll('.circle'));
 const allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
 
@@ -11,6 +13,29 @@ const initialAttributes = {
 }
 
 const classDetails = dungeonworld.classses || [];
+
+// Tabela de modificadores Dungeon World
+function computeModifier(val) {
+    const v = parseInt(val, 10);
+    if (!Number.isFinite(v)) return '';
+    if (v <= 3) return '-3';
+    if (v <= 5) return '-2';
+    if (v <= 8) return '-1';
+    if (v <= 11) return '+0';
+    if (v <= 15) return '+1';
+    if (v <= 17) return '+2';
+    return '+3';
+}
+
+const attrPairs = [
+    { val: 'valFor', mod: 'modFor' },
+    { val: 'valDes', mod: 'modDes' },
+    { val: 'valCon', mod: 'modCon' },
+    { val: 'valInt', mod: 'modInt' },
+    { val: 'valSab', mod: 'modSab' },
+    { val: 'valCar', mod: 'modCar' },
+];
+
 
 // Atribui ids automáticos quando ausentes, preservando ids existentes
 allInputs.forEach((input, index) => {
@@ -23,76 +48,9 @@ circles.forEach((circle, index) => {
     if (!circle.id) circle.id = `xp_${index}`;
 });
 
-// === Sistema de código de ficha ===
-
-function collectState() {
-    const state = {};
-    allInputs.forEach((input) => {
-        if (input.type === 'checkbox') state[input.id] = input.checked ? '1' : '0';
-        else state[input.id] = input.value;
-    });
-    circles.forEach((circle) => {
-        state[circle.id] = circle.classList.contains('active') ? '1' : '0';
-    });
-    return state;
-}
-
-function applyState(state) {
-    allInputs.forEach((input) => {
-        if (state[input.id] !== undefined) {
-            if (input.type === 'checkbox') input.checked = state[input.id] === '1';
-            else input.value = state[input.id];
-        }
-    });
-    circles.forEach((circle) => {
-        if (state[circle.id] === '1') circle.classList.add('active');
-        else circle.classList.remove('active');
-    });
-}
-
-// Cifra XOR com TextEncoder (suporte a UTF-8 e caracteres acentuados)
-function encodeState(state) {
-    const key = 'DungeonWorld2024';
-    const bytes = new TextEncoder().encode(JSON.stringify(state));
-    const keyBytes = new TextEncoder().encode(key);
-    const xored = new Uint8Array(bytes.length);
-    for (let i = 0; i < bytes.length; i++) {
-        xored[i] = bytes[i] ^ keyBytes[i % keyBytes.length];
-    }
-    let binary = '';
-    for (let i = 0; i < xored.length; i++) binary += String.fromCharCode(xored[i]);
-    return btoa(binary);
-}
-
-function decodeState(code) {
-    const key = 'DungeonWorld2024';
-    const keyBytes = new TextEncoder().encode(key);
-    const binary = atob(code);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    const xored = new Uint8Array(bytes.length);
-    for (let i = 0; i < bytes.length; i++) xored[i] = bytes[i] ^ keyBytes[i % keyBytes.length];
-    return JSON.parse(new TextDecoder().decode(xored));
-}
-
-function autoSave() {
-    try {
-        localStorage.setItem('dw_sheet_code', encodeState(collectState()));
-    } catch (e) { /* silent */ }
-}
-
-function autoLoad() {
-    const saved = localStorage.getItem('dw_sheet_code');
-    if (!saved) return;
-    try {
-        applyState(decodeState(saved));
-    } catch (e) {
-        console.warn('Falha ao restaurar ficha:', e);
-    }
-}
 
 // Alias para manter compatibilidade com todas as chamadas existentes
-const saveStateToURL = autoSave;
+const saveStateToURL = SaveAndLoad.autoSave();
 
 // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
 function renderClassMoves() {
@@ -255,28 +213,6 @@ function addSpellToList(listId, spellName) {
 
 }
 
-// Tabela de modificadores Dungeon World
-function computeModifier(val) {
-    const v = parseInt(val, 10);
-    if (!Number.isFinite(v)) return '';
-    if (v <= 3) return '-3';
-    if (v <= 5) return '-2';
-    if (v <= 8) return '-1';
-    if (v <= 11) return '+0';
-    if (v <= 15) return '+1';
-    if (v <= 17) return '+2';
-    return '+3';
-}
-
-const attrPairs = [
-    { val: 'valFor', mod: 'modFor' },
-    { val: 'valDes', mod: 'modDes' },
-    { val: 'valCon', mod: 'modCon' },
-    { val: 'valInt', mod: 'modInt' },
-    { val: 'valSab', mod: 'modSab' },
-    { val: 'valCar', mod: 'modCar' },
-];
-
 function updateModifiers() {
     attrPairs.forEach(({ val, mod }) => {
         const valEl = document.getElementById(val);
@@ -374,6 +310,40 @@ function ClassSelector() {
     updateRaceOptions();
 }
 
+// Método para limpar a ficha (retornar ao estado 0)
+function clearSheet() {
+    // Limpar localStorage
+    try {
+        localStorage.removeItem('dw_sheet_code');
+    } catch (e) { /* silent */ }
+
+    // Limpar sessionStorage
+    try {
+        sessionStorage.removeItem('dw_sheet_code');
+    } catch (e) { /* silent */ }
+
+    // Limpar todos os inputs
+    allInputs.forEach((input) => {
+        if (input.type === 'checkbox') input.checked = false;
+        else input.value = '';
+    });
+
+    // Limpar todos os círculos de XP
+    circles.forEach((circle) => {
+        circle.classList.remove('active');
+    });
+
+    // Resetar selectboxes
+    document.getElementById('charRace').value = '';
+    document.getElementById('charClass').value = '';
+
+    // Atualizar modifiers e strikes
+    updateModifiers();
+    updateStrikethrough();
+    applyClassEffects();
+    renderClassMoves();
+}
+
 circles.forEach((circle, index) => {
     circle.addEventListener('click', () => {
         const isActive = circle.classList.contains('active');
@@ -411,7 +381,7 @@ renderClassMoves();
 
 // === Eventos dos botões de código ===
 document.getElementById('btnGerarCodigo').addEventListener('click', () => {
-    document.getElementById('codeModalText').value = encodeState(collectState());
+    document.getElementById('codeModalText').value = SaveAndLoad.encodeState(SaveAndLoad.collectState());
     document.getElementById('codeModal').style.display = 'flex';
 });
 
@@ -441,8 +411,8 @@ document.getElementById('btnRestaurar').addEventListener('click', () => {
 document.getElementById('btnConfirmarRestaurar').addEventListener('click', () => {
     const code = document.getElementById('restoreCodeInput').value.trim();
     try {
-        applyState(decodeState(code));
-        autoSave();
+        SaveAndLoad.applyState(SaveAndLoad.decodeState(code));
+        SaveAndLoad.autoSave();
         ClassSelector();
         updateModifiers();
         updateStrikethrough();
@@ -457,7 +427,6 @@ document.getElementById('btnCancelarRestaurar').addEventListener('click', () => 
     document.getElementById('restoreModal').style.display = 'none';
 });
 
-
 document.getElementById('addConsumable')?.addEventListener('click', () => {
     addConsumableToList('consumablesContainer');
 });
@@ -465,41 +434,6 @@ document.getElementById('addConsumable')?.addEventListener('click', () => {
 document.getElementById('addEquipment')?.addEventListener('click', () => {
     addEquipmentToList('equipmentContainer');
 });
-
-
-// Método para limpar a ficha (retornar ao estado 0)
-function clearSheet() {
-    // Limpar localStorage
-    try {
-        localStorage.removeItem('dw_sheet_code');
-    } catch (e) { /* silent */ }
-
-    // Limpar sessionStorage
-    try {
-        sessionStorage.removeItem('dw_sheet_code');
-    } catch (e) { /* silent */ }
-
-    // Limpar todos os inputs
-    allInputs.forEach((input) => {
-        if (input.type === 'checkbox') input.checked = false;
-        else input.value = '';
-    });
-
-    // Limpar todos os círculos de XP
-    circles.forEach((circle) => {
-        circle.classList.remove('active');
-    });
-
-    // Resetar selectboxes
-    document.getElementById('charRace').value = '';
-    document.getElementById('charClass').value = '';
-
-    // Atualizar modifiers e strikes
-    updateModifiers();
-    updateStrikethrough();
-    applyClassEffects();
-    renderClassMoves();
-}
 
 document.getElementById('btnLimpar').addEventListener('click', () => {
     if (confirm('Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.')) {
