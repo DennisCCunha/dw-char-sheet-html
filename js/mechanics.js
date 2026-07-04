@@ -4,14 +4,21 @@ import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 export class Bond {
     static create(nome ="", descricao="", finalizado = false) {
         return {
+            id:0,
             nome: nome,
-            descricao: descricao,
-            finalizado: finalizado
+            template: descricao,
+            finalizado: finalizado           
         };
     }
+
+    static define(){
+
+    }
+
     static end(bond) {
         bond.finalizado = true;
     }
+
     static render(bond) {
         return `<div class="bond"> <input type="checkbox" title="Finalizado" class="gold_filling"/> <label class="bond-name" value="${bond.nome}"/> </div>`;
     }
@@ -77,54 +84,62 @@ export class Movement {
             tags: tags
         };
     }
-    static render(movement) {
-        return `<div class="card">
-                    <header class="card-header">
-                        <div class="icon">
-                            <img src="icone.png" alt="Ícone">
-                        </div>
-
-                        <h2>${movement.nome}</h2>
-
-                        <div class="attribute">
-                            🎲 +FOR
-                        </div>
-                    </header>
-
-                    <section class="card-description">
-                        <blockquote>
-                            Quando atacar um adversário em combate corpo a corpo...
-                        </blockquote>
-                    </section>
-
-                    <section class="card-results">
-
-                        <div class="result">
-                            <span class="roll">10+</span>
-
-                            <div class="text">
-                                Cause dano ao adversário e evite seu ataque.
-                                Opcionalmente, você pode causar +1d6 de dano,
-                                expondo-se a contra ataque.
-                            </div>
-                        </div>
-
-                        <div class="result">
-                            <span class="roll">7-9</span>
-
-                            <div class="text">
-                                Cause dano ao adversário, e ele fará um ataque contra você.
-                            </div>
-                        </div>
-
-                    </section>
-
-                    <footer class="card-footer">
-                        <small>MOVIMENTO</small>
-                        <strong>BÁSICO</strong>
-                    </footer>
-                </div>`;
+    static render(movement, type=1) {
+        if (type) return this.#renderPanel(movement);
+        return this.#renderCard(movement);
     }
+    static #renderCard(movement){
+        return `<div class="card">
+            <header class="card-header">
+                <div class="icon">
+                    <img src="icone.png" alt="Ícone">
+                </div>
+
+                <h2>${movement.nome}</h2>
+
+                <div class="attribute">
+                    🎲 +FOR
+                </div>
+            </header>
+
+            <section class="card-description">
+                <blockquote>
+                    Quando atacar um adversário em combate corpo a corpo...
+                </blockquote>
+            </section>
+
+            <section class="card-results">
+
+                <div class="result">
+                    <span class="roll">10+</span>
+
+                    <div class="text">
+                        Cause dano ao adversário e evite seu ataque.
+                        Opcionalmente, você pode causar +1d6 de dano,
+                        expondo-se a contra ataque.
+                    </div>
+                </div>
+
+                <div class="result">
+                    <span class="roll">7-9</span>
+
+                    <div class="text">
+                        Cause dano ao adversário, e ele fará um ataque contra você.
+                    </div>
+                </div>
+
+            </section>
+
+            <footer class="card-footer">
+                <small>MOVIMENTO</small>
+                <strong>BÁSICO</strong>
+            </footer>
+        </div>`;
+    }
+    static #renderPanel(movement){
+
+    }
+
 }
 export class Spell {
     static create(id = 90000, classe = [], nome ="", nivel = 0, school = "", continuo = false, descricao="", tags = []) {
@@ -135,7 +150,6 @@ export class Spell {
             nivel: nivel,
             school: school,
             continuo: continuo,
-
             descricao: descricao,
             tags: tags
         };

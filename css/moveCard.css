@@ -1,4 +1,4 @@
-.card{
+.movement-card{
     width:320px;
     background:#ececec;
     border-radius:12px;
@@ -7,7 +7,7 @@
     font-family:Georgia, serif;
 }
 
-.card-header{
+.movement-card-header{
     background:#777;
     color:white;
     padding:15px;
@@ -16,18 +16,18 @@
     gap:10px;
 }
 
-.card-header h2{
+.movement-card-header h2{
     flex:1;
     font-size:22px;
     margin:0;
 }
 
-.attribute{
+.movement-card-attribute{
     font-size:22px;
     font-weight:bold;
 }
 
-.card-description{
+.movement-card-card-description{
     padding:15px;
 }
 
@@ -37,7 +37,7 @@ blockquote{
     font-weight:bold;
 }
 
-.card-results{
+.movement-card-results{
     padding:0 15px 20px;
 }
 
@@ -46,7 +46,7 @@ blockquote{
     margin-bottom:18px;
 }
 
-.roll{
+.movement-card-roll{
     background:black;
     color:white;
     border-radius:50%;
@@ -59,11 +59,11 @@ blockquote{
     font-weight:bold;
 }
 
-.text{
+.movement-card-text{
     flex:1;
 }
 
-.card-footer{
+.movement-card-card-footer{
     background:#666;
     color:white;
     padding:10px 15px;
