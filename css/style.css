@@ -148,6 +148,21 @@ h3 {
     background: transparent;
 }
 
+.pv-pair{
+    display: inline-flex;
+    align-items: center;
+    gap: 2px; /* Uniform spacing between inputs and the slash */
+}
+.pv-pair input{
+    width: 50%;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 24px;
+    background: transparent;
+}
+
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -327,6 +342,23 @@ td:has(.deb-Modifier-active){
 body {
     padding-bottom: 4rem;
 }
+
+.charNotes-container{
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Makes the wrapper take up all available flex space */
+    height: 100%;
+}
+.charNotes{
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Makes the wrapper take up all available flex space */
+    height: 100%;
+}
+.charNotes .q1-editor{
+    overflow-y: auto;
+}
+
 
 @media print {
     .pagina {
