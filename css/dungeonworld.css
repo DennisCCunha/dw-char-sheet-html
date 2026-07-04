@@ -1,71 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
-
 
 :root {
     --border-color: #000;
     --muted: #777;
-    --danger: rgba(90,0,10,0.9);
-    --gold: rgba(180,140,60,1);
-    --dark: rgba(10,12,15,1);
-    --blue: rgb(36, 66, 86);
-    --green: rgb(39, 84, 45);
-    --red: rgb(143, 0, 17);
-    --white: #fff;
-}
-
-body{
-    background: radial-gradient(circle at center,
-        var(--gold) 0%,
-        var(--danger) 55%,
-        var(--dark) 100%
-    );
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    flex-basis:100%;
+    --danger: #b00;
 }
 
 .pagina {
     font-family: Georgia, serif;
-    margin: 25px;
+    background: #f5f5f5;
+    padding: 24px;
     color: #111;
 }
 
 .sheet {
-    max-width: 100%;
+    max-width: 1200px;
     margin: auto;
-    background: var(--white);
+    background: white;
     border: 2px solid var(--border-color);
-    border: 2px solid var(--border-color);
-    padding: 24px;
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
 }
 
-.equipment-sheet {
-    max-width: 100%;
+
+.pagina {
+    font-family: Georgia, serif;
+    background: #f5f5f5;
+    padding: 24px;
+    color: #111;
+}
+
+.sheet {
+    max-width: 1200px;
     margin: auto;
-    background: var(--white);
+    background: white;
     border: 2px solid var(--border-color);
     padding: 24px;
     display: grid;
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 2fr 1fr;
     gap: 24px;
+}
+.equipment-sheet {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    border: 2px solid var(--border-color);
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+}
+
+.equipment-item{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:6px;
 }
 
 h1,
 h2,
 h3 {
     margin: 0;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
 }
 
 .subtitle select option.disabled-by-race,
 .subtitle select option[disabled] {
-    color: red;
+    color: var(--danger);
     background: transparent;
 }
 
@@ -80,8 +79,8 @@ h3 {
     font-size: 40px;
     border: none;
     outline: none;
-    font-family: 'Cinzel', serif;
-    font-weight: 800;
+    font-family: Georgia, serif;
+    font-weight: bold;
 }
 
 .subtitle {
@@ -125,16 +124,13 @@ h3 {
 }
 
 .card {
-    border: 0px dotted var(--border-color);
-    border-radius: 25px;
+    border: 1px solid var(--border-color);
     padding: 12px;
     text-align: center;
-    background: rgba(219, 219, 219, 0.162);
 }
 
 .card label {
     display: block;
-    font-family: 'Cinzel', serif;
     font-weight: bold;
     margin-bottom: 8px;
 }
@@ -152,35 +148,20 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    border: none;
 }
 
 th,
 td {
-    border-bottom: 1px dotted var(--border-color);
+    border: 1px solid var(--border-color);
     padding: 8px;
     text-align: center;
 }
 
-th {
-    font-family: 'Cinzel', serif;
-    font-weight: bold;
-    background: rgba(219, 219, 219, 0.162);
-}
-
 td input {
-    font-family: 'Cinzel', serif;
     width: 100%;
     border: none;
     text-align: center;
     background: transparent;
-    font-size: 20px;
-}
-
-.debilidade {
-    color: var(--red);
-    font-size: 0.8rem;
-    font-weight: 200;
 }
 
 .xp {
@@ -193,46 +174,14 @@ td input {
 .circle {
     width: 18px;
     height: 18px;
-    border: 2px solid var(--red);
+    border: 2px solid black;
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .circle.active {
-    background: var(--red);
-}
-
-td:has(.deb-Modifier-active){      
-    background: rgba(180,140,60,0.5);
-    padding: 2px 5px;
-}
-
-.deb-Modifier-active {
-    color: var(--white);
-    font-weight: bold;
-    background: rgba(180,140,60,0.5);
-    padding: 10px 0px;  
-}
-
-.bonds {
-    margin: 20px 0;
-    
-}
-
-.bond_input {
-    width: 50%;
-    text-align: center;
-    font-size: 16px;
-    border: none;
-    border-bottom: 0.5px dashed var(--border-color);
-    margin-bottom: 6px;
-}
-
-.bonding-name{
-    font-size: 18px;
-    font-weight: 500;
-    margin-left: 10px;
+    background: #111;
 }
 
 .spells {
@@ -256,26 +205,12 @@ td:has(.deb-Modifier-active){
     gap: 8px;
     margin-bottom: 6px;
     font-size: 16px;
-    border-radius: 10px;
-}
-
-.spell:has(.blue_filling:checked) {
-    background: rgba(180,140,60,0.5);
-    .spell-name{
-        color: var(--white);
-        background: rgba(180,140,60,0.5);
-        border-radius: 10px;
-        padding-left: 11px;
-    }
-    .blue_filling, .gold_filling {
-        accent-color: var(--gold);
-    }
-    
 }
 
 .spell-name {
     border: none;
     border-bottom: 1px dashed transparent;
+    background: transparent;
     font-family: Georgia, serif;
     font-size: 16px;
     width: 100%;
@@ -292,57 +227,36 @@ td:has(.deb-Modifier-active){
     height: 16px;
 }
 
-.gold_filling {
-    accent-color: var(--gold);
-}
-.blue_filling{
-    accent-color: var(--blue);
-}
-.red_filling{
-    accent-color: var(--red);
+.red_filling {
+    accent-color: red;
 }
 
 .addConsumable {
-    cursor: pointer;
-    color: var(--green);
-    font-weight: bold;
-    font-size: 32px;
-    line-height: 1;
-    border: none;
-    background: transparent;
-    padding: 0 4px;
+    cursor:pointer;
+    color:green;
+    font-weight:bold;
+    font-size:32px;
+    line-height:1;
+    border:none;
+    background:transparent;
+    padding:0 4px;  
 }
 
-.removeIcon {
-    cursor: pointer;
-    color: var(--red);
-    font-weight: bold;
-    font-size: 32px;
-    line-height: 1;
-    border: none;
-    background: transparent;
-    padding: 0 4px;
+.removeIcon{
+    cursor:pointer;
+    color:red;
+    font-weight:bold;
+    font-size:32px;
+    line-height:1;
+    border:none;
+    background:transparent;
+    padding:0 4px;
 }
 
 body {
     padding-bottom: 4rem;
 }
 
-@media print {
-    .pagina {
-        background: var(--white);
-        padding: 0;
-    }
-
-    .sheet {
-        border: none;
-    }
-
-    #saveBar,
-    .dw-overlay {
-        display: none !important;
-    }
-}
 
 /* === Barra e modais de código === */
 #saveBar {
@@ -354,18 +268,10 @@ body {
     gap: 8px;
 }
 
-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-nav button {
+#saveBar button {
     padding: 10px 18px;
     background: #222;
-    color: var(--white);
+    color: #fff;
     border: none;
     cursor: pointer;
     font-family: Georgia, serif;
@@ -374,12 +280,8 @@ nav button {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-nav button:hover {
+#saveBar button:hover {
     background: #444;
-}
-
-nav .save_buttons {
-    margin-left: auto;
 }
 
 .dw-overlay {
@@ -393,8 +295,8 @@ nav .save_buttons {
 }
 
 .dw-modal {
-    background: var(--white);
-    border: 2px solid var(--dark);
+    background: #fff;
+    border: 2px solid #000;
     padding: 28px;
     max-width: 520px;
     width: 92%;
@@ -417,7 +319,7 @@ nav .save_buttons {
     font-family: monospace;
     font-size: 12px;
     padding: 8px;
-    border: 1px solid var(--dark);
+    border: 1px solid #000;
     resize: vertical;
 }
 
@@ -431,7 +333,7 @@ nav .save_buttons {
 .dw-modal-actions button {
     padding: 8px 18px;
     background: #222;
-    color: var(--white);
+    color: #fff;
     border: none;
     cursor: pointer;
     font-family: Georgia, serif;
@@ -462,23 +364,30 @@ nav .save_buttons {
     color: #999;
 }
 
-/*Footer*/
 
-footer{
-    text-align:center;
-    margin-top: 24px;
-    font-size: 16px;
-    color: var(--white);
-    
+@media (max-width: 768px) {
+    .sheet {
+        grid-template-columns: 1fr;
+    }
+
+    .equipment-sheet {
+        grid-template-columns: 1fr;
+    }
 }
 
-footer p a{
-    text-decoration:none;
-    color: var(--white);
-    font-weight: 800;
-    
+@media print {
+    .pagina {
+    background: white;
+    padding: 0;
+    }
+
+    .sheet {
+    border: none;
+    }
+
+    #saveBar,
+    .dw-overlay {
+    display: none !important;
+    }
 }
-footer p a:hover{
-    color: var(--gold); 
-    
-}
+
