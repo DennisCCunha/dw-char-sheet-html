@@ -131,7 +131,11 @@
           <div class="stats">
             <div class="card">
               <label>PV</label>
-              <input type="text" id="charPV" value="0" placeholder="X+CON" />
+              <div class="pv-pair">
+                <input type="text" id="curPV" value="0" placeholder="X+CON" />
+                <span>/</span>
+                <input type="text" id="charPV" value="0" placeholder="X+CON" />                
+              </div>
             </div>
 
             <div class="card">
@@ -329,16 +333,15 @@
 
     <article class="pagina">
       <div id="4th-Page" class="sheet">
-        <aside>
-          <h2>Historia</h2>
-          <div id="charNotes" placeholder="Anotações do personagem"></div>
+        <aside class="charNotes-container">
+          <h2>Historia e Anotações</h2>
+          <div id="charNotes" placeholder="Anotações do personagem" class="charNotes"></div>
         </aside>
         <aside>
           <h2>Vinculos Completos</h2>
           <div id="finishedBondsContainer"></div>
         </aside>
       </div>
-
     </article>
 
     <footer class="rodape">
@@ -348,6 +351,5 @@
     </footer>
 
     <script type="module" src="./js/script.js"></script>
-    
   </body>
 </html>
