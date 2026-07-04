@@ -56,43 +56,45 @@
           <button id="btnLimpar">&#x1FF5D1; Limpar ficha</button>
         </div>
     </nav>
-    <!-- Modal: exibir código gerado -->
-    <div id="codeModal" class="dw-overlay" style="display:none">
-      <div class="dw-modal">
-        <h3>Código da ficha</h3>
-        <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
-        <textarea id="codeModalText" rows="6" readonly></textarea>
-        <div class="dw-modal-actions">
-          <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
-          <button id="btnFecharModal" class="secondary">Fechar</button>
+    <div id="modalsContainer">
+      <!-- Modal: exibir código gerado -->
+      <div id="codeModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Código da ficha</h3>
+          <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
+          <textarea id="codeModalText" rows="6" readonly></textarea>
+          <div class="dw-modal-actions">
+            <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
+            <button id="btnFecharModal" class="secondary">Fechar</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Modal: restaurar ficha por código -->
-    <div id="restoreModal" class="dw-overlay" style="display:none">
-      <div class="dw-modal">
-        <h3>Restaurar ficha</h3>
-        <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
-        <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
-        <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
-        <div class="dw-modal-actions">
-          <button id="btnConfirmarRestaurar">Restaurar</button>
-          <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
+      <!-- Modal: restaurar ficha por código -->
+      <div id="restoreModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Restaurar ficha</h3>
+          <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
+          <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
+          <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
+          <div class="dw-modal-actions">
+            <button id="btnConfirmarRestaurar">Restaurar</button>
+            <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Modal: confirmar limpeza da ficha -->
-    <div id="clearModal" class="dw-overlay" style="display:none">
-    <div class="dw-modal">
-      <h3>Limpar ficha</h3>
-      <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
-      <div class="dw-modal-actions">
-        <button id="btnConfirmarLimpeza">Limpar</button>
-        <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
+      <!-- Modal: confirmar limpeza da ficha -->
+      <div id="clearModal" class="dw-overlay" style="display:none">
+      <div class="dw-modal">
+        <h3>Limpar ficha</h3>
+        <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
+        <div class="dw-modal-actions">
+          <button id="btnConfirmarLimpeza">Limpar</button>
+          <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
+        </div>
       </div>
-    </div>
+      </div>
     </div>
 
     <article class="pagina">
@@ -108,7 +110,6 @@
                 <option value="Elfo">Elfo</option>
                 <option value="Humano">Humano</option>
                 <option value="Halfling">Halfling</option>
-                <option value="Orc">Orc</option>
                 <option value="Outro">Outro</option>
               </select>
 
@@ -120,7 +121,7 @@
                 <option value="Druida">Druida</option>
                 <option value="Guerreiro">Guerreiro</option>
                 <option value="Imolador">Imolador</option>
-                <option value="Ladino">Ladino</option>
+                <option value="Ladrão">Ladrão</option>
                 <option value="Mago">Mago</option>
                 <option value="Paladino">Paladino</option>
                 <option value="Ranger">Ranger</option>

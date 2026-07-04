@@ -409,7 +409,7 @@
                 { "classe": "Ranger", "id": 172, "nome": "Mestre Multiclasse", "descricao": "" }
             ]
         },
-        { "keyBytes": [19, 20], "nome": "Ladão",
+        { "keyBytes": [19, 20], "nome": "Ladrão",
             "racas": ["Humano", "Halfling"],
             "hp_base": 6,
             "dado_dano": "d8",

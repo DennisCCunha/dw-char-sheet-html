@@ -12,7 +12,7 @@ export default class SaveAndLoad {
         return state;
     }
 
-    static applyState(state) {
+    static applyState([allInputs, circles], state) {
         allInputs.forEach((input) => {
             if (state[input.id] !== undefined) {
                 if (input.type === 'checkbox') input.checked = state[input.id] === '1';
@@ -50,17 +50,17 @@ export default class SaveAndLoad {
         return JSON.parse(new TextDecoder().decode(xored));
     }
 
-    static autoSave() {
+    static autoSave([allInputs, circles]) {
         try {
-            localStorage.setItem('dw_sheet_code', SaveAndLoad.encodeState(SaveAndLoad.collectState()));
+            localStorage.setItem('dw_sheet_code', SaveAndLoad.encodeState(SaveAndLoad.collectState([allInputs, circles])));
         } catch (e) { console.error('Falha ao salvar ficha:', e); }
     }
 
-    static autoLoad() {
+    static autoLoad([allInputs, circles]) {
         const saved = localStorage.getItem('dw_sheet_code');
         if (!saved) return;
         try {
-            SaveAndLoad.applyState(SaveAndLoad.decodeState(saved));
+            SaveAndLoad.applyState([allInputs, circles], SaveAndLoad.decodeState(saved));
         } catch (e) {
             console.warn('Falha ao restaurar ficha:', e);
         }

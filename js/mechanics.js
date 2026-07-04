@@ -1,7 +1,5 @@
 import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 
-export class Equipment {
-    
 
 export class Bond {
     static create(nome ="", descricao="", finalizado = false) {
@@ -68,48 +66,6 @@ export class Equipment {
         eqp += "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button>" +
         "</div>";
         return eqp;
-    }
-}
-
-export class Consumable {
-    static create(id = 0, nome = "", descricao = "", usos = 0, peso = 0, tags = [], notes = "") {
-        return {
-            nome: nome,
-            descricao: descricao,
-            peso: peso,
-            usos: usos,
-            tags: tags
-        };
-    }
-    static consume(consumable) {
-        if (consumable.usos > 0) {
-            consumable.usos--;
-        }
-    }
-    static render(consumable) {
-
-    }
-}
-export class Bond {
-    static create(nome ="", descricao="", finalizado = false) {
-        return {
-            nome: nome,
-            descricao: descricao,
-            finalizado: finalizado
-        };
-    }
-    static end(bond) {
-        bond.finalizado = true;
-    }
-    static render(bond) {
-        return `<div class="bond"> <input type="checkbox" title="Finalizado" class="gold_filling"/> <label class="bond-name" value="${bond.nome}"/> </div>`;
-    }
-}
-export class Spell {
-    static create(nome ="", descricao="", tags = []) {
-        return {
-            nome: nome,
-        }
     }
 }
 export class Movement {

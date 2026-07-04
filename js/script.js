@@ -9,7 +9,7 @@ class CharacterSheet {
         // Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
         this.circles = Array.from(document.querySelectorAll('.circle'));
         this.allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
-        this.quill = new Quill(document.getElementById('editor'));
+        this.quill = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
 
         this.initialAttributes = {
             stat: [16, 15, 13, 12, 9, 8],
@@ -63,7 +63,7 @@ class CharacterSheet {
             const code = document.getElementById('restoreCodeInput').value.trim();
             try {
                 SaveAndLoad.applyState(SaveAndLoad.decodeState(code));
-                SaveAndLoad.autoSave();
+                this.save();
                 this.classSelector();
                 this.updateModifiers();
                 this.updateStrikethrough();
@@ -122,13 +122,13 @@ class CharacterSheet {
                 } else {
                     for (let i = index; i < this.circles.length; i++) this.circles[i].classList.remove('active');
                 }
-                SaveAndLoad.autoSave();
+                this.save();
             });
         });
 
         this.allInputs.forEach((input) => {
-            input.addEventListener('input', SaveAndLoad.autoSave);
-            input.addEventListener('change', SaveAndLoad.autoSave);
+            input.addEventListener('input', () => this.save());
+            input.addEventListener('change', () => this.save());
         });
 
         // Recalcula modificadores e risca atributos iniciais usados ao editar valor
@@ -138,15 +138,22 @@ class CharacterSheet {
                 this.updateModifiers();
                 this.updateStrikethrough();
                 this.applyClassEffects();
-                SaveAndLoad.autoSave();
+                this.save();
             });
         });
 
-        SaveAndLoad.autoLoad();
+        this.load();
         this.classSelector();
         this.updateModifiers();
         this.updateStrikethrough();
         this.renderClassMoves();
+    }
+
+    save(){
+        SaveAndLoad.autoSave([this.allInputs, this.circles]);
+    }
+    load(){
+        SaveAndLoad.autoLoad([this.allInputs, this.circles]);
     }
 
     // Tabela de modificadores Dungeon World
@@ -398,7 +405,7 @@ class CharacterSheet {
 
         raceInput.addEventListener('change', () => {
             updateClassOptions();
-            SaveAndLoad.autoSave();
+            this.save()
             this.renderClassMoves();
         });
 
@@ -407,7 +414,7 @@ class CharacterSheet {
             if (opt && opt.disabled) classSelect.value = '';
             updateRaceOptions();
             this.applyClassEffects();
-            SaveAndLoad.autoSave();
+            this.save();
             this.renderClassMoves();
         });
 
