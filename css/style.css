@@ -14,11 +14,17 @@
 }
 
 body{
-background: radial-gradient(circle at center,
-    var(--gold) 0%,
-    var(--danger) 55%,
-    var(--dark) 100%
-);}
+    background: radial-gradient(circle at center,
+        var(--gold) 0%,
+        var(--danger) 55%,
+        var(--dark) 100%
+    );
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    flex-basis:100%;
+}
 
 .pagina {
     font-family: Georgia, serif;

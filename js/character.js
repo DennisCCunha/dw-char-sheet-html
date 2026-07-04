@@ -1,27 +1,27 @@
 export class Character {
     constructor() {
-        this.name = "";
-        this.race = "";
-        this.class = "";
+        this.nome = "";
+        this.raca = "";
+        this.classe = "";
 
         this.xp = 0;
-        this.level = 1;
-        this.max_hp = 0;
-        this.load = 0;
-        this.armor = 0;
+        this.nivel = 1;
+        this.pv_max = 0;
+        this.carga = 0;
+        this.armadura = 0;
 
-        this.stats = {
-            str: 0,
-            dex: 0,
-            con: 0,
-            int: 0,
-            wis: 0,
-            cha: 0
+        this.atributos = {
+            forca: 0,
+            destreza: 0,
+            constituicao: 0,
+            inteligencia: 0,
+            sabedoria: 0,
+            carisma: 0
         };
 
-        this.movements = [];
-        this.equipment = [];
-        this.consumables = [];
+        this.movimentos = [];
+        this.equipamentos = [];
+        this.consumiveis = [];
         this.spells = [];
         this.bonds = [];
         this.finishedBonds = [];
