@@ -5,7 +5,8 @@
         "tag": {"id": 0, "nome": "", "descricao": ""},
         "spell":{"id":0, "classe":[], "nome": "", "nivel": 0, "school": "", "continuo": false, "descricao": ""},
         "class":{"nome":"", "racas":[], "hp_base":0, "dado_dano":"", "carga_base":0, "alinhamento":[], "movimentos_raciais":[], "movimentos_iniciais":[], "movimentos_avancados_2_5":[], "movimentos_avancados_6_10":[], "spell_list":[]},
-        "character": {"nome":"", "classe":"", "raca":"", "alinhamento":"", "pv":0, "pv_max":0, "xp":0, "nivel":1, "carga":0, "mochila":[], "atributos":[0, 0, 0, 0, 0, 0], "movimentos":[], "vinculos":[], "spells":[]}
+        "character": {"nome":"", "classe":"", "raca":"", "alinhamento":"", "pv":0, "pv_max":0, "xp":0, "nivel":1, "carga":0, "mochila":[], "atributos":[0, 0, 0, 0, 0, 0], "movimentos":[], "vinculos":[], "spells":[]},
+        "bond":{"nome":"", "customizado":false, "template":"", "alvo":"", "finalizado":false}
     },
 
     "classses": [
@@ -995,5 +996,54 @@
       {"id":0, "nome":"Erva Sangrenta","descricao":"Até ser curado, sempre que o alvo rolar para causar dano, ele rola um d4 adicional e subtrai o resultado do dano provocado.","tags":["perigoso","aplicado","15 moedas","peso 0"]},
       {"id":0, "nome":"Raiz Dourada","descricao":"O alvo trata a próxima criatura que ver como um aliado confiável, até que se prove o contrário.","tags":["perigoso","aplicado","20 moedas","peso 0"]},
       {"id":0, "nome":"Lágrimas da Serpente","descricao":"Qualquer pessoa que role para causar dano no alvo deve rolar duas vezes o dado e utilizar o melhor resultado.","tags":["perigoso","toque","10 moedas","peso 0"]}
-  ]
+    ],
+
+    "lista_bonds":[
+        {"classe":"Barbáro","template": "________________ é fraco e tolo, mas me diverte."},
+        {"classe":"Barbáro","template": "Os modos de ________________ são estranhos e confusos."},
+        {"classe":"Barbáro","template": "________________ está sempre entrando em apuros. eu preciso protegê-lo de si mesmo."},
+        {"classe":"Barbáro","template": "________________ compartilha minha fome por glória; a terra tremerá diante de nós!"},
+
+        {"classe":"Bárdo","template": "Esta não é minha primeira aventura com ________________."},
+        {"classe":"Bárdo","template": "Já cantei histórias sobre ________________ bem antes de nos conhecermos pessoalmente."},
+        {"classe":"Bárdo","template": "________________ é normalmente o alvo de minhas piadas."},
+        {"classe":"Bárdo","template": "Estou escrevendo uma balada a respeito das aventuras de ________________."},
+        {"classe":"Bárdo","template": "________________ me confidenciou um segredo."},
+        {"classe":"Bárdo","template": "________________ não confia em mim, e com boas razões."},
+
+        {"classe":"Clérigo","template": "________________ insultou minha divindade; eu não confio nele."},
+        {"classe":"Clérigo","template": "________________ é uma pessoa boa e fiel; eu confio nele implicitamente."},
+        {"classe":"Clérigo","template": "________________ está em constantemente em perigo, mas o(a) manterei a salvo."},
+        {"classe":"Clérigo","template": "Estou trabalhando para converter ________________ à minha fé."},
+
+        {"classe":"Druida","template":"________________ tem cheiro de caça, e não de caçador."},
+        {"classe":"Druida","template":"Os espíritos me alertaram acerca de um grande perigo que ronda ________________."},
+        {"classe":"Druida","template":"Eu mostrei a ________________ um ritual secreto da Terra."},
+        {"classe":"Druida","template":"________________ provou meu sangue, e eu o seu. Estamos unidos por isso."},
+
+        {"classe":"Guerreiro","template":"________________ me deve sua vida, quer admita isso ou não."},
+        {"classe":"Guerreiro","template":"Eu jurei proteger ________________."},
+        {"classe":"Guerreiro","template":"Eu me preocupo com a capacidade de ________________ de sobreviver dentro das masmorras."},
+        {"classe":"Guerreiro","template":"________________ é muito mole, mas o tornarei resistente como eu."},
+
+        {"classe":"Ladrão","template":"Eu roubei algo de ________________."},
+        {"classe":"Ladrão","template":"________________  estará comigo se algo der errado."},
+        {"classe":"Ladrão","template":"________________ conhece detalhes incriminadores a meu respeito."},
+        {"classe":"Ladrão","template":"________________ e eu estamos fazendo uma falcatrua."},
+
+        {"classe":"Mago","template":"________________ terá um importante papel a desempenhar em eventos vindouros. Assim dizem minhas previsões!"},
+        {"classe":"Mago","template":"________________ está escondendo de mim um importante segredo."},
+        {"classe":"Mago","template":"________________ é totalmente ignorante sobre o funcionamento deste mundo. Eu lhe ensinarei tudo o que puder."},
+
+        {"classe":"Paladino","template":"O comportamento inadequado de ________________ coloca em risco sua própria alma!"},
+        {"classe":"Paladino","template":"________________ já batalhou ao meu lado e tem minha total confiança."},
+        {"classe":"Paladino","template":"Eu respeito as crenças de ________________, mas espero que ele(a) enxergue a verdade um dia."},
+        {"classe":"Paladino","template":"________________ é uma alma corajosa, uma pessoa com a qual tenho muito o que aprender."},
+
+        {"classe":"Ranger","template":"Eu já havia guiado ________________ anteriormente, e ele(a) ainda me deve por isso."},
+        {"classe":"Ranger","template":"________________ nutre amizade pela natureza, e por isso, também lhe ofereci a minha."},
+        {"classe":"Ranger","template":"________________ não respeita a natureza, logo, também não tem meu respeito."},
+        {"classe":"Ranger","template":"________________ não entende a vida selvagem, mas eu lhe ensinarei."}
+    ]
+
 }
