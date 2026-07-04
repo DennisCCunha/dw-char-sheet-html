@@ -22,6 +22,29 @@ export class Character {
         this.movements = [];
         this.equipment = [];
         this.consumables = [];
+        this.nome = "";
+        this.raca = "";
+        this.classe = "";
+
+        this.xp = 0;
+        this.nivel = 1;
+        this.pv_max = 0;
+        this.carga = 0;
+        this.armadura = 0;
+
+        this.atributos = {
+            forca: 0,
+            destreza: 0,
+            constituicao: 0,
+            inteligencia: 0,
+            sabedoria: 0,
+            carisma: 0
+        };
+
+        this.movimentos = [];
+        this.equipamentos = [];
+        this.consumiveis = [];
+>>>>>>> estilo
         this.spells = [];
         this.bonds = [];
         this.finishedBonds = [];

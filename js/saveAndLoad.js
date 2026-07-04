@@ -1,19 +1,31 @@
-export class SaveAndLoad {
-
-    static applyState(state) {
-    allInputs.forEach((input) => {
-        if (state[input.id] !== undefined) {
-            if (input.type === 'checkbox') input.checked = state[input.id] === '1';
-            else input.value = state[input.id];
-        }
-    });
-    circles.forEach((circle) => {
-        if (state[circle.id] === '1') circle.classList.add('active');
-        else circle.classList.remove('active');
-    });
+export default class SaveAndLoad {
+    
+    static collectState([allInputs, circles]) {
+        const state = {};
+        allInputs.forEach((input) => {
+            if (input.type === 'checkbox') state[input.id] = input.checked ? '1' : '0';
+            else state[input.id] = input.value;
+        });
+        circles.forEach((circle) => {
+            state[circle.id] = circle.classList.contains('active') ? '1' : '0';
+        });
+        return state;
     }
 
-// Cifra XOR com TextEncoder (suporte a UTF-8 e caracteres acentuados)
+    static applyState(state) {
+        allInputs.forEach((input) => {
+            if (state[input.id] !== undefined) {
+                if (input.type === 'checkbox') input.checked = state[input.id] === '1';
+                else input.value = state[input.id];
+            }
+        });
+        circles.forEach((circle) => {
+            if (state[circle.id] === '1') circle.classList.add('active');
+            else circle.classList.remove('active');
+        });
+    }
+
+
     static encodeState(state) {
         const key = 'DungeonWorld2024';
         const bytes = new TextEncoder().encode(JSON.stringify(state));
@@ -40,7 +52,7 @@ export class SaveAndLoad {
 
     static autoSave() {
         try {
-            localStorage.setItem('dw_sheet_code', SaveAndLoad.encodeState(collectState()));
+            localStorage.setItem('dw_sheet_code', SaveAndLoad.encodeState(SaveAndLoad.collectState()));
         } catch (e) { console.error('Falha ao salvar ficha:', e); }
     }
 
@@ -49,19 +61,20 @@ export class SaveAndLoad {
         if (!saved) return;
         try {
             SaveAndLoad.applyState(SaveAndLoad.decodeState(saved));
-        } catch (e) { console.warn('Falha ao restaurar ficha:', e); }
+        } catch (e) {
+            console.warn('Falha ao restaurar ficha:', e);
+        }
     }
 
-    static listCharacters() {
-        const characters = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith('dw_sheet_code_')) {
-                const name = key.substring('dw_sheet_code_'.length);
-                characters.push(name);
-            }
-        }
-        return characters;
+    static clearState() {
+        try {
+            localStorage.removeItem('dw_sheet_code');
+        } catch (e) { /* silent */ }
+
+        // Limpar sessionStorage
+        try {
+            sessionStorage.removeItem('dw_sheet_code');
+        } catch (e) { /* silent */ }
     }
 
 }
