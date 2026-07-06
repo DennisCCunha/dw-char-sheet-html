@@ -2,6 +2,7 @@
 
 
 :root {
+    --font: 'Cinzel', serif;
     --border-color: #000;
     --muted: #777;
     --danger: rgba(90,0,10,0.9);
@@ -11,6 +12,10 @@
     --green: rgb(39, 84, 45);
     --red: rgb(143, 0, 17);
     --white: #fff;
+}
+
+html{
+    font-family: var(--font);
 }
 
 body{
@@ -27,7 +32,7 @@ body{
 }
 
 .pagina {
-    font-family: Georgia, serif;
+    font-family: var(--font);
     margin: 25px;
     color: #111;
 }
@@ -37,8 +42,13 @@ body{
     margin: auto;
     background: var(--white);
     border: 2px solid var(--border-color);
-    border: 2px solid var(--border-color);
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sheet-container{
     display: flex;
     flex-direction: row;
     gap: 24px;
@@ -59,7 +69,7 @@ h1,
 h2,
 h3 {
     margin: 0;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font);
     font-weight: 700;
 }
 
@@ -80,7 +90,7 @@ h3 {
     font-size: 40px;
     border: none;
     outline: none;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font);
     font-weight: 800;
 }
 
@@ -101,7 +111,7 @@ h3 {
     font-size: 24px;
     border: none;
     outline: none;
-    font-family: Georgia, serif;
+    font-family: var(--font);
     font-weight: bold;
 }
 
@@ -134,7 +144,7 @@ h3 {
 
 .card label {
     display: block;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font);
     font-weight: bold;
     margin-bottom: 8px;
 }
@@ -178,13 +188,13 @@ td {
 }
 
 th {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font);
     font-weight: bold;
     background: rgba(219, 219, 219, 0.162);
 }
 
 td input {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font);
     width: 100%;
     border: none;
     text-align: center;
@@ -291,7 +301,7 @@ td:has(.deb-Modifier-active){
 .spell-name {
     border: none;
     border-bottom: 1px dashed transparent;
-    font-family: Georgia, serif;
+    font-family: var(--font);
     font-size: 16px;
     width: 100%;
     outline: none;
@@ -315,6 +325,9 @@ td:has(.deb-Modifier-active){
 }
 .red_filling{
     accent-color: var(--red);
+}
+.grey_filling{
+    accent-color: var(--muted);
 }
 
 .addConsumable {
@@ -359,23 +372,6 @@ body {
     overflow-y: auto;
 }
 
-
-@media print {
-    .pagina {
-        background: var(--white);
-        padding: 0;
-    }
-
-    .sheet {
-        border: none;
-    }
-
-    #saveBar,
-    .dw-overlay {
-        display: none !important;
-    }
-}
-
 /* === Barra e modais de código === */
 #saveBar {
     position: fixed;
@@ -400,7 +396,7 @@ nav button {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: Georgia, serif;
+    font-family: var(--font);
     font-size: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -430,7 +426,7 @@ nav .save_buttons {
     padding: 28px;
     max-width: 520px;
     width: 92%;
-    font-family: Georgia, serif;
+    font-family: var(--font);
 }
 
 .dw-modal h3 {
@@ -446,7 +442,7 @@ nav .save_buttons {
 .dw-modal textarea {
     width: 100%;
     box-sizing: border-box;
-    font-family: monospace;
+    font-family: var(--font);
     font-size: 12px;
     padding: 8px;
     border: 1px solid var(--dark);
@@ -466,7 +462,7 @@ nav .save_buttons {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: Georgia, serif;
+    font-family: var(--font);
     font-size: 14px;
 }
 
@@ -514,3 +510,137 @@ footer p a:hover{
     color: var(--gold); 
     
 }
+
+/* Change the font of the actual text inside the editor */
+.ql-container.ql-snow .ql-editor {
+  font-family: var(--font);
+  font-size: 16px;
+}
+
+/* Ensure the toolbar dropdown reflects your new default label */
+.ql-snow .ql-picker.ql-font .ql-picker-label::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item::before {
+  font-family: var(--font);
+}
+
+
+.movement-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.movement-list li {
+    margin-bottom: 6px;
+    font-family: var(--font);
+    font-size: 16px;
+    border-bottom: 1px dotted var(--border-color);
+    padding-bottom: 4px;
+}
+
+
+.movement-list li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.btnMovementTab{
+    padding: 6px 12px;
+    background: #222;
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 14px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.btnMovementTab:active{
+    background: #444;
+}
+
+
+.movement-card{
+    display: flex;
+    flex-direction: column;
+    /* margin: 5px 5px 5px 5px; */
+    padding: 5px;
+}
+.movement-card-header{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    background: rgba(121, 121, 121, 0.301);
+}
+.movement-card-icon{
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+.movement-card-title{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 12px;
+}
+.movement-card-roll{
+    align-self: flex-end;
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+.movement-card-roll:has(.roll-icon){
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 2.5rem;
+}
+.movement-card-roll-detail{
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.movement-card-description{
+
+}
+.movement-card-footer{
+
+}
+.movement-panel{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+}
+.movement-panel-header{
+
+}
+.movement-panel-description{
+    background: rgba(216, 216, 216, 0.301);
+    padding: 6px;
+}
+
+
+@media print {
+    .pagina {
+        background: var(--white);
+        padding: 0;
+    }
+
+    .sheet {
+        border: none;
+    }
+
+    #saveBar,
+    .dw-overlay {
+        display: none !important;
+    }
+}
+

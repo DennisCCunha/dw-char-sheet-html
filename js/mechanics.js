@@ -22,7 +22,11 @@ export class Bond {
     static render(bond) {
         return `<div class="bond"> <input type="checkbox" title="Finalizado" class="gold_filling"/> <label class="bond-name" value="${bond.nome}"/> </div>`;
     }
+    static bondListByClass(classe) {
+        return dungeonworld.lista_bonds.filter(bond => bond.classe === classe);
+    }
 }
+
 export class Consumable {
     static create(id = 0, nome = "", descricao = "", usos = 0, peso = 0, tags = [], notes = "") {
         return {
@@ -48,6 +52,7 @@ export class Consumable {
         "</div>";
     }
 }
+
 export class Equipment {
 
     static create(id = 0, nome = "", descricao = "", usos = 0, peso = 0, tags = [], notes = "") {
@@ -75,6 +80,7 @@ export class Equipment {
         return eqp;
     }
 }
+
 export class Movement {
     static create(id = 0, nome ="", descricao="", tags = []) {
         return {
@@ -84,63 +90,71 @@ export class Movement {
             tags: tags
         };
     }
-    static render(movement, type=1) {
-        if (type) return this.#renderPanel(movement);
-        return this.#renderCard(movement);
+
+    static getMovementListByClass(classe) {
+        return dungeonworld.lista_movimentos.filter(movement => movement.classe === classe);
     }
-    static #renderCard(movement){
-        return `<div class="card">
-            <header class="card-header">
-                <div class="icon">
-                    <img src="icone.png" alt="Ícone">
-                </div>
 
-                <h2>${movement.nome}</h2>
+    static renderCard(movement) {
+        let icon = "basico";
+        if (movement.tipo.includes("Especial")) {
+            icon = "especial";
+        }
+        else if (movement.tipo.includes("Avançado")) {
+            icon = "avançado";
+        }
 
-                <div class="attribute">
-                    🎲 +FOR
-                </div>
-            </header>
 
-            <section class="card-description">
-                <blockquote>
-                    Quando atacar um adversário em combate corpo a corpo...
-                </blockquote>
-            </section>
+        return `<div class="movement-card">
+                    <header class="movement-card-header">
+                        <div class="movement-card-title">
+                            <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
+                            <h2>${movement.nome}</h2>
+                        </div>
+                        <div class="movement-card-roll">
+                            ${movement.rolagem ? `<div class="movement-card-roll-detail"> 
+                                <span class="movement-card-icon">&#9860 &#9861</span>
+                                <span>${movement.rolagem}</span>
+                                </div>` : ''}
+                        </div>
+                    </header>
 
-            <section class="card-results">
+                    <section class="movement-card-description">
+                        <blockquote>
+                            <p>${movement.descricao}</p>
+                        </blockquote>
+                    </section>
 
-                <div class="result">
-                    <span class="roll">10+</span>
+                    <section class="movement-card-results">
+                    </section>
 
-                    <div class="text">
-                        Cause dano ao adversário e evite seu ataque.
-                        Opcionalmente, você pode causar +1d6 de dano,
-                        expondo-se a contra ataque.
+                    <footer class="movement-card-footer">
+                        <small>MOVIMENTO</small>
+                        <strong>${icon.toUpperCase()}</strong>
+                    </footer>
+                </div>`;
+    }
+    static renderPanel(movement) {
+        return `<div class="movement-panel">
+                    <h3>${movement.nome}</h3>
+                    <div>
+                        ${movement.tipo ? `<span class="movement-type">Tipo: ${movement.tipo}</span>` : ''}
+                        ${movement.rolagem ? `<span class="movement-roll">Rolagem: ${movement.rolagem}</span>` : ''}
                     </div>
-                </div>
-
-                <div class="result">
-                    <span class="roll">7-9</span>
-
-                    <div class="text">
-                        Cause dano ao adversário, e ele fará um ataque contra você.
+                    <div class="movement-panel-description">
+                        <p class="">${movement.descricao}</p>
                     </div>
-                </div>
-
-            </section>
-
-            <footer class="card-footer">
-                <small>MOVIMENTO</small>
-                <strong>BÁSICO</strong>
-            </footer>
-        </div>`;
-    }
-    static #renderPanel(movement){
-
+                </div>`;
     }
 
+    static render(movement, format) {
+        if (format === "card") {
+            return Movement.renderCard(movement);
+        }
+        return Movement.renderPanel(movement);
+    }
 }
+
 export class Spell {
     static create(id = 90000, classe = [], nome ="", nivel = 0, school = "", continuo = false, descricao="", tags = []) {
         return {
@@ -156,6 +170,32 @@ export class Spell {
     }
     static render(spell) {
         return `<div class="spell"> <input type="checkbox" title="Preparada" class="gold_filling"/> <input class="spell-name" value="${spell.nome}"/> <label>${spell.nivel}</label></div>`;
+    }
+
+    static getSpellListByClassAndLevel(classe, nivel=0) {
+        const spells = dungeonworld.spells.filter(spell => spell.classe.includes(classe));
+        if (nivel > 0) {
+            return spells.filter(spell => spell.nivel === nivel);
+        }
+        else {
+            return spells;
+        }
+    }
+
+    static renderSpellList(container, spells) {
+        if (!container || !spells) {
+            console.error("Container or spells list is undefined.");
+            return "Container or spells list is undefined.";
+        }
+        const spellListContainer = document.getElementById(container);
+        spellListContainer.innerHTML = '';
+        spells.forEach(spell => {
+            const spellElement = document.createElement('div');
+            spellElement.classList.add('spell');
+            spellElement.innerHTML = Spell.render(spell);
+            spellListContainer.appendChild(spellElement);
+        });
+
     }
 }
 

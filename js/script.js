@@ -1,6 +1,7 @@
 import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 import SaveAndLoad from './saveAndLoad.js';
 import Mechanics from './mechanics.js';
+import Character from './character.js';
 import Utils from './utils.js';
 
 class CharacterSheet {
@@ -9,7 +10,10 @@ class CharacterSheet {
         // Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
         this.circles = Array.from(document.querySelectorAll('.circle'));
         this.allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
+        this.charRace = document.getElementById('charRace');
+        this.charClass = document.getElementById('charClass');
         this.quill = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
+        this.character = new Character();
 
         this.initialAttributes = {
             stat: [16, 15, 13, 12, 9, 8],
@@ -25,11 +29,29 @@ class CharacterSheet {
         ]
         this.classDetails = dungeonworld.classses || [];
 
+        this.movementListFormat = 'card'; // ou 'list'
+
         this.start();
         this.registryEvents();
+
     }
 
+
     registryEvents() {
+        document.getElementById('valFor').addEventListener('input', (e) => { this.character.atributos.forca = e.target.value; this.updateModifiers(); });
+        document.getElementById('valDes').addEventListener('input', (e) => { this.character.atributos.destreza = e.target.value; this.updateModifiers(); });
+        document.getElementById('valCon').addEventListener('input', (e) => { this.character.atributos.constituicao = e.target.value; this.updateModifiers(); });
+        document.getElementById('valInt').addEventListener('input', (e) => { this.character.atributos.inteligencia = e.target.value; this.updateModifiers(); });
+        document.getElementById('valSab').addEventListener('input', (e) => { this.character.atributos.sabedoria = e.target.value; this.updateModifiers(); });
+        document.getElementById('valCar').addEventListener('input', (e) => { this.character.atributos.carisma = e.target.value; this.updateModifiers(); });
+
+        document.getElementById('debFor').addEventListener('change', (e) => { this.character.debilidade.forca = e.target.checked ? -1 : 0; this.updateModifiers(); });
+        document.getElementById('debDes').addEventListener('change', (e) => { this.character.debilidade.destreza = e.target.checked ? -1 : 0; this.updateModifiers(); });
+        document.getElementById('debCon').addEventListener('change', (e) => { this.character.debilidade.constituicao = e.target.checked ? -1 : 0; this.updateModifiers(); });
+        document.getElementById('debInt').addEventListener('change', (e) => { this.character.debilidade.inteligencia = e.target.checked ? -1 : 0; this.updateModifiers(); });
+        document.getElementById('debSab').addEventListener('change', (e) => { this.character.debilidade.sabedoria = e.target.checked ? -1 : 0; this.updateModifiers(); });
+        document.getElementById('debCar').addEventListener('change', (e) => { this.character.debilidade.carisma = e.target.checked ? -1 : 0; this.updateModifiers(); });
+
         // === Eventos dos botões de código ===
         document.getElementById('btnGerarCodigo').addEventListener('click', () => {
             document.getElementById('codeModalText').value = SaveAndLoad.encodeState(SaveAndLoad.collectState([this.allInputs, this.circles]));
@@ -69,6 +91,7 @@ class CharacterSheet {
                 this.updateModifiers();
                 this.updateStrikethrough();
                 this.renderClassMoves();
+                this.updateAlignmentOptions();
                 document.getElementById('restoreModal').style.display = 'none';
             } catch (e) {
                 console.error('Erro ao restaurar código:', e);
@@ -93,6 +116,38 @@ class CharacterSheet {
                 this.clearInputs();
                 SaveAndLoad.clearState();
             }
+        });
+
+        this.charRace.addEventListener('change', () => {
+            this.character.raca = this.charRace.value;
+            this.updateClassOptions();
+            this.save()
+            this.renderClassMoves();
+        });
+
+        this.charClass.addEventListener('change', () => {
+            this.character.classe = this.charClass.value;
+            const opt = this.charClass.selectedOptions[0];
+            if (opt && opt.disabled) this.charClass.value = '';
+            this.updateRaceOptions();
+            this.applyClassEffects();
+            this.save();
+            this.renderClassMoves();
+            this.updateAlignmentOptions();
+        });
+
+
+        this.btnMoveCardView = document.getElementById('btnMoveCardView').addEventListener('click', () => {
+            this.movementListFormat = 'card';
+            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.add('active');
+            this.btnMoveListView = document.getElementById('btnMoveListView').classList.remove('active');
+            this.renderClassMoves();
+        });
+        this.btnMoveListView = document.getElementById('btnMoveListView').addEventListener('click', () => {
+            this.movementListFormat = 'list';
+            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.remove('active');
+            this.btnMoveListView = document.getElementById('btnMoveListView').classList.add('active');
+            this.renderClassMoves();
         });
 
         // Fechar modais clicando no fundo escuro
@@ -140,6 +195,7 @@ class CharacterSheet {
                 this.updateModifiers();
                 this.updateStrikethrough();
                 this.applyClassEffects();
+                this.updateAlignmentOptions();
                 this.save();
             });
         });
@@ -148,29 +204,19 @@ class CharacterSheet {
         this.classSelector();
         this.updateModifiers();
         this.updateStrikethrough();
+        this.updateAlignmentOptions();
         this.renderClassMoves();
     }
 
     save(){
         SaveAndLoad.autoSave([this.allInputs, this.circles]);
     }
+
     load(){
         SaveAndLoad.autoLoad([this.allInputs, this.circles]);
     }
 
     // Tabela de modificadores Dungeon World
-    computeModifier(val) {
-        const v = parseInt(val, 10);
-        if (!Number.isFinite(v)) return '';
-        if (v <= 3) return '-3';
-        if (v <= 5) return '-2';
-        if (v <= 8) return '-1';
-        if (v <= 11) return '+0';
-        if (v <= 15) return '+1';
-        if (v <= 17) return '+2';
-        return '+3';
-    }
-
     clearInputs() {
         // Limpar todos os inputs
         this.allInputs.forEach((input) => {
@@ -188,58 +234,32 @@ class CharacterSheet {
     renderClassMoves() {
         const container = document.getElementById('classMoves');
         if (!container) return;
-        const classSelect = document.getElementById('charClass');
-        const raceSelect = document.getElementById('charRace');
-        const className = classSelect ? classSelect.value : '';
-        const race = raceSelect ? raceSelect.value : '';
+        const className = this.character.classe;
+        const race = this.character.raca;
 
         let html = '';
-        if (!className) {
-            html = '<div style="padding:12px"><em>Selecione uma classe para ver os movimentos.</em></div>';
+        if (!this.character.classe) {
+            html = '<div class="movement-list"><em>Selecione uma classe para ver os movimentos.</em></div>';
             container.innerHTML = html;
             return;
         }
 
-        const cls = this.classDetails.find((cd) => Utils.canonical(cd.nome) === Utils.canonical(className));
-        if (!cls) {
-            container.innerHTML = '<div style="padding:12px"><em>Classe não encontrada em classDetails.</em></div>';
-            return;
-        }
+        const movementList = Mechanics.Movement.getMovementListByClass(this.character.classe);
+        console.log(movementList);
+        let movementElements = '';
+        movementList.forEach(movement => {
+            movementElements += Mechanics.Movement.render(movement, this.movementListFormat);
+        });
+        container.innerHTML = movementElements;
+    }
 
-        // Cabeçalho com info básica
-        html += `<div style="padding:12px"><h2>${cls.nome}</h2>`;
-        html += `<p><strong>HP base:</strong> ${cls.hp_base ?? '-'} &nbsp; <strong>Dado de dano:</strong> ${cls.dado_dano ?? '-'} &nbsp; <strong>Carga base:</strong> ${cls.carga_base ?? '-'}</p>`;
 
-        function renderList(title, arr) {
-            if (!arr || !arr.length) return '';
-            let s = `<h3>${title}</h3><ul>`;
-            arr.forEach((it) => { s += `<li>${it?.nome ?? it}</li>`; });
-            s += '</ul>';
-            return s;
-        }
-
-        html += renderList('Movimentos iniciais', cls.movimentos_iniciais || []);
-
-        // movimentos raciais específicos para a raça selecionada
-        if (cls.movimentos_raciais && race) {
-            const keys = Object.keys(cls.movimentos_raciais || {});
-            const found = keys.find((k) => Utils.canonical(k) === Utils.canonical(race));
-            const mr = found ? cls.movimentos_raciais[found] : null;
-            if (mr && mr.length) html += renderList(`Movimentos raciais: ${race}`, mr);
-        }
-
-        html += renderList('Escolhas iniciais', cls.escolha_inicial || []);
-        html += renderList('Movimentos (níveis 2-5)', cls.movimentos_avancados_2_5 || []);
-        html += renderList('Movimentos (níveis 6-10)', cls.movimentos_avancados_6_10 || []);
-        if (cls.movimentos_substituidos) {
-            let s = '<h3>Movimentos substituídos</h3><ul>';
-            Object.entries(cls.movimentos_substituidos).forEach(([k, v]) => { s += `<li>${k} → ${v}</li>`; });
-            s += '</ul>';
-            html += s;
-        }
-
-        html += '</div>';
-        container.innerHTML = html;
+    renderList(title, arr) {
+        if (!arr || !arr.length) return '';
+        let s = `<h3>${title}</h3><ul>`;
+        arr.forEach((it) => { s += `<li>${it?.nome ?? it}</li>`; });
+        s += '</ul>';
+        return s;
     }
 
     // === Funções de classe/atributo (escopo de módulo) ===
@@ -327,11 +347,18 @@ class CharacterSheet {
 
     }
 
-    updateModifiers() {
-        this.attrPairs.forEach(({ val, mod }) => {
+    updateModifiers() { 
+        this.attrPairs.forEach(({ val, mod, deb }) => {
             const valEl = document.getElementById(val);
             const modEl = document.getElementById(mod);
-            if (valEl && modEl) modEl.value = this.computeModifier(valEl.value);
+            const debEl = document.getElementById(deb);
+            const debValue = debEl ? (debEl.checked ? -1 : 0) : 0;
+            if (valEl && modEl) {
+                let modificador = this.character.abilityModifier(valEl.value, debValue);
+                modEl.value = modificador >= 0 ? `+${modificador}` : `${modificador}`;
+            } else {
+                modEl.value = "invalido";
+            }
         });
     }
 
@@ -347,81 +374,82 @@ class CharacterSheet {
         });
     }
 
-    // Aplica restrições cruzadas entre `charRace` e `charClass`.
-    classSelector() {
-        const raceInput = document.getElementById('charRace');
+    updateAlignmentOptions() {
+        const charAlignment = document.getElementById('charAlignment');
+        charAlignment.innerHTML = '<option value="">Selecione</option>';
         const classSelect = document.getElementById('charClass');
+        const className = classSelect ? classSelect.value : '';
+        const cls = this.findClassByName(className);
+        const alinhamentosDisponiveis = cls && cls.alinhamento ? cls.alinhamento : null;
+        for (const alignment of alinhamentosDisponiveis || []) {
+            let option = document.createElement("option");
+            option.value = alignment.id;
+            option.textContent = alignment.nome;
+            charAlignment.appendChild(option);
+        }
 
-        const findAllowedClasses = (race) => {
+    }
+
+    findAllowedClasses(race) {
             if (!race) return null;
             const normalized = Utils.canonical(race);
             const allowed = this.classDetails
                 .filter((cd) => (cd.racas || []).some((r) => Utils.canonical(r) === normalized))
                 .map((cd) => cd.nome);
             return allowed.length ? allowed : null;
-        }
+    }
 
-        const findAllowedRaces = (className) => {
+    findAllowedRaces(className) {
             if (!className) return null;
             const normalized = Utils.canonical(className);
             const cls = this.classDetails.find((cd) => Utils.canonical(cd.nome) === normalized);
             return (cls && cls.racas && cls.racas.length) ? cls.racas : null;
-        }
+    }
 
-        const updateClassOptions = () => {
-            const race = raceInput.value;
-            const allowed = findAllowedClasses(race);
-            const allowedSet = allowed ? new Set(allowed.map((a) => Utils.canonical(a))) : null;
-            Array.from(classSelect.options).forEach((option) => {
-                if (!option.value) return;
-                const optCan = Utils.canonical(option.value);
-                const isDisabled = allowedSet === null ? false : !allowedSet.has(optCan);
-                option.disabled = isDisabled;
-                if (isDisabled) option.classList.add('disabled-by-race');
-                else option.classList.remove('disabled-by-race');
-            });
-            const selected = classSelect.value;
-            if (selected && classSelect.querySelector(`option[value="${selected}"]`).disabled) {
-                classSelect.value = '';
-            }
-            this.applyClassEffects();
-        }
-
-        const updateRaceOptions = () => {
-            const className = classSelect.value;
-            const allowedRaces = findAllowedRaces(className);
-            const allowedSet = allowedRaces ? new Set(allowedRaces.map((r) => Utils.canonical(r))) : null;
-            Array.from(raceInput.options).forEach((option) => {
-                if (!option.value) return;
-                const optCan = Utils.canonical(option.value);
-                const isDisabled = allowedSet === null ? false : !allowedSet.has(optCan);
-                option.disabled = isDisabled;
-                if (isDisabled) option.classList.add('disabled-by-race');
-                else option.classList.remove('disabled-by-race');
-            });
-            const selectedRace = raceInput.value;
-            if (selectedRace && raceInput.querySelector(`option[value="${selectedRace}"]`).disabled) {
-                raceInput.value = '';
-            }
-        }
-
-        raceInput.addEventListener('change', () => {
-            updateClassOptions();
-            this.save()
-            this.renderClassMoves();
+    updateClassOptions(){
+        const race = this.charRace.value;
+        const allowed = this.findAllowedClasses(race);
+        const allowedSet = allowed ? new Set(allowed.map((a) => Utils.canonical(a))) : null;
+        Array.from(this.charClass.options).forEach((option) => {
+            if (!option.value) return;
+            const optCan = Utils.canonical(option.value);
+            const isDisabled = allowedSet === null ? false : !allowedSet.has(optCan);
+            option.disabled = isDisabled;
+            if (isDisabled) option.classList.add('disabled-by-race');
+            else option.classList.remove('disabled-by-race');
         });
+        const selected = this.charClass.value;
+        if (selected && this.charClass.querySelector(`option[value="${selected}"]`).disabled) {
+            this.charClass.value = '';
+        }
+        this.applyClassEffects();
+    }
 
-        classSelect.addEventListener('change', () => {
-            const opt = classSelect.selectedOptions[0];
-            if (opt && opt.disabled) classSelect.value = '';
-            updateRaceOptions();
-            this.applyClassEffects();
-            this.save();
-            this.renderClassMoves();
+    updateRaceOptions() {
+        const className = this.charClass.value;
+        const allowedRaces = this.findAllowedRaces(className);
+        const allowedSet = allowedRaces ? new Set(allowedRaces.map((r) => Utils.canonical(r))) : null;
+        Array.from(this.charRace.options).forEach((option) => {
+            if (!option.value) return;
+            const optCan = Utils.canonical(option.value);
+            const isDisabled = allowedSet === null ? false : !allowedSet.has(optCan);
+            option.disabled = isDisabled;
+            if (isDisabled) option.classList.add('disabled-by-race');
+            else option.classList.remove('disabled-by-race');
         });
+        const selectedRace = this.charRace.value;
+        if (selectedRace && this.charRace.querySelector(`option[value="${selectedRace}"]`).disabled) {
+            this.charRace.value = '';
+        }
+    }
 
-        updateClassOptions();
-        updateRaceOptions();
+    // Aplica restrições cruzadas entre `charRace` e `charClass`.
+    classSelector() {
+        const raceInput = this.charRace;
+        const classSelect = this.charClass;
+
+        this.updateClassOptions();
+        this.updateRaceOptions();
     }
 
     // Método para limpar a ficha (retornar ao estado 0)
@@ -431,11 +459,12 @@ class CharacterSheet {
         this.clearInputs();
 
         // Resetar selectboxes
-        document.getElementById('charRace').value = '';
-        document.getElementById('charClass').value = '';
+        this.charRace.value = '';
+        this.charClass.value = '';
 
         // Atualizar modifiers e strikes
         this.updateModifiers();
+        this.updateAlignmentOptions();
         this.updateStrikethrough();
         this.applyClassEffects();
         this.renderClassMoves();

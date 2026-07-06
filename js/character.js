@@ -1,27 +1,5 @@
-export class Character {
+export default class Character {
     constructor() {
-        this.name = "";
-        this.race = "";
-        this.class = "";
-
-        this.xp = 0;
-        this.level = 1;
-        this.max_hp = 0;
-        this.load = 0;
-        this.armor = 0;
-
-        this.stats = {
-            str: 0,
-            dex: 0,
-            con: 0,
-            int: 0,
-            wis: 0,
-            cha: 0
-        };
-
-        this.movements = [];
-        this.equipment = [];
-        this.consumables = [];
         this.nome = "";
         this.raca = "";
         this.classe = "";
@@ -41,32 +19,46 @@ export class Character {
             carisma: 0
         };
 
+        this.debilidade = {
+            forca: false,
+            destreza: false,
+            constituicao: false,
+            inteligencia: false,
+            sabedoria: false,
+            carisma: false
+        };
+
         this.movimentos = [];
         this.equipamentos = [];
         this.consumiveis = [];
->>>>>>> estilo
+
         this.spells = [];
         this.bonds = [];
         this.finishedBonds = [];
-        this.notes = "";
+        this.notas = "";
     }
 
-    applyDebility(debility) {
-        this.abilityModifier(debility, this.stats[debility]);       
-    }
-
-    abilityModifier(stat, val=0) {
-        const v = parseInt(stat, 10);
+    abilityModifier(atributo, debility=0) {
+        const v = parseInt(atributo, 10);
+        if (isNaN(v)) {
+            return 0;
+        }
         let m = 3;
-        if (!Number.isFinite(v)) return '';
         if (v < 16) m = 1; 
-        if (v < 8) m = 0;  
+        if (v < 8) m = -1;  
         if (v < 18) m = 2; 
         if (v < 12) m = -1;
         if (v < 6) m = -2;
         if (v < 4) m = -3;
         
-        return v + m;
+        return m + debility;
+    }
+
+    updateModifiers() {
+        for (const atributo in this.atributos) {
+            
+            this.atributos[atributo + "_mod"] = this.abilityModifier(this.atributos[atributo], debility);
+        }
     }
 
     addMovement(movement) {

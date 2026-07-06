@@ -185,9 +185,9 @@
             "dado_dano": "d6",
             "carga_base": 6,
             "alinhamento": [
-                { "nome": "", "descricao": "" },
-                { "nome": "", "descricao": "" },
-                { "nome": "", "descricao": "" }
+                { "nome": "Bom", "descricao": "Ajudar alguma coisa ou alguém a crescer" },
+                { "nome": "Caótico", "descricao": "Destruir um símbolo de civilização" },
+                { "nome": "Neutro", "descricao": "Eliminar uma ameaça não natural" }
             ],
             "movimentos_raciais": [
                 { "classe": "Druida", "tipo": "Racial", "nome": "Humano", "descricao": "" },
@@ -894,7 +894,7 @@
         {"id":20031, "nome":"Desengonçado", "descricao":"é difícil se mover usando isso. -1 constante enquanto estiver vestindo. A penalidade é cumulativa."}
     ],
         
-    "spell_list": [
+    "lista_spells": [
         {"id":10000, "classe":["Clérigo","Mago"], "nome": "Luz", "nivel": 0, "school": "Truque", "continuo": false, "descricao": "Um item tocado por você brilha com luz arcana, com a mesma intensidade de uma tocha. Essa luz não emite calor ou som e nem precisa de combustível para queimar, mas funciona como uma tocha comum para todos os outros efeitos. Você possui total controle sobre a cor da luz. O feitiço dura enquanto o item estiver em sua presença." },
         {"id":10001, "classe":["Mago"], "nome": "Santificar", "nivel": 0, "school": "", "continuo": false, "descricao": "Qualquer comida ou água que estiver em suas mãos enquanto conjura este feitiço será consagrada por sua divindade. Além de se tornar sagrada ou profana, a substância afetada é purificada de qualquer resíduo mundano." },
         {"id":10002, "classe":["Mago"], "nome": "Guia", "nivel": 0, "school": "", "continuo": false, "descricao": "O símbolo da sua divindade surge à sua frente e aponta na direção ou curso de ação que seu deus gostaria que você tomasse, desaparecendo logo em seguida. Esta mensagem é passada apenas através de movimentos – a comunicação permitida por este feitiço é extremamente limitada." },
