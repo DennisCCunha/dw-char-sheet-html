@@ -101,7 +101,12 @@ class CharacterSheet {
                 if (e.target.id === id) document.getElementById(id).style.display = 'none';
             });
         });
-    }
+
+        document.getElementById('btnAddMovement').addEventListener('click', (e) => {
+                let movement = e;
+                this.character.addMovement()
+            })
+        };
 
 
     start() {

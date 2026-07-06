@@ -44,7 +44,6 @@ export class Character {
         this.movimentos = [];
         this.equipamentos = [];
         this.consumiveis = [];
->>>>>>> estilo
         this.spells = [];
         this.bonds = [];
         this.finishedBonds = [];
