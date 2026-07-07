@@ -33,12 +33,11 @@ body{
 
 .pagina {
     font-family: var(--font);
-    margin: 25px;
+    margin: 1.5rem;
     color: #111;
 }
 
 .sheet {
-    max-width: 100%;
     margin: auto;
     background: var(--white);
     border: 2px solid var(--border-color);
@@ -52,6 +51,14 @@ body{
     display: flex;
     flex-direction: row;
     gap: 24px;
+}
+
+.sheet-header{
+    display: flex;
+    flex-direction: row;
+    flex:1;
+    align-items: flex-end;
+    gap: 12px;
 }
 
 .equipment-sheet {
@@ -263,6 +270,15 @@ td:has(.deb-Modifier-active){
 .spells {
     border-left: 2px solid var(--border-color);
     padding-left: 20px;
+}
+
+.spell_availiable {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 12px;
+    align-items: flex-start;
+    align-self: flex-start;
 }
 
 .spell-group {
@@ -561,17 +577,47 @@ footer p a:hover{
 }
 
 
+.movement-available{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+}
+
+
+ /* Movement Card Styles */
+.movement-cardbox{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+}
 .movement-card{
     display: flex;
     flex-direction: column;
     /* margin: 5px 5px 5px 5px; */
-    padding: 5px;
+    /* padding: 5px; */
+    flex-basis: 33rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    border: #000 1px solid;
+    border-radius: 5%;
 }
 .movement-card-header{
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     background: rgba(121, 121, 121, 0.301);
+    border-top: #000 1px solid;
+    border-bottom: #000 1px solid;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
 }
 .movement-card-icon{
     width: 40px;
@@ -604,13 +650,17 @@ footer p a:hover{
     font-weight: bold;
     font-size: 1.2rem;
 }
-
 .movement-card-description{
-
+    font-size: 1rem;
+    min-height: 10rem;
 }
 .movement-card-footer{
-
+    font-size:0.9rem;
+    flex: auto;
+    align-self: flex-start;
 }
+
+/* Movement Panel Styles */
 .movement-panel{
     display: flex;
     flex-direction: column;
@@ -620,11 +670,37 @@ footer p a:hover{
     padding-bottom: 0.8rem;
 }
 .movement-panel-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
 }
+.movement-panel-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+.movement-panel-roll{
+    
+}
+.movement-panel-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+.movement-panel-details{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 12px;
+}
+
 .movement-panel-description{
     background: rgba(216, 216, 216, 0.301);
-    padding: 6px;
+    padding: 0.5rem;
+    padding-left: 1rem;
 }
 
 

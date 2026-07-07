@@ -64,18 +64,17 @@ export class Equipment {
         };
     }
     static render(equipment = {nome: "", descricao: "", peso: 0, tags: [], notes: ""}) {
-        let eqp = "<div class='list-item equipment-item'>" +
-        "<input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />" +
-        "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />" +
-        "<input class='spell-name' type='text' placeholder='Descrição' style='flex:3' />" +
-        "<input class='spell-name' type='text' placeholder='Notas' style='flex:3' />" +
-        "<select multiple></select>"
-
+        let eqp = `<div class='list-item equipment-item'>"
+            "<input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />"
+            "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />"
+            "<input class='spell-name' type='text' placeholder='Descrição' style='flex:3' />"
+            "<input class='spell-name' type='text' placeholder='Notas' style='flex:3' />"
+        "<select multiple></select>`;
         for (let i = 0; i < 5; i++) {
             eqp += "<option value='" + i + "'>Tag " + (i + 1) + "</option>";
         }
 
-        eqp += "<button onclick=\"this.closest('.list-item').remove()\" class='removeIcon'>&#215</button>" +
+        eqp += "<button class='addItem'>&#215</button>" +
         "</div>";
         return eqp;
     }
@@ -104,9 +103,8 @@ export class Movement {
             icon = "avançado";
         }
 
-
         return `<div class="movement-card">
-                    <header class="movement-card-header">
+                    <div class="movement-card-header">
                         <div class="movement-card-title">
                             <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
                             <h2>${movement.nome}</h2>
@@ -117,7 +115,7 @@ export class Movement {
                                 <span>${movement.rolagem}</span>
                                 </div>` : ''}
                         </div>
-                    </header>
+                    </div>
 
                     <section class="movement-card-description">
                         <blockquote>
@@ -128,18 +126,26 @@ export class Movement {
                     <section class="movement-card-results">
                     </section>
 
-                    <footer class="movement-card-footer">
-                        <small>MOVIMENTO</small>
+                    <div class="movement-card-footer">
+                        <strong>MOVIMENTO</strong>
                         <strong>${icon.toUpperCase()}</strong>
-                    </footer>
+                    </div>
                 </div>`;
     }
-    static renderPanel(movement) {
+
+    static renderPanel(movement, selectable = false) {
         return `<div class="movement-panel">
-                    <h3>${movement.nome}</h3>
-                    <div>
-                        ${movement.tipo ? `<span class="movement-type">Tipo: ${movement.tipo}</span>` : ''}
-                        ${movement.rolagem ? `<span class="movement-roll">Rolagem: ${movement.rolagem}</span>` : ''}
+                    <div class="movement-panel-header">
+                        <div class="movement-panel-title">
+                            ${selectable ? `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select"/>` : ''}
+                            <h3>${movement.nome}</h3>
+                        </div>
+                        <div class="movement-panel-info">
+                            ${movement.tipo ? `<span class="movement-panel-type">Tipo: ${movement.tipo}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="movement-panel-details">
+                        ${movement.rolagem ? `<span class="movement-panel-roll">Rolagem: <strong>${movement.rolagem}</strong></span>` : ''}
                     </div>
                     <div class="movement-panel-description">
                         <p class="">${movement.descricao}</p>
@@ -147,12 +153,17 @@ export class Movement {
                 </div>`;
     }
 
-    static render(movement, format) {
+    static render(movement, format, selectable = false) {
         if (format === "card") {
             return Movement.renderCard(movement);
         }
-        return Movement.renderPanel(movement);
+        return Movement.renderPanel(movement, selectable);
     }
+
+    static selectableMovementsByClass(movement, format = "card") {
+        return Movement.render(movement, format, true);
+    }
+
 }
 
 export class Spell {
@@ -197,6 +208,33 @@ export class Spell {
         });
 
     }
+
+    static renderSpell(spell, format) {
+        if (format === "card") {
+            return `<div class="spell-card">
+                        <h2>${spell.nome}</h2>
+                        <p>${spell.descricao}</p>
+                    </div>`;
+        }
+        else{
+            return `<div id="spell-${spell.id}" class="spell">
+                <input type="checkbox" title="No grimório" class="gold_filling" />
+                <input type="checkbox" title="Preparada" class="blue_filling"/>
+                <input class="spell-name" value="${spell.nome}" />
+            </div>`;
+        }
+    }
+
+    static renderSpellGroupbyClass(classe) {
+        const spells = Spell.getSpellListByClassAndLevel(classe);
+        const spellGroupContainer = document.getElementById("spells_available");
+        spellGroupContainer.appendChild(document.createElement('h3'))
+            .appendChild(document.createElement("input")).type = "text"
+            .appendChild(document.createElement("input")).value = "${spell.nivel > 0 ? 'Nível ' + spell.nivel : 'Truques'}";
+        
+        // "<div class="spell-group"><h3><input value="Truques" /></h3>"
+    }
+
 }
 
 export default { Bond, Consumable, Equipment, Movement, Spell };

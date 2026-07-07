@@ -27,7 +27,7 @@
     font-weight:bold;
 }
 
-.movement-card-card-description{
+.movement-card-description{
     padding:15px;
 }
 
@@ -46,7 +46,7 @@ blockquote{
     margin-bottom:18px;
 }
 
-.movement-card-roll{
+.movement-card-info{
     background:black;
     color:white;
     border-radius:50%;
@@ -58,12 +58,15 @@ blockquote{
     margin-right:12px;
     font-weight:bold;
 }
+.movement-card-roll{
+
+}
 
 .movement-card-text{
     flex:1;
 }
 
-.movement-card-card-footer{
+.movement-card-footer{
     background:#666;
     color:white;
     padding:10px 15px;

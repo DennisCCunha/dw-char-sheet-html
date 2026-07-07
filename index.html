@@ -55,46 +55,7 @@
           <button id="btnLimpar">&#x1FF5D1; Limpar ficha</button>
         </div>
     </nav>
-    <div id="modalsContainer">
-      <!-- Modal: exibir código gerado -->
-      <div id="codeModal" class="dw-overlay" style="display:none">
-        <div class="dw-modal">
-          <h3>Código da ficha</h3>
-          <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
-          <textarea id="codeModalText" rows="6" readonly></textarea>
-          <div class="dw-modal-actions">
-            <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
-            <button id="btnFecharModal" class="secondary">Fechar</button>
-          </div>
-        </div>
-      </div>
 
-      <!-- Modal: restaurar ficha por código -->
-      <div id="restoreModal" class="dw-overlay" style="display:none">
-        <div class="dw-modal">
-          <h3>Restaurar ficha</h3>
-          <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
-          <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
-          <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
-          <div class="dw-modal-actions">
-            <button id="btnConfirmarRestaurar">Restaurar</button>
-            <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal: confirmar limpeza da ficha -->
-      <div id="clearModal" class="dw-overlay" style="display:none">
-      <div class="dw-modal">
-        <h3>Limpar ficha</h3>
-        <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
-        <div class="dw-modal-actions">
-          <button id="btnConfirmarLimpeza">Limpar</button>
-          <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
-        </div>
-      </div>
-      </div>
-    </div>
 
     <article class="pagina">
       <div id="1st-Page" class="sheet">
@@ -284,7 +245,7 @@
 
             </div>
           </aside>
-          <aside id="classSpells" class="spells">
+          <aside id="classSpells" class="spell_availiable">
             <div id="mageSpellsSet">
             <h2>Lista de Magias</h2>
             <div class="spell-group">
@@ -344,6 +305,48 @@
         </aside>
       </div>
     </article>
+
+
+    <div id="modalsContainer">
+      <!-- Modal: exibir código gerado -->
+      <div id="codeModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Código da ficha</h3>
+          <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
+          <textarea id="codeModalText" rows="6" readonly></textarea>
+          <div class="dw-modal-actions">
+            <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
+            <button id="btnFecharModal" class="secondary">Fechar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: restaurar ficha por código -->
+      <div id="restoreModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Restaurar ficha</h3>
+          <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
+          <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
+          <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
+          <div class="dw-modal-actions">
+            <button id="btnConfirmarRestaurar">Restaurar</button>
+            <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: confirmar limpeza da ficha -->
+      <div id="clearModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Limpar ficha</h3>
+          <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
+          <div class="dw-modal-actions">
+            <button id="btnConfirmarLimpeza">Limpar</button>
+            <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="rodape">
       <p><a href="https://www.dungeon-world.com/" target="_blank"><strong class="gold_filling">Dungeon World</strong></a> é um jogo de RPG criado por Sage LaTorra e Adam Koebel e pertence à Phinlos LLC.</p>

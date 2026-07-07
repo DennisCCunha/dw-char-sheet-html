@@ -113,20 +113,21 @@ class CharacterSheet {
 
         document.getElementById('btnLimpar').addEventListener('click', () => {
             if (confirm('Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.')) {
-                this.clearInputs();
-                SaveAndLoad.clearState();
+               this.clearSheet();
             }
         });
 
         this.charRace.addEventListener('change', () => {
-            this.character.raca = this.charRace.value;
+            this.character.raca = this.charRace.value !== "Raça" ? this.charRace.value : "";
+            this.updateRaceOptions();
+            this.applyClassEffects();
             this.updateClassOptions();
             this.save()
             this.renderClassMoves();
         });
 
         this.charClass.addEventListener('change', () => {
-            this.character.classe = this.charClass.value;
+            this.character.classe = this.charClass.value !== "Classe" ? this.charClass.value : "";
             const opt = this.charClass.selectedOptions[0];
             if (opt && opt.disabled) this.charClass.value = '';
             this.updateRaceOptions();
@@ -200,6 +201,8 @@ class CharacterSheet {
             });
         });
 
+        
+
         this.load();
         this.classSelector();
         this.updateModifiers();
@@ -232,34 +235,29 @@ class CharacterSheet {
 
     // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
     renderClassMoves() {
-        const container = document.getElementById('classMoves');
-        if (!container) return;
-        const className = this.character.classe;
-        const race = this.character.raca;
-
-        let html = '';
+        const container = document.getElementById('classMovesList');
         if (!this.character.classe) {
-            html = '<div class="movement-list"><em>Selecione uma classe para ver os movimentos.</em></div>';
-            container.innerHTML = html;
+            container.innerHTML = '<div class="movement-list"><em>Selecione uma classe para ver os movimentos.</em></div>';
             return;
         }
-
-        const movementList = Mechanics.Movement.getMovementListByClass(this.character.classe);
-        console.log(movementList);
-        let movementElements = '';
-        movementList.forEach(movement => {
-            movementElements += Mechanics.Movement.render(movement, this.movementListFormat);
-        });
-        container.innerHTML = movementElements;
-    }
-
-
-    renderList(title, arr) {
-        if (!arr || !arr.length) return '';
-        let s = `<h3>${title}</h3><ul>`;
-        arr.forEach((it) => { s += `<li>${it?.nome ?? it}</li>`; });
-        s += '</ul>';
-        return s;
+        container.innerHTML = '';
+        const movimentList = Mechanics.Movement.getMovementListByClass(this.character.classe);
+        if(this.movementListFormat === 'card') {
+            let cardbox = document.createElement('div');
+            cardbox.classList.add('movement-cardbox');
+            for (const movement of movimentList) {   
+                cardbox.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
+            }
+            container.appendChild(cardbox);
+        } else if(this.movementListFormat === 'list') {
+            let panelBox = document.createElement('div');
+            panelBox.classList.add('movement-list');
+            for (const movement of movimentList) {
+                panelBox.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
+            }
+            container.appendChild(panelBox);
+        }
+        return;
     }
 
     // === Funções de classe/atributo (escopo de módulo) ===
@@ -458,9 +456,14 @@ class CharacterSheet {
         SaveAndLoad.clearState();
         this.clearInputs();
 
+        document.getElementById("classMoves").innerHTML = '';
+        document.getElementById("spells_available").innerHTML = '';
+
         // Resetar selectboxes
-        this.charRace.value = '';
-        this.charClass.value = '';
+        document.getElementById("charRace").selectedIndex = 0;
+        document.getElementById("charClass").selectedIndex = 0;
+        this.character.classe = "";
+        this.character.raca = "";
 
         // Atualizar modifiers e strikes
         this.updateModifiers();
@@ -472,4 +475,6 @@ class CharacterSheet {
 
 }
 
-new CharacterSheet();
+document.addEventListener('DOMContentLoaded', () => {
+    const sheet = new CharacterSheet();
+});
