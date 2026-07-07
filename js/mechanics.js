@@ -89,11 +89,15 @@ export class Movement {
             tags: tags
         };
     }
-
+    static getMovementList(){
+        return dungeonworld.lista_movimentos;
+    }
 
     static getMovementListByClass(classe) {
         return dungeonworld.lista_movimentos.filter(movement => movement.classe === classe);
     }
+
+
 
     // WIP - Retorna o html do design do Card, segundo imagem na Issue #5
     static renderCard(movement) {
@@ -298,13 +302,14 @@ export class Spell {
             tags: tags
         };
     }
-    static render(spell) {
-        return `<div class="spell"> <input type="checkbox" title="Preparada" class="gold_filling"/> <input class="spell-name" value="${spell.nome}"/> <label>${spell.nivel}</label></div>`;
+
+    static getSpellList() {
+        return dungeonworld.spells;
     }
 
-    static getSpellListByClassAndLevel(classe, nivel=0) {
+    static getSpellListByClassAndLevel(classe, nivel=null) {
         const spells = dungeonworld.spells.filter(spell => spell.classe.includes(classe));
-        if (nivel > 0) {
+        if (nivel !== null) {
             return spells.filter(spell => spell.nivel === nivel);
         }
         else {
@@ -312,36 +317,46 @@ export class Spell {
         }
     }
 
-    static renderSpellList(container, spells) {
-        if (!container || !spells) {
-            console.error("Container or spells list is undefined.");
-            return "Container or spells list is undefined.";
+    static render(spell, format) {
+        if (format === "card") {
+            return Spell.renderSpellCard(spell);
         }
-        const spellListContainer = document.getElementById(container);
+        return Spell.renderSpell(spell, format);
+    }
+
+
+
+    static renderSpellList(spells, format) {
         spellListContainer.innerHTML = '';
         spells.forEach(spell => {
             const spellElement = document.createElement('div');
-            spellElement.classList.add('spell');
-            spellElement.innerHTML = Spell.render(spell);
+            spellElement.classList.add(`spell ${format}`);
+            spellElement.innerHTML = Spell.render(spell, format);
             spellListContainer.appendChild(spellElement);
         });
 
     }
 
-    static renderSpell(spell, format) {
-        if (format === "card") {
-            return `<div class="spell-card">
+    static renderSpellCard(spell) {
+        return `<div id="spell-${spell.id}" class="spell-card">
+                    <div class="spell-card-header">
                         <h2>${spell.nome}</h2>
+                        <span class="spell-card-level">${spell.nivel > 0 ? 'Nível ' + spell.nivel : 'Truque'}</span>
+                        <span class="spell-card-school">${spell.school}</span>
+                        <span class="spell-card-continuous">${spell.continuo ? 'Contínuo' : ''}</span>
+                    </div>
+                    <div class="spell-card-description">
                         <p>${spell.descricao}</p>
-                    </div>`;
-        }
-        else{
-            return `<div id="spell-${spell.id}" class="spell">
-                <input type="checkbox" title="No grimório" class="gold_filling" />
-                <input type="checkbox" title="Preparada" class="blue_filling"/>
-                <input class="spell-name" value="${spell.nome}" />
-            </div>`;
-        }
+                    </div>
+                </div>`;
+    }
+
+    static renderSpell(spell, format) {
+        return `<div id="spell-${spell.id}" class="spell">
+            <input type="checkbox" title="No grimório" class="gold_filling" />
+            <input type="checkbox" title="Preparada" class="blue_filling"/>
+            <input class="spell-name" value="${spell.nome}" />
+        </div>`;
     }
 
     static renderSpellGroupbyClass(classe) {
