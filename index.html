@@ -14,7 +14,6 @@
       if ('serviceWorker' in navigator)
         navigator.serviceWorker.register('./service-worker.js');
     </script>
-
   </head>
   <body>
     <nav class="floating-nav" >
@@ -56,46 +55,7 @@
           <button id="btnLimpar">&#x1FF5D1; Limpar ficha</button>
         </div>
     </nav>
-    <div id="modalsContainer">
-      <!-- Modal: exibir código gerado -->
-      <div id="codeModal" class="dw-overlay" style="display:none">
-        <div class="dw-modal">
-          <h3>Código da ficha</h3>
-          <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
-          <textarea id="codeModalText" rows="6" readonly></textarea>
-          <div class="dw-modal-actions">
-            <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
-            <button id="btnFecharModal" class="secondary">Fechar</button>
-          </div>
-        </div>
-      </div>
 
-      <!-- Modal: restaurar ficha por código -->
-      <div id="restoreModal" class="dw-overlay" style="display:none">
-        <div class="dw-modal">
-          <h3>Restaurar ficha</h3>
-          <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
-          <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
-          <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
-          <div class="dw-modal-actions">
-            <button id="btnConfirmarRestaurar">Restaurar</button>
-            <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal: confirmar limpeza da ficha -->
-      <div id="clearModal" class="dw-overlay" style="display:none">
-      <div class="dw-modal">
-        <h3>Limpar ficha</h3>
-        <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
-        <div class="dw-modal-actions">
-          <button id="btnConfirmarLimpeza">Limpar</button>
-          <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
-        </div>
-      </div>
-      </div>
-    </div>
 
     <article class="pagina">
       <div id="1st-Page" class="sheet">
@@ -104,15 +64,6 @@
             <input type="text" id="charName" value="" placeholder="Nome do personagem" />
 
             <div class="subtitle">
-              <select id="charRace">
-                <option value="">Raça</option>
-                <option value="Anão">Anão</option>
-                <option value="Elfo">Elfo</option>
-                <option value="Humano">Humano</option>
-                <option value="Halfling">Halfling</option>
-                <option value="Outro">Outro</option>
-              </select>
-
               <select id="charClass">
                 <option value="">Classe</option>
                 <option value="Bárbaro">Bárbaro</option>
@@ -126,6 +77,15 @@
                 <option value="Paladino">Paladino</option>
                 <option value="Ranger">Ranger</option>
               </select>
+              <select id="charRace">
+                <option value="">Raça</option>
+                <option value="Anão">Anão</option>
+                <option value="Elfo">Elfo</option>
+                <option value="Humano">Humano</option>
+                <option value="Halfling">Halfling</option>
+                <option value="Outro">Outro</option>
+              </select>
+
             </div>
           </div>
           <div class="stats">
@@ -201,34 +161,34 @@
               <tr>
                 <th>Deb</th>
                 <td>
-                  <input type="checkbox" class="red_filling" />
+                  <input id="debFor" type="checkbox" class="red_filling" />
                   <label><em class="debilidade">Fraco -1</em></label>
                 </td>
                 <td>
-                  <input type="checkbox" class="red_filling" />
+                  <input id="debDes" type="checkbox" class="red_filling" />
                   <label><em class="debilidade">Trêmulo -1</em></label>
                 </td>
                 <td>
-                  <input type="checkbox" class="red_filling" />
+                  <input id="debCon" type="checkbox" class="red_filling" />
                   <label><em class="debilidade">Doente -1</em></label>
                 </td>
                 <td>
-                  <input type="checkbox" class="red_filling" />
+                  <input id="debInt" type="checkbox" class="red_filling" />
                   <label><em class="debilidade">Atordoado -1</em></label>
                 </td>
                 <td>
-                  <input type="checkbox" class="red_filling" />
+                  <input id="debSab" type="checkbox" class="red_filling" />
                   <label><em class="debilidade">Confuso -1</em></label>
                   </td>
                 <td>
-                  <input type="checkbox" class="red_filling" />
+                  <input id="debCar" type="checkbox" class="red_filling" />
                   <label><em class="debilidade">Marcado -1</em></label>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <div>
+          <div id="charXPBonds">
             <div class="xp">
               <strong>Nível</strong>
               <input type="text" id="charLevel" value="1" placeholder="Nível" style="width: 50px; text-align: center;" />
@@ -254,7 +214,9 @@
             </div>
             <div class="alignment">
               <strong>Alinhamento</strong>
-              <input type="text" id="charAlignment" value="" placeholder="Alinhamento do personagem" />
+              <select id="charAlignment">
+                <option value="">Selecione</option>
+              </select>
             </div>
             <div class="bonds">
               <strong>Vínculos</strong>
@@ -263,7 +225,7 @@
               <div class="bonds_area" id="bondsArea">
                 <!-- Vínculos do personagem serão exibidos aqui -->
               </div>
-            </div>     
+            </div>
           </div>
         </div> <!-- Fim da primeira ficha-->
       </div>
@@ -273,8 +235,8 @@
     <article class="pagina">
       <div id="Movements" class="sheet">  
         <div class="sheet-header">
-          <button>lista</button>
-          <button>card</button>
+          <button id="btnMoveCardView" class="btnMovementTab">card</button>
+          <button id="btnMoveListView" class="btnMovementTab">lista</button>
         </div>
         <div class="sheet-container">
           <aside id="classMoves" class="movement_availiable">
@@ -283,7 +245,7 @@
 
             </div>
           </aside>
-          <aside id="classSpells" class="spells">
+          <aside id="classSpells" class="spell_availiable">
             <div id="mageSpellsSet">
             <h2>Lista de Magias</h2>
             <div class="spell-group">
@@ -343,6 +305,48 @@
         </aside>
       </div>
     </article>
+
+
+    <div id="modalsContainer">
+      <!-- Modal: exibir código gerado -->
+      <div id="codeModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Código da ficha</h3>
+          <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
+          <textarea id="codeModalText" rows="6" readonly></textarea>
+          <div class="dw-modal-actions">
+            <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
+            <button id="btnFecharModal" class="secondary">Fechar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: restaurar ficha por código -->
+      <div id="restoreModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Restaurar ficha</h3>
+          <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
+          <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
+          <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
+          <div class="dw-modal-actions">
+            <button id="btnConfirmarRestaurar">Restaurar</button>
+            <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: confirmar limpeza da ficha -->
+      <div id="clearModal" class="dw-overlay" style="display:none">
+        <div class="dw-modal">
+          <h3>Limpar ficha</h3>
+          <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
+          <div class="dw-modal-actions">
+            <button id="btnConfirmarLimpeza">Limpar</button>
+            <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="rodape">
       <p><a href="https://www.dungeon-world.com/" target="_blank"><strong class="gold_filling">Dungeon World</strong></a> é um jogo de RPG criado por Sage LaTorra e Adam Koebel e pertence à Phinlos LLC.</p>
