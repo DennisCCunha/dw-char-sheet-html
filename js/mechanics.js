@@ -90,10 +90,12 @@ export class Movement {
         };
     }
 
+
     static getMovementListByClass(classe) {
         return dungeonworld.lista_movimentos.filter(movement => movement.classe === classe);
     }
 
+    // WIP - Retorna o html do design do Card, segundo imagem na Issue #5
     static renderCard(movement) {
         let icon = "basico";
         if (movement.tipo.includes("Especial")) {
@@ -162,6 +164,123 @@ export class Movement {
 
     static selectableMovementsByClass(movement, format = "card") {
         return Movement.render(movement, format, true);
+    }
+
+    // WIP - Formatar o texto para se conformar ao design do Card, segundo imagem na Issue #5
+    static formatToMovementCard(texto) {
+        // Normaliza quebras de linha
+        texto = texto.replace(/\r\n/g, "\n").trim();
+
+        const resultado = {
+            descricaoInicial: null,
+            rolagem: null,
+            criteriosRolagem: [],
+            efeitos: [],
+            textoFinal: null
+        };
+
+        // Regex sugeridos
+        const regexRolagem = /Role(?:\s+com)?\s*[\+\-]?\s*[\wÁÉÍÓÚÂÊÔÃÕÇ]+/i;
+        const regexCriterio = /(?:Em um|Com|Num)?\s*(10\+|7-9|6-)/i;
+        const regexItemLista = /^\s*(?:•|-|\*|\d+\.)\s+(.+)$/gm;
+
+        //--------------------------------------------------
+        // 1. Descrição inicial
+        //--------------------------------------------------
+
+        const primeiroMarcador = [
+            texto.search(regexRolagem),
+            texto.search(regexCriterio),
+            texto.search(/^\s*(?:•|-|\*|\d+\.)/m)
+        ]
+            .filter(i => i >= 0)
+            .sort((a, b) => a - b)[0];
+
+        if (primeiroMarcador !== undefined) {
+            resultado.descricaoInicial = texto
+                .substring(0, primeiroMarcador)
+                .trim();
+
+            texto = texto.substring(primeiroMarcador).trim();
+        } else {
+            resultado.descricaoInicial = texto;
+            return resultado;
+        }
+
+        //--------------------------------------------------
+        // 2. Rolagem
+        //--------------------------------------------------
+
+        const matchRolagem = texto.match(regexRolagem);
+
+        if (matchRolagem) {
+            resultado.rolagem = matchRolagem[0].trim();
+
+            texto = texto.replace(matchRolagem[0], "").trim();
+        }
+
+        //--------------------------------------------------
+        // 3. Critérios (10+, 7-9, 6-)
+        //--------------------------------------------------
+
+        let linhas = texto.split("\n");
+
+        let criterioAtual = null;
+
+        for (let linha of linhas) {
+
+            linha = linha.trim();
+
+            if (!linha)
+                continue;
+
+            const criterio = linha.match(regexCriterio);
+
+            if (criterio) {
+
+                criterioAtual = {
+                    criterio: criterio[1],
+                    efeitos: []
+                };
+
+                resultado.criteriosRolagem.push(criterioAtual);
+
+                continue;
+            }
+
+            //--------------------------------------------------
+            // Lista
+            //--------------------------------------------------
+
+            const item = linha.match(/^(?:•|-|\*|\d+\.)\s+(.+)/);
+
+            if (item) {
+
+                if (criterioAtual) {
+                    criterioAtual.efeitos.push(item[1]);
+                } else {
+                    resultado.efeitos.push(item[1]);
+                }
+
+                continue;
+            }
+
+            //--------------------------------------------------
+            // Texto solto
+            //--------------------------------------------------
+
+            if (criterioAtual) {
+                criterioAtual.efeitos.push(linha);
+            } else {
+
+                resultado.textoFinal =
+                    (resultado.textoFinal ?? "") +
+                    (resultado.textoFinal ? "\n" : "") +
+                    linha;
+            }
+        }
+
+        return resultado;
     }
 
 }
