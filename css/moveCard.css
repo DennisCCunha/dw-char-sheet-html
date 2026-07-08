@@ -1,49 +1,76 @@
+::root{
+    --card-border:#b4b4b4;
+    --card-description:#ececec;
+    --card-description-even:#cccccc;
+    --card-roll-badge:#6d6d6d;
+}
+
 .movement-card{
     width:320px;
+    /* height: 480px; */
+    height:fit-content;
     background:#ececec;
-    border-radius:12px;
+    border-radius:14px;
     overflow:hidden;
-    border:4px solid #cfcfcf;
-    font-family:Georgia, serif;
+    border:1px solid #cfcfcf;
 }
 
 .movement-card-header{
-    background:#777;
-    color:white;
+    background:#b0b0b0;
+    
     padding:15px;
     display:flex;
     align-items:center;
     gap:10px;
 }
+.movement-card-header img{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+}
 
 .movement-card-header h2{
     flex:1;
-    font-size:22px;
+    flex-wrap:wrap;
+    font-size: 1.5rem;
     margin:0;
+    color:white;
 }
 
-.movement-card-attribute{
+.movement-card-roll-sign{
     font-size:22px;
     font-weight:bold;
 }
 
 .movement-card-description{
     padding:15px;
+    font-size:1.3rem;
+    background:var(--card-description);
 }
 
-blockquote{
-    margin:0;
-    font-style:italic;
-    font-weight:bold;
-}
-
-.movement-card-results{
-    padding:0 15px 20px;
-}
-
-.result{
+.movement-card-result{
     display:flex;
-    margin-bottom:18px;
+    align-items:center;
+    background:transparent;
+}
+
+.even{
+    background:var(--card-description-even);
+}
+
+.movemenrt-card-result-badge{
+    background:var(--card-roll-badge);
+    color:white;
+    font-weight:bold;
+    border-radius:50px;
+    margin-right:12px;
+}
+
+.movement-card-result img{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    margin-left:-12px;
 }
 
 .movement-card-info{
@@ -57,13 +84,6 @@ blockquote{
     align-items:center;
     margin-right:12px;
     font-weight:bold;
-}
-.movement-card-roll{
-
-}
-
-.movement-card-text{
-    flex:1;
 }
 
 .movement-card-footer{
