@@ -134,16 +134,20 @@ export class Movement {
 
                     <div class="movement-card-footer">
                         <strong>MOVIMENTO</strong>
-                        <strong>${icon.toUpperCase()}</strong>
+                        <strong>${movement.tipo.toUpperCase()}</strong>
                     </div>
                 </div>`;
     }
 
     static renderPanel(movement, selectable = false) {
+        let inicial = '';
+        if (movement.tipo === "Inicial" || movement.tipo === "Basico" || movement.tipo === "Especial") {
+            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" checked disabled />`;
+        }
         return `<div class="movement-panel">
                     <div class="movement-panel-header">
                         <div class="movement-panel-title">
-                            ${selectable ? `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select"/>` : ''}
+                            ${inicial}
                             <h3>${movement.nome}</h3>
                         </div>
                         <div class="movement-panel-info">

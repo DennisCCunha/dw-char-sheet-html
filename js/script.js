@@ -36,7 +36,6 @@ class CharacterSheet {
 
     }
 
-
     registryEvents() {
         document.getElementById('valFor').addEventListener('input', (e) => { this.character.atributos.forca = e.target.value; this.updateModifiers(); });
         document.getElementById('valDes').addEventListener('input', (e) => { this.character.atributos.destreza = e.target.value; this.updateModifiers(); });
@@ -140,14 +139,14 @@ class CharacterSheet {
 
         this.btnMoveCardView = document.getElementById('btnMoveCardView').addEventListener('click', () => {
             this.movementListFormat = 'card';
-            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.add('active');
-            this.btnMoveListView = document.getElementById('btnMoveListView').classList.remove('active');
+            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.add('selected');
+            this.btnMoveListView = document.getElementById('btnMoveListView').classList.remove('selected');
             this.renderClassMoves();
         });
         this.btnMoveListView = document.getElementById('btnMoveListView').addEventListener('click', () => {
             this.movementListFormat = 'list';
-            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.remove('active');
-            this.btnMoveListView = document.getElementById('btnMoveListView').classList.add('active');
+            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.remove('selected');
+            this.btnMoveListView = document.getElementById('btnMoveListView').classList.add('selected');
             this.renderClassMoves();
         });
 
@@ -158,7 +157,6 @@ class CharacterSheet {
             });
         });
     }
-
 
     start() {
         // Atribui ids automáticos quando ausentes, preservando ids existentes
@@ -202,7 +200,8 @@ class CharacterSheet {
         });
 
         
-
+        
+        this.clearInputs();
         this.load();
         this.classSelector();
         this.updateModifiers();
@@ -223,7 +222,13 @@ class CharacterSheet {
     clearInputs() {
         // Limpar todos os inputs
         this.allInputs.forEach((input) => {
-            if (input.type === 'checkbox') input.checked = false;
+            if (input.type === 'checkbox'){ 
+                input.checked = false;
+            }
+            if (input.type === 'select-one') {
+                input.selectedIndex = 0; 
+                input.value = '';
+            }
             else input.value = '';
         });
 
@@ -235,24 +240,34 @@ class CharacterSheet {
 
     // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
     renderClassMoves() {
-        const container = document.getElementById('classMovesList');
-        if (!this.character.classe) {
+        const container = document.getElementById('classMovesList');  
+        if (this.charClass.value === "Classe" || !this.charClass.value) {
             container.innerHTML = '<div class="movement-list"><em>Selecione uma classe para ver os movimentos.</em></div>';
             return;
         }
         container.innerHTML = '';
-        const movimentList = Mechanics.Movement.getMovementListByClass(this.character.classe);
+        const movementList = Mechanics.Movement.getMovementListByClass(this.charClass.value);
+
+        // Precisa ter uma forma mais eficiente de filtrar movimentos raciais, mas por enquanto, vamos fazer isso aqui:
+        for (const movement of movementList) {
+            if (this.charClass.value.toLowerCase() !== "bárbaro") {
+                if (this.charRace.value && movement.tipo === "Racial" && movement.nome !== this.charRace.value) {
+                    movementList.splice(movementList.indexOf(movement), 1);
+                }
+            }
+        }
+
         if(this.movementListFormat === 'card') {
             let cardbox = document.createElement('div');
             cardbox.classList.add('movement-cardbox');
-            for (const movement of movimentList) {   
+            for (const movement of movementList) {   
                 cardbox.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
             }
             container.appendChild(cardbox);
         } else if(this.movementListFormat === 'list') {
             let panelBox = document.createElement('div');
             panelBox.classList.add('movement-list');
-            for (const movement of movimentList) {
+            for (const movement of movementList) {
                 panelBox.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
             }
             container.appendChild(panelBox);
@@ -457,7 +472,7 @@ class CharacterSheet {
         this.clearInputs();
 
         document.getElementById("classMoves").innerHTML = '';
-        document.getElementById("spells_available").innerHTML = '';
+        //document.getElementById("spells_available").innerHTML = '';
 
         // Resetar selectboxes
         document.getElementById("charRace").selectedIndex = 0;
@@ -472,7 +487,6 @@ class CharacterSheet {
         this.applyClassEffects();
         this.renderClassMoves();
     }
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {
