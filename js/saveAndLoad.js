@@ -4,6 +4,10 @@ export default class SaveAndLoad {
         const state = {};
         allInputs.forEach((input) => {
             if (input.type === 'checkbox') state[input.id] = input.checked ? '1' : '0';
+            if (input.type === 'select-one') state[input.id] = {
+                value: input.value || '', 
+                index: input.selectedIndex || 0
+            };
             else state[input.id] = input.value;
         });
         circles.forEach((circle) => {
@@ -16,7 +20,10 @@ export default class SaveAndLoad {
         allInputs.forEach((input) => {
             if (state[input.id] !== undefined) {
                 if (input.type === 'checkbox') input.checked = state[input.id] === '1';
-                else input.value = state[input.id];
+                if (input.type === 'select-one') {
+                    input.selectedIndex = state[input.id].index;
+                    input.value = state[input.id].value;
+                } else input.value = state[input.id];
             }
         });
         circles.forEach((circle) => {
