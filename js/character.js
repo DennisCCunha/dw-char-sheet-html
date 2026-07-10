@@ -44,12 +44,19 @@ export default class Character {
             return 0;
         }
         let m = 3;
-        if (v < 16) m = 1; 
-        if (v < 8) m = -1;  
-        if (v < 18) m = 2; 
-        if (v < 12) m = -1;
-        if (v < 6) m = -2;
-        if (v < 4) m = -3;
+        if (v >= 9){
+            if (v < 18) m = 2;
+            else if (v < 16) m = 1;
+            else if (v < 13) m = 0;
+        }
+        else{
+            if (v < 9) m = -1;
+            else if (v < 6) m = -2;
+            else if (v < 4) m = -3;
+        }
+
+         
+
         
         return m + debility;
     }

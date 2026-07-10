@@ -72,6 +72,30 @@ body{
     gap: 24px;
 }
 
+input, select, textarea {
+    font-family: var(--font);
+    font-size: 1rem;
+    color: #111;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+input::placeholder, select::placeholder, textarea::placeholder {
+    color: var(--gold);
+    font-weight: bold;
+}
+select option:hover {
+    color: var(--gold);
+}
+select::picker(select) {
+  appearance: base-select;
+  background-color: var(--muted);
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
 h1,
 h2,
 h3 {

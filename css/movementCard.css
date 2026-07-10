@@ -36,7 +36,7 @@
     display:flex;
     align-items:flex-start;
     justify-content: space-between;
-    flex-basis: 80px;
+    flex-basis: fit-content;
 }
 
 .movement-card-title{
@@ -47,9 +47,10 @@
 
 .movement-card-icon{
     display:flex;
-    width:54px;
-    height:54px;
+    width:42px;
+    height:42px;
     border-radius:50%;
+    box-shadow: 0px 0px 5px 1px #000000;
 }
 
 .movement-card-title h2{
@@ -66,17 +67,19 @@
 .movement-card-roll{
     font-size:22px;
     font-weight:bold;
-    color:var(--card-roll-badge)
+    color:var(--card-roll-badge);
+
 }
 
 .movement-card-roll-detail{
     font-size: 0.9rem;
     justify-content: space-between;
+    align-self:flex-end;
 }
 
 .movement-card-roll-detail-icon{
-    width:45px;
-    height:45px;
+    width:42px;
+    height:42px;
     border-radius:5%;
 }
 
