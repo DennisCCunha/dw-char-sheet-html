@@ -11,6 +11,14 @@ export class Bond {
         };
     }
 
+    static getBondList() {
+        return dungeonworld.lista_bonds;
+    }
+
+    static getBondListByClass(classe) {
+        return dungeonworld.lista_bonds.filter(bond => bond.classe === classe);
+    }
+
     static define(){
 
     }
@@ -20,10 +28,20 @@ export class Bond {
     }
 
     static render(bond) {
-        return `<div class="bond"> <input type="checkbox" title="Finalizado" class="gold_filling"/> <label class="bond-name" value="${bond.nome}"/> </div>`;
+        return `<div class="bond" id="bond-${bond.id}">
+        <input type="checkbox" title="Finalizado" class="gold_filling"/> 
+        <label class="bond-name" value="${bond.nome}"/> 
+        <label class="bond-name" value="${bond.template}"/> 
+        <button id="btn-end-bond" class="endBond">END</button>
+        </div>`;
     }
-    static bondListByClass(classe) {
-        return dungeonworld.lista_bonds.filter(bond => bond.classe === classe);
+
+    static renderBondTemplate(bond){
+        return `<div class="bond-template"> 
+        <input id="bond-name" class="bond-name" value="${bond.nome}" />
+        <p>${bond.template}</p>
+        <button id="btn-add-bond" class="addBond">ADD</button>
+        </div>`;
     }
 }
 
