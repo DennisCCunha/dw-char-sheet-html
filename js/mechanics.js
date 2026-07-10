@@ -89,6 +89,7 @@ export class Movement {
             tags: tags
         };
     }
+
     static getMovementList(){
         return dungeonworld.lista_movimentos;
     }
@@ -96,8 +97,6 @@ export class Movement {
     static getMovementListByClass(classe) {
         return dungeonworld.lista_movimentos.filter(movement => movement.classe === classe);
     }
-
-
 
     // WIP - Retorna o html do design do Card, segundo imagem na Issue #5
     static renderCard(movement) {
@@ -117,19 +116,17 @@ export class Movement {
                         </div>
                         <div class="movement-card-roll">
                             ${movement.rolagem ? `<div class="movement-card-roll-detail"> 
-                                <span class="movement-card-icon">&#9860 &#9861</span>
+                                <img class="movement-card-roll-detail-icon" src="../assets/icons/dados.png" alt="roll" />
                                 <span>${movement.rolagem}</span>
                                 </div>` : ''}
                         </div>
                     </div>
 
                     <section class="movement-card-description">
-                        <blockquote>
-                            <p>${movement.descricao}</p>
-                        </blockquote>
+                        <p>${movement.descricao}</p>
                     </section>
 
-                    <section class="movement-card-results">
+                    <section class="movement-card-result">
                     </section>
 
                     <div class="movement-card-footer">

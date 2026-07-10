@@ -4,8 +4,9 @@
     <title>Ficha de Personagem - Dungeon World</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="./assets/dev-favicon.png" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/movementCard.css" />
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     <link rel="manifest" href="./manifest.json" />
 
@@ -191,7 +192,7 @@
           <div id="charXPBonds">
             <div class="xp">
               <strong>Nível</strong>
-              <input type="text" id="charLevel" value="1" placeholder="Nível" style="width: 50px; text-align: center;" />
+              <input type="text" id="charLevel" value="1" placeholder="Nível" class="charLevelInput" />
               <strong>XP</strong>
               <div class="circle"></div>
               <div class="circle"></div>
@@ -355,5 +356,13 @@
     </footer>
 
     <script type="module" src="./js/script.js"></script>
+    <script>
+        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+          const favicon = document.querySelector("link[rel='icon']");
+          if (favicon) {
+            favicon.setAttribute("href", "./assets/dev-favicon.png");
+          }
+        }
+    </script>
   </body>
 </html>

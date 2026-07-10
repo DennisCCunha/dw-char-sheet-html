@@ -7,33 +7,34 @@ import Utils from './utils.js';
 class CharacterSheet {
 
     constructor() {
-        // Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
-        this.circles = Array.from(document.querySelectorAll('.circle'));
-        this.allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
-        this.charRace = document.getElementById('charRace');
-        this.charClass = document.getElementById('charClass');
-        this.quill = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
-        this.character = new Character();
+        document.addEventListener('DOMContentLoaded', () => {
+            // Garantir ids únicos para todos os inputs/checkboxes/circles e usar esses ids ao salvar/carregar
+            this.circles = Array.from(document.querySelectorAll('.circle'));
+            this.allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
+            this.charRace = document.getElementById('charRace');
+            this.charClass = document.getElementById('charClass');
+            this.quill = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
+            this.character = new Character();
 
-        this.initialAttributes = {
-            stat: [16, 15, 13, 12, 9, 8],
-            mod: [2, 1, 1, 0, 0, -1]
-        }
-        this.attrPairs = [
-            { val: 'valFor', mod: 'modFor', deb: 'debFor' },
-            { val: 'valDes', mod: 'modDes', deb: 'debDes' },
-            { val: 'valCon', mod: 'modCon', deb: 'debCon' },
-            { val: 'valInt', mod: 'modInt', deb: 'debInt' },
-            { val: 'valSab', mod: 'modSab', deb: 'debSab' },
-            { val: 'valCar', mod: 'modCar', deb: 'debCar' },
-        ]
-        this.classDetails = dungeonworld.classses || [];
+            this.initialAttributes = {
+                stat: [16, 15, 13, 12, 9, 8],
+                mod: [2, 1, 1, 0, 0, -1]
+            }
+            this.attrPairs = [
+                { val: 'valFor', mod: 'modFor', deb: 'debFor' },
+                { val: 'valDes', mod: 'modDes', deb: 'debDes' },
+                { val: 'valCon', mod: 'modCon', deb: 'debCon' },
+                { val: 'valInt', mod: 'modInt', deb: 'debInt' },
+                { val: 'valSab', mod: 'modSab', deb: 'debSab' },
+                { val: 'valCar', mod: 'modCar', deb: 'debCar' },
+            ]
+            this.classDetails = dungeonworld.classses || [];
 
-        this.movementListFormat = 'card'; // ou 'list'
+            this.movementListFormat = 'card'; // ou 'list'
 
-        this.start();
-        this.registryEvents();
-
+            this.registryEvents();
+            this.start();
+        })
     }
 
     registryEvents() {
@@ -199,8 +200,6 @@ class CharacterSheet {
             });
         });
 
-        
-        
         this.clearInputs();
         this.load();
         this.classSelector();
@@ -390,14 +389,12 @@ class CharacterSheet {
     updateAlignmentOptions() {
         const charAlignment = document.getElementById('charAlignment');
         charAlignment.innerHTML = '<option value="">Selecione</option>';
-        const classSelect = document.getElementById('charClass');
-        const className = classSelect ? classSelect.value : '';
-        const cls = this.findClassByName(className);
+        const cls = this.findClassByName(this.charClass.value);
         const alinhamentosDisponiveis = cls && cls.alinhamento ? cls.alinhamento : null;
         for (const alignment of alinhamentosDisponiveis || []) {
             let option = document.createElement("option");
             option.value = alignment.id;
-            option.textContent = alignment.nome;
+            option.textContent = (alignment.nome ? `${alignment.nome}` : '') + (alignment.descricao ? ` - ${alignment.descricao}` : '');
             charAlignment.appendChild(option);
         }
 
@@ -489,6 +486,4 @@ class CharacterSheet {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const sheet = new CharacterSheet();
-});
+const sheet = new CharacterSheet();
