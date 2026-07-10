@@ -1,0 +1,145 @@
+:root{
+    --card-border:#b4b4b4;
+    --card-description:#ececec;
+    --card-description-even:#cccccc;
+    --card-roll-badge:#6d6d6d;
+}
+
+.movement-cardbox{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+}
+
+.movement-card{
+    width:320px;
+    /* height: 480px; */
+    max-height: 480px;
+    height:fit-content;
+    background: var(--card-border);
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid #cfcfcf;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items:stretch;
+}
+
+.movement-card-header{
+    background: var(--card-border);
+    padding: 10px 10px;
+    display:flex;
+    align-items:flex-start;
+    justify-content: space-between;
+    flex-basis: 80px;
+}
+
+.movement-card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.movement-card-icon{
+    display:flex;
+    width:54px;
+    height:54px;
+    border-radius:50%;
+}
+
+.movement-card-title h2{
+    flex:1;
+    flex-wrap:wrap;
+    font-size: 1.1rem;
+    margin:0;
+    margin-left: 10px;
+    color:white;
+    font-weight:bold;
+    text-align:justify;
+}
+
+.movement-card-roll{
+    font-size:22px;
+    font-weight:bold;
+    color:var(--card-roll-badge)
+}
+
+.movement-card-roll-detail{
+    font-size: 0.9rem;
+    justify-content: space-between;
+}
+
+.movement-card-roll-detail-icon{
+    width:45px;
+    height:45px;
+    border-radius:5%;
+}
+
+.movement-card-description{
+    /* padding:15px; */
+    margin:8px;
+    font-size:0.8rem;
+    text-align:justify;
+    background:var(--card-description);
+    flex-basis: 320px;
+    flex-grow: 1;
+    border-radius: 10px 33px 10px 10px;
+}
+
+.movement-card-description p{
+    padding:5px 5px 0 5px;
+}
+
+
+.movement-card-result{
+    display:flex;
+    align-items:center;
+    background:transparent;
+}
+
+.even{
+    background:var(--card-description-even);
+}
+
+.movement-card-result-badge{
+    background:var(--card-roll-badge);
+    color:white;
+    font-weight:bold;
+    border-radius:50px;
+    margin-right:12px;
+}
+
+.movement-card-result img{
+    width:27px;
+    height:27px;
+    border-radius:12%;
+    padding-top: 50px;
+    margin-left:-12px;
+}
+
+.movement-card-info{
+    background:black;
+    color:white;
+    border-radius:50%;
+    width:42px;
+    height:42px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-right:12px;
+    font-weight:bold;
+}
+
+.movement-card-footer{
+    background:var(--card-border);
+    color:white;
+    padding:5px 15px 10px 15px;
+    text-transform:uppercase;
+    font-size:0.7rem;
+    /* align-self:flex-end; */
+}
