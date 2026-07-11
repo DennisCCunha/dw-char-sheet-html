@@ -43,21 +43,14 @@ export default class Character {
         if (isNaN(v)) {
             return 0;
         }
-        let m = 3;
-        if (v >= 9){
-            if (v < 18) m = 2;
-            else if (v < 16) m = 1;
-            else if (v < 13) m = 0;
-        }
-        else{
-            if (v < 9) m = -1;
-            else if (v < 6) m = -2;
-            else if (v < 4) m = -3;
-        }
-
-         
-
-        
+        let m = 0;
+            if (v > 0 && v <= 3) m = -3;
+            else if (v > 3 && v <= 5) m = -2;
+            else if (v > 5 && v <= 8) m = -1;
+            else if (v > 8 && v <= 12) m = 0;
+            else if (v > 12 && v <= 15) m = 1;
+            else if (v > 15 && v < 18) m = 2;
+            else if (v >= 18) m = 3;
         return m + debility;
     }
 
