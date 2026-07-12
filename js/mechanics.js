@@ -1,12 +1,11 @@
 import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 
-
 export class Bond {
-    static create(nome ="", descricao="", finalizado = false) {
+    static create(nome ="", template="", finalizado = false) {
         return {
             id:0,
             nome: nome,
-            template: descricao,
+            template: template,
             finalizado: finalizado           
         };
     }
@@ -20,7 +19,6 @@ export class Bond {
     }
 
     static define(){
-
     }
 
     static end(bond) {
@@ -29,10 +27,9 @@ export class Bond {
 
     static render(bond) {
         return `<div class="bond" id="bond-${bond.id}">
-        <input type="checkbox" title="Finalizado" class="gold_filling"/> 
-        <label class="bond-name" value="${bond.nome}"/> 
-        <label class="bond-name" value="${bond.template}"/> 
-        <button id="btn-end-bond" class="endBond">END</button>
+        <label class="bond-name">${bond.nome}</label> 
+        <label class="bond-template">${bond.template}</label> 
+        <button id="btn-end-bond" class="bond-end">END</button>
         </div>`;
     }
 
@@ -114,6 +111,10 @@ export class Movement {
 
     static getMovementListByClass(classe) {
         return dungeonworld.lista_movimentos.filter(movement => movement.classe === classe);
+    }
+
+    static getBasicMovements() {
+        return dungeonworld.lista_movimentos.filter(movement => movement.classe === "basico");
     }
 
     // WIP - Retorna o html do design do Card, segundo imagem na Issue #5

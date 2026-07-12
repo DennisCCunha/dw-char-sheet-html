@@ -83,7 +83,7 @@ class CharacterSheet {
 
         document.getElementById('btnConfirmarRestaurar').addEventListener('click', () => {
             const code = document.getElementById('restoreCodeInput').value.trim();
-            console.log('Restaurando código:', code);
+            console.warn('Restaurando código:', code);
             try {
                 SaveAndLoad.applyState([this.allInputs, this.circles], SaveAndLoad.decodeState(code));
                 this.save();
@@ -117,6 +117,12 @@ class CharacterSheet {
             }
         });
 
+        //Vinculos
+        document.getElementById('btnAddBond').addEventListener('click', () => {
+            this.addBondToActiveList(document.getElementById('charBonds').value.trim());
+        });
+
+
         this.charRace.addEventListener('change', () => {
             this.character.raca = this.charRace.value !== "Raça" ? this.charRace.value : "";
             this.updateRaceOptions();
@@ -144,10 +150,17 @@ class CharacterSheet {
             this.btnMoveListView = document.getElementById('btnMoveListView').classList.remove('selected');
             this.renderClassMoves();
         });
+
         this.btnMoveListView = document.getElementById('btnMoveListView').addEventListener('click', () => {
             this.movementListFormat = 'list';
             this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.remove('selected');
             this.btnMoveListView = document.getElementById('btnMoveListView').classList.add('selected');
+            this.renderClassMoves();
+        });
+
+         document.getElementById('toggleMovementType').addEventListener('change', (e) => {
+            this.toggleMovementType = e.target.checked ? true : false;
+            document.getElementById('toggleLabel').textContent = e.target.checked ? 'Movimentos Classe' : 'Movimentos Básicos';
             this.renderClassMoves();
         });
 
@@ -239,13 +252,16 @@ class CharacterSheet {
 
     // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
     renderClassMoves() {
-        const container = document.getElementById('classMovesList');  
+        const container = document.getElementById('classMovesList');
         if (this.charClass.value === "Classe" || !this.charClass.value) {
             container.innerHTML = '<div class="movement-list"><em>Selecione uma classe para ver os movimentos.</em></div>';
             return;
         }
         container.innerHTML = '';
-        const movementList = Mechanics.Movement.getMovementListByClass(this.charClass.value);
+        let movementList = [];
+        movementList = this.toggleMovementType ? Mechanics.Movement.getMovementListByClass(this.charClass.value) : Mechanics.Movement.getBasicMovements();
+
+
 
         // Precisa ter uma forma mais eficiente de filtrar movimentos raciais, mas por enquanto, vamos fazer isso aqui:
         for (const movement of movementList) {
@@ -255,7 +271,6 @@ class CharacterSheet {
                 }
             }
         }
-
         if(this.movementListFormat === 'card') {
             let cardbox = document.createElement('div');
             cardbox.classList.add('movement-cardbox');
@@ -271,7 +286,7 @@ class CharacterSheet {
             }
             container.appendChild(panelBox);
         }
-        return;
+            return;
     }
 
     // === Funções de classe/atributo (escopo de módulo) ===
@@ -357,6 +372,26 @@ class CharacterSheet {
 
     addSpellToList(listId, spellName) {
 
+    }
+
+    addBondToActiveList(bondName) {
+        const listEl = document.getElementById("bondsArea");
+        if (!listEl || !bondName) return;
+        this.character.bonds.push(Mechanics.Bond.create("custom", bondName, false));
+        this.updatedBondsList();
+    }
+
+    updatedBondsList() {
+        const listEl = document.getElementById("bondsArea");
+        if (!listEl) return;
+        if (this.character.bonds.length === 0) {
+            listEl.innerHTML = "<em>Não há vínculos ativos.</em>";
+            return;
+        }
+        listEl.innerHTML = "";
+        for (const bond of this.character.bonds) {
+            listEl.insertAdjacentHTML('beforeend', Mechanics.Bond.render(bond));
+        }
     }
 
     updateModifiers() { 
@@ -468,8 +503,8 @@ class CharacterSheet {
         SaveAndLoad.clearState();
         this.clearInputs();
 
-        document.getElementById("classMoves").innerHTML = '';
-        //document.getElementById("spells_available").innerHTML = '';
+        document.getElementById("classMovesList").innerHTML = '';
+        document.getElementById("spells_available").innerHTML = '';
 
         // Resetar selectboxes
         document.getElementById("charRace").selectedIndex = 0;
