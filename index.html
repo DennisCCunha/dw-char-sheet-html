@@ -20,32 +20,26 @@
     <nav class="floating-nav" >
         <div style="display:none;">
           <button class="nav-item active" data-section="character">
-              <span>👤</span>
               <span>Character</span>
           </button>
 
           <button class="nav-item" data-section="attributes">
-              <span>⚔️</span>
               <span>Attributes</span>
           </button>
 
           <button class="nav-item" data-section="moves">
-              <span>📜</span>
               <span>Moves</span>
           </button>
 
           <button class="nav-item" data-section="equipment">
-              <span>🛡️</span>
               <span>Equipment</span>
           </button>
 
           <button class="nav-item" data-section="spells">
-              <span>✨</span>
               <span>Spells</span>
           </button>
 
           <button class="nav-item" data-section="notes">
-              <span>📝</span>
               <span>Notes</span>
           </button>
         </div>
@@ -222,7 +216,7 @@
             <div class="bonds">
               <strong>Vínculos</strong>
                 <input class="bond_input" type="" id="charBonds" value="" placeholder="Vínculos do personagem" />
-                <button id="addBond" class='addConsumable'>&#x2b</button>
+                <button id="btnAddBond" class='addConsumable'>&#x2b</button>
               <div class="bonds_area" id="bondsArea">
                 <!-- Vínculos do personagem serão exibidos aqui -->
               </div>
@@ -236,6 +230,16 @@
     <article class="pagina">
       <div id="Movements" class="sheet">  
         <div class="sheet-header">
+          <div class="movement-toggle">
+            <label id="toggleLabel"class="">Movimentos Basicos</label>
+            <label class="switch">
+              <input id="toggleMovementType" type="checkbox">
+              <span class="slider"></span>
+          </label>
+          </div>
+
+
+
           <span id="btnMoveCardView" class="btnMovementTab">card</span>
           <span id="btnMoveListView" class="btnMovementTab">lista</span>
         </div>
