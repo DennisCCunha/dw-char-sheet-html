@@ -4,8 +4,9 @@
     <title>Ficha de Personagem - Dungeon World</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="./assets/dev-favicon.png" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/movementCard.css" />
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     <link rel="manifest" href="./manifest.json" />
 
@@ -19,40 +20,34 @@
     <nav class="floating-nav" >
         <div style="display:none;">
           <button class="nav-item active" data-section="character">
-              <span>👤</span>
               <span>Character</span>
           </button>
 
           <button class="nav-item" data-section="attributes">
-              <span>⚔️</span>
               <span>Attributes</span>
           </button>
 
           <button class="nav-item" data-section="moves">
-              <span>📜</span>
               <span>Moves</span>
           </button>
 
           <button class="nav-item" data-section="equipment">
-              <span>🛡️</span>
               <span>Equipment</span>
           </button>
 
           <button class="nav-item" data-section="spells">
-              <span>✨</span>
               <span>Spells</span>
           </button>
 
           <button class="nav-item" data-section="notes">
-              <span>📝</span>
               <span>Notes</span>
           </button>
         </div>
 
         <div class="save_buttons">
-          <button id="btnGerarCodigo">&#x1F4BE; Salvar ficha</button>
-          <button id="btnRestaurar">&#x1F4E5; Restaurar ficha</button>
-          <button id="btnLimpar">&#x1FF5D1; Limpar ficha</button>
+          <button id="btnGerarCodigo">Salvar ficha</button>
+          <button id="btnRestaurar">Restaurar ficha</button>
+          <button id="btnLimpar">Limpar ficha</button>
         </div>
     </nav>
 
@@ -191,7 +186,7 @@
           <div id="charXPBonds">
             <div class="xp">
               <strong>Nível</strong>
-              <input type="text" id="charLevel" value="1" placeholder="Nível" style="width: 50px; text-align: center;" />
+              <input type="text" id="charLevel" value="1" placeholder="Nível" class="charLevelInput" />
               <strong>XP</strong>
               <div class="circle"></div>
               <div class="circle"></div>
@@ -221,7 +216,7 @@
             <div class="bonds">
               <strong>Vínculos</strong>
                 <input class="bond_input" type="" id="charBonds" value="" placeholder="Vínculos do personagem" />
-                <button id="addBond" class='addConsumable'>&#x2b</button>
+                <button id="btnAddBond" class='addConsumable'>&#x2b</button>
               <div class="bonds_area" id="bondsArea">
                 <!-- Vínculos do personagem serão exibidos aqui -->
               </div>
@@ -235,8 +230,18 @@
     <article class="pagina">
       <div id="Movements" class="sheet">  
         <div class="sheet-header">
-          <button id="btnMoveCardView" class="btnMovementTab">card</button>
-          <button id="btnMoveListView" class="btnMovementTab">lista</button>
+          <div class="movement-toggle">
+            <label id="toggleLabel"class="">Movimentos Basicos</label>
+            <label class="switch">
+              <input id="toggleMovementType" type="checkbox">
+              <span class="slider"></span>
+          </label>
+          </div>
+
+
+
+          <span id="btnMoveCardView" class="btnMovementTab">card</span>
+          <span id="btnMoveListView" class="btnMovementTab">lista</span>
         </div>
         <div class="sheet-container">
           <aside id="classMoves" class="movement_availiable">
@@ -355,5 +360,13 @@
     </footer>
 
     <script type="module" src="./js/script.js"></script>
+    <script>
+        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+          const favicon = document.querySelector("link[rel='icon']");
+          if (favicon) {
+            favicon.setAttribute("href", "./assets/dev-favicon.png");
+          }
+        }
+    </script>
   </body>
 </html>

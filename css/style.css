@@ -39,6 +39,7 @@ body{
 
 .sheet {
     margin: auto;
+    width: 90vw;
     background: var(--white);
     border: 2px solid var(--border-color);
     padding: 24px;
@@ -62,7 +63,7 @@ body{
 }
 
 .equipment-sheet {
-    max-width: 100%;
+    width: 90vw;
     margin: auto;
     background: var(--white);
     border: 2px solid var(--border-color);
@@ -71,6 +72,30 @@ body{
     grid-template-columns: 2fr 3fr;
     gap: 24px;
 }
+
+input, select, textarea {
+    font-family: var(--font);
+    font-size: 1rem;
+    color: #111;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+input::placeholder, select::placeholder, textarea::placeholder {
+    color: var(--gold);
+    font-weight: bold;
+}
+select option:hover {
+    color: var(--gold);
+}
+select::picker(select) {
+  appearance: base-select;
+  background-color: var(--muted);
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 
 h1,
 h2,
@@ -139,6 +164,20 @@ h3 {
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     margin-bottom: 20px;
+}
+
+.charLevelInput{
+    margin: 1rem 0;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    width: 50px;
+}
+
+#charAlignment{
+    margin: 1rem 0;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    width: 80%;
 }
 
 .card {
@@ -247,9 +286,16 @@ td:has(.deb-Modifier-active){
     padding: 10px 0px;  
 }
 
+
+.bondsArea{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 .bonds {
-    margin: 20px 0;
-    
+    margin: 1rem 0;
 }
 
 .bond_input {
@@ -261,11 +307,31 @@ td:has(.deb-Modifier-active){
     margin-bottom: 6px;
 }
 
-.bonding-name{
-    font-size: 18px;
-    font-weight: 500;
-    margin-left: 10px;
+.bond-name{
+    color: var(--dark);
+    font-size: 16px;
 }
+.bond-template{
+    color: var(--dark);
+    font-size: 16px;
+}
+.bond-end{
+    background-color: var(--red);
+    font-family: var(--font);
+    font-weight: bold;
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+}
+
+
+
+.movement_availiable{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
 
 .spells {
     border-left: 2px solid var(--border-color);
@@ -572,8 +638,8 @@ footer p a:hover{
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
-.btnMovementTab:active{
-    background: #444;
+.btnMovementTab.selected{
+    background: var(--gold);
 }
 
 
@@ -585,79 +651,6 @@ footer p a:hover{
     max-height: 600px;
     overflow-y: auto;
     padding-bottom: 0.8rem;
-}
-
-
- /* Movement Card Styles */
-.movement-cardbox{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 12px;
-    overflow-y: auto;
-    padding-bottom: 0.8rem;
-}
-.movement-card{
-    display: flex;
-    flex-direction: column;
-    /* margin: 5px 5px 5px 5px; */
-    /* padding: 5px; */
-    flex-basis: 33rem;
-    flex-grow: 0;
-    flex-shrink: 0;
-    border: #000 1px solid;
-    border-radius: 5%;
-}
-.movement-card-header{
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    background: rgba(121, 121, 121, 0.301);
-    border-top: #000 1px solid;
-    border-bottom: #000 1px solid;
-    border-top-left-radius: 5%;
-    border-top-right-radius: 5%;
-}
-.movement-card-icon{
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-}
-.movement-card-title{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    font-family: var(--font);
-    font-weight: bold;
-    font-size: 18px;
-    margin-left: 12px;
-}
-.movement-card-roll{
-    align-self: flex-end;
-    font-family: var(--font);
-    font-weight: bold;
-    font-size: 2.5rem;
-}
-.movement-card-roll:has(.roll-icon){
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 2.5rem;
-}
-.movement-card-roll-detail{
-    font-family: var(--font);
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-.movement-card-description{
-    font-size: 1rem;
-    min-height: 10rem;
-}
-.movement-card-footer{
-    font-size:0.9rem;
-    flex: auto;
-    align-self: flex-start;
 }
 
 /* Movement Panel Styles */
@@ -702,6 +695,63 @@ footer p a:hover{
     padding: 0.5rem;
     padding-left: 1rem;
 }
+
+
+/* Slider Toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--muted);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--gold);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--gold);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+
+
+
 
 
 @media print {
