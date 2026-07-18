@@ -16,6 +16,9 @@ class CharacterSheet {
             this.quill = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
             this.character = new Character();
 
+            this.btnMoveCardView = document.getElementById('btnMoveCardView');
+            this.btnMoveListView = document.getElementById('btnMoveListView');
+
             this.initialAttributes = {
                 stat: [16, 15, 13, 12, 9, 8],
                 mod: [2, 1, 1, 0, 0, -1]
@@ -28,7 +31,7 @@ class CharacterSheet {
                 { val: 'valSab', mod: 'modSab', deb: 'debSab' },
                 { val: 'valCar', mod: 'modCar', deb: 'debCar' },
             ]
-            this.classDetails = dungeonworld.classses || [];
+            this.classDetails = dungeonworld.classes || [];
 
             this.movementListFormat = 'card'; // ou 'list'
 
@@ -143,24 +146,26 @@ class CharacterSheet {
             this.updateAlignmentOptions();
         });
 
-
-        this.btnMoveCardView = document.getElementById('btnMoveCardView').addEventListener('click', () => {
+        this.btnMoveCardView.addEventListener('click', () => {
             this.movementListFormat = 'card';
-            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.add('selected');
-            this.btnMoveListView = document.getElementById('btnMoveListView').classList.remove('selected');
+            this.btnMoveCardView.classList.add('selected');
+            this.btnMoveListView.classList.remove('selected');
             this.renderClassMoves();
         });
 
-        this.btnMoveListView = document.getElementById('btnMoveListView').addEventListener('click', () => {
+      
+        this.btnMoveListView.addEventListener('click', () => {
             this.movementListFormat = 'list';
-            this.btnMoveCardView = document.getElementById('btnMoveCardView').classList.remove('selected');
-            this.btnMoveListView = document.getElementById('btnMoveListView').classList.add('selected');
+            this.btnMoveCardView.classList.remove('selected');
+            this.btnMoveListView.classList.add('selected');
             this.renderClassMoves();
         });
 
          document.getElementById('toggleMovementType').addEventListener('change', (e) => {
             this.toggleMovementType = e.target.checked ? true : false;
-            document.getElementById('toggleLabel').textContent = e.target.checked ? 'Movimentos Classe' : 'Movimentos Básicos';
+            Array.from(document.getElementsByClassName('toggleLabel')).forEach(el => {
+                el.textContent = e.target.checked ? 'Movimentos de Classe' : 'Movimentos Básicos';
+            });
             this.renderClassMoves();
         });
 
@@ -170,9 +175,15 @@ class CharacterSheet {
                 if (e.target.id === id) document.getElementById(id).style.display = 'none';
             });
         });
-    }
+
+        document.getElementById('btnAddMovement')?.addEventListener('click', (e) => {
+                let movement = e;
+                this.character.addMovement()
+            })
+        };
 
     start() {
+
         // Atribui ids automáticos quando ausentes, preservando ids existentes
         this.allInputs.forEach((input, index) => {
             if (!input.id) {
@@ -213,6 +224,9 @@ class CharacterSheet {
             });
         });
 
+        //Iniciar com o botão card selecionado
+        this.btnMoveCardView.classList.add("selected");
+        
         this.clearInputs();
         this.load();
         this.classSelector();
@@ -253,16 +267,16 @@ class CharacterSheet {
     // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
     renderClassMoves() {
         const container = document.getElementById('classMovesList');
-        if (this.charClass.value === "Classe" || !this.charClass.value) {
-            container.innerHTML = '<div class="movement-list"><em>Selecione uma classe para ver os movimentos.</em></div>';
-            return;
-        }
+
         container.innerHTML = '';
         let movementList = [];
         movementList = this.toggleMovementType ? Mechanics.Movement.getMovementListByClass(this.charClass.value) : Mechanics.Movement.getBasicMovements();
 
 
-
+        if(movementList.length === 0) {
+            container.innerHTML = '<div class="movement-list"><em>Não há movimentos disponíveis para esta classe.</em></div>';
+            return;
+        }
         // Precisa ter uma forma mais eficiente de filtrar movimentos raciais, mas por enquanto, vamos fazer isso aqui:
         for (const movement of movementList) {
             if (this.charClass.value.toLowerCase() !== "bárbaro") {
@@ -271,22 +285,15 @@ class CharacterSheet {
                 }
             }
         }
-        if(this.movementListFormat === 'card') {
-            let cardbox = document.createElement('div');
-            cardbox.classList.add('movement-cardbox');
-            for (const movement of movementList) {   
-                cardbox.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
-            }
-            container.appendChild(cardbox);
-        } else if(this.movementListFormat === 'list') {
-            let panelBox = document.createElement('div');
-            panelBox.classList.add('movement-list');
-            for (const movement of movementList) {
-                panelBox.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
-            }
-            container.appendChild(panelBox);
+        let box = document.createElement('div');
+        box.classList.add(this.movementListFormat === 'card' ? 'movement-cardbox' : 'movement-list');
+        for (const movement of movementList) {   
+            box.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
         }
-            return;
+
+        container.appendChild(box);
+
+        return;
     }
 
     // === Funções de classe/atributo (escopo de módulo) ===

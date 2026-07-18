@@ -31,7 +31,7 @@ export default class Character {
         this.movimentos = [];
         this.equipamentos = [];
         this.consumiveis = [];
-
+        
         this.spells = [];
         this.bonds = [];
         this.finishedBonds = [];

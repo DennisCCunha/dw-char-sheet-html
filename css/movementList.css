@@ -1,0 +1,95 @@
+:root{
+    --card-border:#b4b4b4;
+    --card-description:#ececec;
+    --card-description-even:#cccccc;
+    --card-roll-badge:#6d6d6d;
+    --card-roll-shadow:#525252;
+    --ultra:#00ff00;
+}
+
+.movement-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.movement-list li {
+    margin-bottom: 6px;
+    font-family: var(--font);
+    font-size: 16px;
+    border-bottom: 1px dotted var(--border-color);
+    padding-bottom: 4px;
+}
+
+.movement-list li input[type="checkbox"]:disabled {
+    color: var(--card-roll-shadow);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.movement-list li:nth-child(odd) {
+    background-color: var(--card-description);
+}
+
+.movement-list li:nth-child(even) {
+    background-color: var(--card-description-even);
+}
+
+.movement-list li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+
+/* Movement Panel Styles */
+.movement-panel{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+}
+
+.movement-panel-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.movement-panel-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.movement-panel-title input[type="checkbox"]:disabled:checked {
+    color: var(--ultra) !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+.movement-panel-roll{
+    
+}
+.movement-panel-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+.movement-panel-details{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 12px;
+}
+
+.movement-panel-description{
+    background: rgba(216, 216, 216, 0.301);
+    padding: 0.5rem;
+    padding-left: 1rem;
+}

@@ -95,7 +95,158 @@ export class Equipment {
     }
 }
 
+
 export class Movement {
+    static #parsing(movement) {
+
+
+            // "Quando viajar por um território hostil, escolha um membro do grupo para ser o desbravador, outro para ser o batedor, e outro para ser o contramestre."
+            // "Cada personagem rola+SAB."
+            // "Com <span class='badge'>10+</span>:"
+            // "\n• o contramestre reduz a quantidade de rações necessárias em 1;"
+            // "\n• o desbravador reduz a quantidade de tempo necessária para alcançar o destino (o MJ dirá o quanto);"
+            // "\n• o batedor vai notar qualquer perigo rápido o bastante para que vocês obtenham vantagem."
+            // "Com <span class='badge'>7-9</span>,"
+            // "cada personagem desempenhará seu papel como esperado: a quantidade normal de rações será consumida,"
+            // "a jornada demorará o tempo esperado, e ninguém consegue surpreender o grupo, mas ninguém também será surpreendido."
+
+
+            let texto = movement.descricao;
+            // Normaliza quebras de linha
+            texto = texto.replace(/\r\n/g, "\n").trim();
+
+            const resultado = {
+                descricaoInicial: null,
+                rolagem: null,
+                criteriosRolagem: [],
+                efeitos: [],
+                textoFinal: null
+            };
+
+            // Regex sugeridos
+            const regexRolagem = /Role(?:\s+com)?\s*[\+\-]?\s*[\wÁÉÍÓÚÂÊÔÃÕÇ]+/i;
+            const regexCriterio = /(?:Em um|Com|Num)?\s*(\d+[\+\-](?:\d+)?)/i;
+            const regexEfeito = /(?:•|-|\*|\d+\.)\s+(.+)/;
+            const regexItemLista = /^\s*(?:•|-|\*|\d+\.)\s+(.+)$/gm;
+
+            //--------------------------------------------------
+            // 1. Descrição inicial
+            //--------------------------------------------------
+
+            const primeiroMarcador = [
+                texto.search(regexRolagem),
+                texto.search(regexCriterio),
+                texto.search(/^\s*(?:•|-|\*|\d+\.)/m)
+            ]
+                .filter(i => i >= 0)
+                .sort((a, b) => a - b)[0];
+
+            if (primeiroMarcador !== undefined) {
+                resultado.descricaoInicial = texto
+                    .substring(0, primeiroMarcador)
+                    .trim();
+
+                texto = texto.substring(primeiroMarcador).trim();
+            } else {
+                resultado.descricaoInicial = texto;
+                return resultado;
+            }
+
+            //--------------------------------------------------
+            // 2. Rolagem
+            //--------------------------------------------------
+
+            const matchRolagem = texto.match(regexRolagem);
+
+            if (matchRolagem) {
+                resultado.rolagem = matchRolagem[0].trim();
+
+                texto = texto.replace(matchRolagem[0], "").trim();
+            }
+
+            //--------------------------------------------------
+            // 3. Critérios (10+, 7-9, 6-)
+            //--------------------------------------------------
+
+            let linhas = texto.split("\n");
+
+            let criterioAtual = null;
+
+            for (let i = 0; i < linhas.length; i++) {
+
+                let linha = linhas[i].trim();
+
+                if (!linha)
+                    continue;
+
+                const criterio = linha.match(regexCriterio);
+
+                if (criterio) {
+
+                    criterioAtual = {
+                        criterio: criterio[1],
+                        efeito: "",
+                        conteudo: []
+                    };
+
+                    resultado.criteriosRolagem.push(criterioAtual);
+
+                    // Extrai tudo até o próximo critério
+                    let proximoCriterio = -1;
+                    for (let j = i + 1; j < linhas.length; j++) {
+                        if (linhas[j].trim().match(regexCriterio)) {
+                            proximoCriterio = j;
+                            break;
+                        }
+                    }
+
+                    const fimIntervalo = proximoCriterio >= 0 ? proximoCriterio : linhas.length;
+                    for (let j = i + 1; j < fimIntervalo; j++) {
+                        const conteudoLinha = linhas[j].trim();
+                        if (conteudoLinha) {
+                            criterioAtual.conteudo.push(conteudoLinha);
+                        }
+                    }
+
+                    continue;
+                }
+
+                //--------------------------------------------------
+                // Lista
+                //--------------------------------------------------
+
+                const item = linha.match(/^(?:•|-|\*|\d+\.)\s+(.+)/);
+
+                if (item) {
+
+                    if (criterioAtual) {
+                        criterioAtual.efeito += (criterioAtual.efeito ? "\n" : "") + item[1];
+                    } else {
+                        resultado.efeitos.push(item[1]);
+                    }
+
+                    continue;
+                }
+
+                //--------------------------------------------------
+                // Texto solto
+                //--------------------------------------------------
+
+                if (criterioAtual) {
+                    criterioAtual.efeitos.push(linha);
+                } else {
+
+                    resultado.textoFinal =
+                        (resultado.textoFinal ?? "") +
+                        (resultado.textoFinal ? "\n" : "") +
+                        linha;
+                }
+            }
+
+            return resultado;
+        
+    }
+
     static create(id = 0, nome ="", descricao="", tags = []) {
         return {
             id: id,
@@ -114,7 +265,7 @@ export class Movement {
     }
 
     static getBasicMovements() {
-        return dungeonworld.lista_movimentos.filter(movement => movement.classe === "basico");
+        return dungeonworld.lista_movimentos.filter(movement => movement.classe === "basico").sort((a, b) => a.nome.localeCompare(b.nome));;
     }
 
     // WIP - Retorna o html do design do Card, segundo imagem na Issue #5
@@ -180,8 +331,14 @@ export class Movement {
     }
 
     static render(movement, format, selectable = false) {
+        
+        let parsedMovement = Movement.#parsing(movement);
+        movement.parsedMovement = parsedMovement;
+
         if (format === "card") {
             return Movement.renderCard(movement);
+            // return Movement.renderFormattedCard(movement);
+            
         }
         return Movement.renderPanel(movement, selectable);
     }
@@ -190,123 +347,70 @@ export class Movement {
         return Movement.render(movement, format, true);
     }
 
-    // WIP - Formatar o texto para se conformar ao design do Card, segundo imagem na Issue #5
-    static formatToMovementCard(texto) {
-        // Normaliza quebras de linha
-        texto = texto.replace(/\r\n/g, "\n").trim();
 
-        const resultado = {
-            descricaoInicial: null,
-            rolagem: null,
-            criteriosRolagem: [],
-            efeitos: [],
-            textoFinal: null
-        };
+    static renderFormattedCard(movement) {
+        console.log(movement);
 
-        // Regex sugeridos
-        const regexRolagem = /Role(?:\s+com)?\s*[\+\-]?\s*[\wÁÉÍÓÚÂÊÔÃÕÇ]+/i;
-        const regexCriterio = /(?:Em um|Com|Num)?\s*(10\+|7-9|6-)/i;
-        const regexItemLista = /^\s*(?:•|-|\*|\d+\.)\s+(.+)$/gm;
-
-        //--------------------------------------------------
-        // 1. Descrição inicial
-        //--------------------------------------------------
-
-        const primeiroMarcador = [
-            texto.search(regexRolagem),
-            texto.search(regexCriterio),
-            texto.search(/^\s*(?:•|-|\*|\d+\.)/m)
-        ]
-            .filter(i => i >= 0)
-            .sort((a, b) => a - b)[0];
-
-        if (primeiroMarcador !== undefined) {
-            resultado.descricaoInicial = texto
-                .substring(0, primeiroMarcador)
-                .trim();
-
-            texto = texto.substring(primeiroMarcador).trim();
-        } else {
-            resultado.descricaoInicial = texto;
-            return resultado;
+        let criteirios = movement.parsedMovement.criteriosRolagem.map(criterio => `<span>${criterio.criterio}</span>`).join('');
+  
+        let icon = "basico";
+        if (movement.tipo.includes("Especial")) {
+            icon = "especial";
+        }
+        else if (movement.tipo.includes("Avançado")) {
+            icon = "avançado";
         }
 
-        //--------------------------------------------------
-        // 2. Rolagem
-        //--------------------------------------------------
+        return `<div class="movement-card">
+                    <div class="movement-card-header">
+                        <div class="movement-card-title">
+                            <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
+                            <h2>${movement.nome}</h2>
+                        </div>
+                        <div class="movement-card-roll">
+                            ${movement.rolagem ? `<div class="movement-card-roll-detail"> 
+                                <img class="movement-card-roll-detail-icon" src="../assets/icons/dados.png" alt="roll" />
+                                <span>${movement.rolagem}</span>
+                                </div>` : ''}
+                        </div>
+                    </div>
 
-        const matchRolagem = texto.match(regexRolagem);
+                    <section class="movement-card-description">
+                        <p>${movement.parsedMovement.descricaoInicial}</p>
+                        ${movement.parsedMovement.criteriosRolagem.map(criterio => `<span class="badge">${criterio.criterio}</span><p>${criterio.efeito}</p>`)}
+                        <p>${movement.parsedMovement.textoFinal}</p>
+                    </section>
 
-        if (matchRolagem) {
-            resultado.rolagem = matchRolagem[0].trim();
+                    <section >
+                                
+                    </section>
 
-            texto = texto.replace(matchRolagem[0], "").trim();
-        }
-
-        //--------------------------------------------------
-        // 3. Critérios (10+, 7-9, 6-)
-        //--------------------------------------------------
-
-        let linhas = texto.split("\n");
-
-        let criterioAtual = null;
-
-        for (let linha of linhas) {
-
-            linha = linha.trim();
-
-            if (!linha)
-                continue;
-
-            const criterio = linha.match(regexCriterio);
-
-            if (criterio) {
-
-                criterioAtual = {
-                    criterio: criterio[1],
-                    efeitos: []
-                };
-
-                resultado.criteriosRolagem.push(criterioAtual);
-
-                continue;
-            }
-
-            //--------------------------------------------------
-            // Lista
-            //--------------------------------------------------
-
-            const item = linha.match(/^(?:•|-|\*|\d+\.)\s+(.+)/);
-
-            if (item) {
-
-                if (criterioAtual) {
-                    criterioAtual.efeitos.push(item[1]);
-                } else {
-                    resultado.efeitos.push(item[1]);
-                }
-
-                continue;
-            }
-
-            //--------------------------------------------------
-            // Texto solto
-            //--------------------------------------------------
-
-            if (criterioAtual) {
-                criterioAtual.efeitos.push(linha);
-            } else {
-
-                resultado.textoFinal =
-                    (resultado.textoFinal ?? "") +
-                    (resultado.textoFinal ? "\n" : "") +
-                    linha;
-            }
-        }
-
-        return resultado;
+                    <div class="movement-card-footer">
+                        <strong>MOVIMENTO</strong>
+                        <strong>${movement.tipo.toUpperCase()}</strong>
+                    </div>
+                </div>`;
     }
 
+}
+
+export class ClassAndRace{
+    static getClasses() {
+        return dungeonworld.classes;
+    }
+
+    static getClassList(){
+        return dungeonworld.classes.map(clas => (clas.nome));
+    }
+    static getRacesList(){
+        let races = [];
+        dungeonworld.classes.forEach(clas => {
+            if (clas.racas) {
+                races = [...new Set(races.concat(clas.racas))];
+            }
+        });
+        return races;
+    }
 }
 
 export class Spell {
@@ -391,4 +495,4 @@ export class Spell {
 
 }
 
-export default { Bond, Consumable, Equipment, Movement, Spell };
+export default { Bond, ClassAndRace, Consumable, Equipment, Movement, Spell };
