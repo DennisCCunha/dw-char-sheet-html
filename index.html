@@ -51,7 +51,6 @@
         </div>
     </nav>
 
-
     <article class="pagina">
       <div id="1st-Page" class="sheet">
         <div>
@@ -78,7 +77,6 @@
                 <option value="Elfo">Elfo</option>
                 <option value="Humano">Humano</option>
                 <option value="Halfling">Halfling</option>
-                <option value="Outro">Outro</option>
               </select>
 
             </div>
@@ -225,27 +223,25 @@
         </div> <!-- Fim da primeira ficha-->
       </div>
     </article>
-
  
     <article class="pagina">
       <div id="Movements" class="sheet">  
         <div class="sheet-header">
           <div class="movement-toggle">
-            <label id="toggleLabel"class="">Movimentos Basicos</label>
+            <label id="toggleLabel" class="toggleLabel">Movimentos Básicos</label>
             <label class="switch">
               <input id="toggleMovementType" type="checkbox">
-              <span class="slider"></span>
+              <span id="toggleMovementTypeSlider" class="slider"></span>
           </label>
           </div>
-
-
-
-          <span id="btnMoveCardView" class="btnMovementTab">card</span>
-          <span id="btnMoveListView" class="btnMovementTab">lista</span>
+          <div class="movement-view-toggle">
+            <span id="btnMoveCardView" class="btnMovementTab">card</span>
+            <span id="btnMoveListView" class="btnMovementTab">lista</span>
+          </div>
         </div>
         <div class="sheet-container">
           <aside id="classMoves" class="movement_availiable">
-            <h2>Movimentos de Classe</h2>
+            <h2 class="toggleLabel">Movimentos Básicos</h2>
             <div id="classMovesList">
 
             </div>
@@ -310,7 +306,6 @@
         </aside>
       </div>
     </article>
-
 
     <div id="modalsContainer">
       <!-- Modal: exibir código gerado -->
