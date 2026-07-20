@@ -180,7 +180,7 @@ class CharacterSheet {
                 let movement = e;
                 this.character.addMovement()
             })
-        };
+    };
 
     start() {
 
@@ -234,6 +234,8 @@ class CharacterSheet {
         this.updateStrikethrough();
         this.updateAlignmentOptions();
         this.renderClassMoves();
+        this.applyClassEffects();
+
     }
 
     save(){
@@ -272,7 +274,6 @@ class CharacterSheet {
         let movementList = [];
         movementList = this.toggleMovementType ? Mechanics.Movement.getMovementListByClass(this.charClass.value) : Mechanics.Movement.getBasicMovements();
 
-
         if(movementList.length === 0) {
             container.innerHTML = '<div class="movement-list"><em>Não há movimentos disponíveis para esta classe.</em></div>';
             return;
@@ -303,12 +304,11 @@ class CharacterSheet {
         return this.classDetails.find((cd) => Utils.canonical(cd.nome) === normalized) || null;
     }
 
-    updateClassSpellsVisibility() {
-        const classSelect = document.getElementById('charClass');
+    renderClassSpells(){
+        console.log(this.character);
+        if (!this.character.classe || !this.character.classe.spellcaster) return;
         const classSpells = document.getElementById('classSpells');
-        if (!classSpells || !classSelect) return;
-        const sel = Utils.canonical(classSelect.value);
-        classSpells.style.display = (sel === 'mago' || sel === 'clerigo') ? '' : 'none';
+
     }
 
     applyClassEffects() {
@@ -340,7 +340,7 @@ class CharacterSheet {
             const charLoadInput = document.getElementById('charLoad');
             if (charLoadInput) charLoadInput.value = '';
         }
-        this.updateClassSpellsVisibility();
+        this.renderClassSpells();
     }
 
     // Funções para adicionar itens, magias e movimentos à ficha

@@ -32,7 +32,6 @@ export default class SaveAndLoad {
         });
     }
 
-
     static encodeState(state) {
         const key = 'DungeonWorld2024';
         const bytes = new TextEncoder().encode(JSON.stringify(state));

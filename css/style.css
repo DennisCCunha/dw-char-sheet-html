@@ -71,11 +71,14 @@ body{
 
 .sheet-header{
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     flex:1;
+    justify-content: space-between;
     align-items: flex-end;
     alignment-baseline: central;
     gap: 12px;
+    border-bottom: 1px solid #000;
+    width: 90vw;
 }
 
 .equipment-sheet {
@@ -602,8 +605,18 @@ footer p a:hover{
 }
 
 
+
+.movement-view-toggle{
+    display: flex;
+    flex-direction: row;
+
+    gap: 8px;
+}
+
 .btnMovementTab{
+    height: 20px;
     padding: 6px 12px;
+    margin-bottom: 1px;
     background: #222;
     color: var(--white);
     border: none;
@@ -611,8 +624,7 @@ footer p a:hover{
     font-family: var(--font);
     font-size: 14px;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    align-self: center;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */
 }
 .btnMovementTab.selected{
     background: var(--gold);
@@ -629,11 +641,22 @@ footer p a:hover{
 }
 
 /* Slider Toggle */
+
+.toggleLabel {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--dark);
+    margin-right: 8px;
+    vertical-align: sub;
+}
+
+
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
+  margin-bottom: 1px;
 }
 
 .switch input { 

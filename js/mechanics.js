@@ -311,6 +311,13 @@ export class Movement {
         if (movement.tipo === "Inicial" || movement.tipo === "Basico" || movement.tipo === "Especial") {
             inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" checked disabled />`;
         }
+        if(movement.tipo.includes("Avançado") && selectable){
+            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" />`;
+        }
+        if(movement.exclusivo && selectable){
+            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" />`;
+        }
+
         return `<div class="movement-panel">
                     <div class="movement-panel-header">
                         <div class="movement-panel-title">

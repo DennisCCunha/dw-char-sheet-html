@@ -106,6 +106,7 @@
             "hp_base": 8,
             "dado_dano": "d6",
             "carga_base": 10,
+            "spellcaster": true,
             "alinhamento": [
                 { "nome": "Bom", "descricao": "Colocar-se em perigo para curar outra pessoa." },
                 { "nome": "Ordeiro", "descricao": "Colocar-se em perigo seguindo os preceitos de sua igreja ou deus." },
@@ -465,6 +466,7 @@
             "hp_base": 4,
             "dado_dano": "d4",
             "carga_base": 7,
+            "spellcaster": true,
             "alinhamento": [
                 { "nome": "Bom", "descricao": "Usar magia para ajudar diretamente outra pessoa." },
                 { "nome": "Neutro", "descricao": "Descobrir informações a respeito de um enigma ou mistério mágico." },

@@ -93,3 +93,16 @@
     padding: 0.5rem;
     padding-left: 1rem;
 }
+
+.movement-select{
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid black;
+    background: white;
+    cursor: pointer;
+    position: relative;
+}
+.movement-select:checked{
+    background: black;  
+}
