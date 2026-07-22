@@ -1,38 +1,6 @@
+import Character from './character.js';
+
 export default class SaveAndLoad {
-    
-    static collectState([allInputs, circles]) {
-        const state = {};
-        allInputs.forEach((input) => {
-            if (input.type === 'checkbox') state[input.id] = input.checked ? '1' : '0';
-            if (input.type === 'select-one') state[input.id] = {
-                value: input.value || '', 
-                index: input.selectedIndex || 0
-            };
-            else state[input.id] = input.value;
-        });
-        circles.forEach((circle) => {
-            state[circle.id] = circle.classList.contains('active') ? '1' : '0';
-        });
-        return state;
-    }
-
-    static applyState([allInputs, circles], character, state) {
-        allInputs.forEach((input) => {
-            if (state[input.id] !== undefined) {
-                if (input.type === 'checkbox') input.checked = state[input.id] === '1';
-                if (input.type === 'select-one') {
-                    input.selectedIndex = state[input.id].index;
-                    input.value = state[input.id].value;
-                } else input.value = state[input.id];
-            }
-        });
-        circles.forEach((circle) => {
-            if (state[circle.id] === '1') circle.classList.add('active');
-            else circle.classList.remove('active');
-        });
-
-        console.log('State applied:', state);
-    }
 
     static encodeState(state) {
         const key = 'DungeonWorld2024';
@@ -58,19 +26,22 @@ export default class SaveAndLoad {
         return JSON.parse(new TextDecoder().decode(xored));
     }
 
-    static autoSave([allInputs, circles]) {
+    /** Serialises the Character model and persists it to localStorage. */
+    static autoSave(character) {
         try {
-            localStorage.setItem('dw_sheet_code', SaveAndLoad.encodeState(SaveAndLoad.collectState([allInputs, circles])));
+            localStorage.setItem('dw_sheet_code', SaveAndLoad.encodeState(Character.toState(character)));
         } catch (e) { console.error('Falha ao salvar ficha:', e); }
     }
 
-    static autoLoad([allInputs, circles]) {
+    /** Loads from localStorage and returns a hydrated Character, or null if nothing is saved. */
+    static autoLoad() {
         const saved = localStorage.getItem('dw_sheet_code');
-        if (!saved) return;
+        if (!saved) return null;
         try {
-            SaveAndLoad.applyState([allInputs, circles], null, SaveAndLoad.decodeState(saved));
+            return Character.fromState(SaveAndLoad.decodeState(saved));
         } catch (e) {
             console.warn('Falha ao restaurar ficha:', e);
+            return null;
         }
     }
 
@@ -83,10 +54,6 @@ export default class SaveAndLoad {
         try {
             sessionStorage.removeItem('dw_sheet_code');
         } catch (e) { /* silent */ }
-    }
-
-    static SaveCharacterState(char, state) {
-        
     }
 
 }

@@ -98,19 +98,6 @@ export class Equipment {
 
 export class Movement {
     static #parsing(movement) {
-
-
-            // "Quando viajar por um território hostil, escolha um membro do grupo para ser o desbravador, outro para ser o batedor, e outro para ser o contramestre."
-            // "Cada personagem rola+SAB."
-            // "Com <span class='badge'>10+</span>:"
-            // "\n• o contramestre reduz a quantidade de rações necessárias em 1;"
-            // "\n• o desbravador reduz a quantidade de tempo necessária para alcançar o destino (o MJ dirá o quanto);"
-            // "\n• o batedor vai notar qualquer perigo rápido o bastante para que vocês obtenham vantagem."
-            // "Com <span class='badge'>7-9</span>,"
-            // "cada personagem desempenhará seu papel como esperado: a quantidade normal de rações será consumida,"
-            // "a jornada demorará o tempo esperado, e ninguém consegue surpreender o grupo, mas ninguém também será surpreendido."
-
-
             let texto = movement.descricao;
             // Normaliza quebras de linha
             texto = texto.replace(/\r\n/g, "\n").trim();
@@ -274,8 +261,11 @@ export class Movement {
         if (movement.tipo.includes("Especial")) {
             icon = "especial";
         }
-        else if (movement.tipo.includes("Avançado")) {
+        else if (movement.tipo.includes("Avançado 2-5")) {
             icon = "avançado";
+        }
+        else if (movement.tipo.includes("Avançado 6-10")) {
+            icon = "avançado2";
         }
 
         return `<div class="movement-card">
@@ -471,15 +461,27 @@ export class Spell {
     }
 
     static renderSpellCard(spell) {
-        return `<div id="spell-${spell.id}" class="spell-card">
+        return `<div class="spell-card">
                     <div class="spell-card-header">
-                        <h2>${spell.nome}</h2>
-                        <span class="spell-card-level">${spell.nivel > 0 ? 'Nível ' + spell.nivel : 'Truque'}</span>
-                        <span class="spell-card-school">${spell.school}</span>
-                        <span class="spell-card-continuous">${spell.continuo ? 'Contínuo' : ''}</span>
+                        <div class="spell-card-title">
+                            <img class="movement-card-icon" src="../assets/icons/spell.png" alt="spell" />
+                            <h2>${spell.nome}</h2>
+                        </div>
+                        <div class="spell-card-school">
+                            <span>${spell.nivel > 0 ? 'Nível ' + spell.nivel +',': ''} ${spell.school} ${spell.continuo ? ', Contínuo' : ''}</span>
+                        </div>
                     </div>
-                    <div class="spell-card-description">
+
+                    <section class="spell-card-description">
                         <p>${spell.descricao}</p>
+                    </section>
+
+                    <section class="spell-card-result">
+                    </section>
+
+                    <div class="spell-card-footer">
+                        <strong>FEITIÇO</strong>
+                        <strong>${spell.classe}</strong>
                     </div>
                 </div>`;
     }
@@ -492,8 +494,8 @@ export class Spell {
         </div>`;
     }
 
-    static renderSpellGroupbyLevel(classe) {
-        const lista_spells = Spell.getSpellListByClassAndLevel(classe);
+    static renderSpellGroupbyLevel(lista_spells, nivel, format="card") {
+        
 
         const groupedSpells = [];
         for (const spell of lista_spells) {
@@ -504,16 +506,32 @@ export class Spell {
         }
 
         const spellGroupContainer = document.createElement('div');
+
         for (const [nivel, spells] of Object.entries(groupedSpells)) {
-            const spellsContainer = document.createElement('div');
-            spellsContainer.classList.add('spell-group');
-            const levelHeader = document.createElement('h3');
-            levelHeader.textContent = nivel > 0 ? `Nível ${nivel}` : 'Truques';
-            spellsContainer.appendChild(levelHeader);
+
+            //Crei o Spell-Group para conter as magias de Cada Nivel
+            const containerA = document.createElement('div');
+            containerA.classList.add('spell-card-group');
+            containerA.id = `spell-group-${nivel}`;
+            
+            //Cabeçalhos das Magias
+            const header = document.createElement('h3');
+            header.textContent = nivel > 0 ? `Nível ${nivel}` : 'Truques';
+            header.id = `spell-group-header-${nivel}`;
+            containerA.appendChild(header);
+            
+            //Container para dos Cards de Magias
+            const spellCardContainer = document.createElement('div');
+            spellCardContainer.classList.add('spell-card-container');
+            spellCardContainer.id = `spell-card-container-${nivel}`;
+            
             spells.forEach(spell => {
-                spellsContainer.innerHTML += Spell.render(spell, 'list');
+                spellCardContainer.innerHTML += Spell.render(spell, format);
             });
-            spellGroupContainer.appendChild(spellsContainer);
+
+            containerA.appendChild(spellCardContainer);
+
+            spellGroupContainer.appendChild(containerA);
         }
         return spellGroupContainer.innerHTML;
     }

@@ -85,9 +85,9 @@
             <div class="card">
               <label>PV</label>
               <div class="pv-pair">
-                <input type="text" id="curPV" value="0" placeholder="X+CON" />
+                <input type="text" id="curPV" value="" placeholder="X+CON" />
                 <span>/</span>
-                <input type="text" id="charPV" value="0" placeholder="X+CON" />                
+                <input type="text" id="charPV" value="" placeholder="X+Constituição" />
               </div>
             </div>
 
@@ -113,21 +113,20 @@
               <span class="init-val" data-val="15">15(+1)</span>,
               <span class="init-val" data-val="13">13(+1)</span>,
               <span class="init-val" data-val="12">12(+0)</span>,
-              <span class="init-val" data-val="10">10(+0)</span>,
+              <span class="init-val" data-val="9">9(+0)</span>,
               <span class="init-val" data-val="8">8(-1)</span>]</label>
           </div>
 
           <table id="attributesTable">
             <tbody>
-            <tbody>
               <tr>
                 <th>Atributo</th>
-                <td>FOR</td>
-                <td>DES</td>
-                <td>CON</td>
-                <td>INT</td>
-                <td>SAB</td>
-                <td>CAR</td>
+                <td class="table-attribute-title">FOR</td>
+                <td class="table-attribute-title">DES</td>
+                <td class="table-attribute-title">CON</td>
+                <td class="table-attribute-title">INT</td>
+                <td class="table-attribute-title">SAB</td>
+                <td class="table-attribute-title">CAR</td>
               </tr>
 
               <tr>
@@ -151,7 +150,7 @@
               </tr>
 
 
-              <tr>
+              <tr class="table-row-debilidade">
                 <th>Deb</th>
                 <td>
                   <input id="debFor" type="checkbox" class="red_filling" />
@@ -227,36 +226,40 @@
     <article class="pagina">
       <div id="Movements" class="sheet">  
         <div class="sheet-header">
-
+          <!-- Controllers de Movimentos -->
+          <div id="movementController" class="movement-controller">
+            <div id="toggleGroupMovement">
+              <span id="toggleLabel" class="toggleLabel">Movimentos Básicos</span>
+              <label class="switch">
+                <input id="toggleMovementType" type="checkbox">
+                <span id="toggleMovementTypeSlider" class="slider"></span>
+              </label>
+            </div>
+            <div class="movement-view-toggle">
+              <span id="btnMoveCardView" class="btnMovementTab">card</span>
+              <span id="btnMoveListView" class="btnMovementTab">lista</span>
+            </div>
+            <div id="movementFilter">
+              <input type="text" id="movementSearch" placeholder="Pesquisar movimentos..."/>
+            </div>
+          </div>
+          <!-- Controllers de Magias -->
+          <div id="spellController" class="spells-controller">
+            <div class="spell-view-toggle">
+              <span id="btnSpellCardView" class="btnMovementTab">card</span>
+              <span id="btnSpellListView" class="btnMovementTab">lista</span>
+            </div>
+          </div>
         </div>
         <div class="sheet-container">
           <aside id="movementContainer" class="movement_availiable">
-            <div id="movementController" class="movement-controller">
-              <div id="toggleGroupMovement">
-                <span id="toggleLabel" class="toggleLabel">Movimentos Básicos</span>
-                <label class="switch">
-                  <input id="toggleMovementType" type="checkbox">
-                  <span id="toggleMovementTypeSlider" class="slider"></span>
-                </label>
-              </div>
-              <div class="movement-view-toggle">
-                <span id="btnMoveCardView" class="btnMovementTab">card</span>
-                <span id="btnMoveListView" class="btnMovementTab">lista</span>
-              </div>
-            </div>
+
             <div id="classMoves" class="movement-list">
               <!-- Movimentos da classe serão exibidos aqui -->
             </div>
           </aside>
           <aside id="spellContainer" class="spell_availiable">
-            <div id="spellController" class="spells-controller">
-
-              <div class="spell-view-toggle">
-                <span id="btnSpellCardView" class="btnMovementTab">card</span>
-                <span id="btnSpellListView" class="btnMovementTab">lista</span>
-              </div>
-            </div>
-            <div id="classSpells" class="spell-list">
+            <div id="classSpells" class="">
               <!-- Magias da classe serão exibidas aqui -->
             </div>
           </aside>
