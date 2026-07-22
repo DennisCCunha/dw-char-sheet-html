@@ -4,6 +4,9 @@
 @import url('./movementCard.css');
 @import url('./movementList.css');
 
+@import url('./spellCard.css');
+@import url('./spellList.css');
+
 :root {
     --font: 'Cinzel', serif;
     --border-color: #000;
@@ -102,11 +105,14 @@ input, select, textarea {
     background: transparent;
     border: none;
     outline: none;
+    font-weight: bold;
 }
+
 input::placeholder, select::placeholder, textarea::placeholder {
     color: var(--gold);
     font-weight: bold;
 }
+
 select option:hover {
     color: var(--gold);
 }
@@ -192,6 +198,14 @@ h3 {
     border: none;
     border-bottom: 1px solid var(--border-color);
     width: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--gold);
+}
+
+.alignment{
+    flex: auto;
 }
 
 #charAlignment{
@@ -206,7 +220,7 @@ h3 {
     border-radius: 25px;
     padding: 12px;
     text-align: center;
-    background: rgba(219, 219, 219, 0.162);
+    background: rgba(219, 219, 219, 0.192);
 }
 
 .card label {
@@ -236,8 +250,19 @@ h3 {
     border: none;
     border-bottom: 1px solid var(--border-color);
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5rem;
     background: transparent;
+}
+
+.pv-pair input:placeholder-shown{
+    width: 50%;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.8rem;
+    background: transparent;
+    padding-bottom: 5%;
 }
 
 
@@ -259,6 +284,7 @@ th {
     font-family: var(--font);
     font-weight: bold;
     background: rgba(219, 219, 219, 0.162);
+
 }
 
 td input {
@@ -270,24 +296,25 @@ td input {
     font-size: 20px;
 }
 
-.debilidade {
-    color: var(--red);
-    font-size: 0.8rem;
-    font-weight: 200;
+.table-attribute-title {
+    font-weight: bold;
+    color: var(--dark);
+    font-size: 16px;
 }
 
-td:has(.deb-Modifier-active){      
-    background: rgba(180,140,60,0.5);
+.table-row-debilidade td{
+    background: rgba(180, 84, 60, 0.1);
     padding: 2px 5px;
 }
 
-.deb-Modifier-active {
-    color: var(--white);
-    font-weight: bold;
-    background: rgba(180,140,60,0.5);
-    padding: 10px 0px;  
-}
 
+
+
+.debilidade {
+    color: var(--red);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
 
 .bondsArea{
     display: flex;
@@ -330,11 +357,10 @@ td:has(.deb-Modifier-active){
 .movement-controller{
     display: flex;
     flex-direction: row;
-    flex:1;
     justify-content: space-between;
     align-items: flex-end;
     alignment-baseline: central;
-    border-bottom: 1px solid #000;
+    margin-bottom: 1rem;
 }
 
 .movement_availiable{
@@ -342,7 +368,7 @@ td:has(.deb-Modifier-active){
     flex-direction: column;
     flex-wrap: wrap;
     flex-basis: 24rem;
-    flex-grow: 11;
+    flex-grow: 3;
 }
 
 .spells {
@@ -356,7 +382,7 @@ td:has(.deb-Modifier-active){
     justify-content: space-between;
     align-items: flex-end;
     alignment-baseline: central;
-    border-bottom: 1px solid #000;
+    margin-bottom: 1rem;
 }
 
 .spell_availiable {
@@ -364,7 +390,7 @@ td:has(.deb-Modifier-active){
     flex-direction: column;
     flex-wrap: wrap;
     flex-basis: 10rem;
-    flex-grow: 1;
+    flex-grow: 3;
 }
 
 .spell-group {
