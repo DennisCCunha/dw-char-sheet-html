@@ -227,51 +227,37 @@
     <article class="pagina">
       <div id="Movements" class="sheet">  
         <div class="sheet-header">
-          <div class="movement-toggle">
-            <label id="toggleLabel" class="toggleLabel">Movimentos Básicos</label>
-            <label class="switch">
-              <input id="toggleMovementType" type="checkbox">
-              <span id="toggleMovementTypeSlider" class="slider"></span>
-          </label>
-          </div>
-          <div class="movement-view-toggle">
-            <span id="btnMoveCardView" class="btnMovementTab">card</span>
-            <span id="btnMoveListView" class="btnMovementTab">lista</span>
-          </div>
+
         </div>
         <div class="sheet-container">
-          <aside id="classMoves" class="movement_availiable">
-            <h2 class="toggleLabel">Movimentos Básicos</h2>
-            <div id="classMovesList">
-
+          <aside id="movementContainer" class="movement_availiable">
+            <div id="movementController" class="movement-controller">
+              <div id="toggleGroupMovement">
+                <span id="toggleLabel" class="toggleLabel">Movimentos Básicos</span>
+                <label class="switch">
+                  <input id="toggleMovementType" type="checkbox">
+                  <span id="toggleMovementTypeSlider" class="slider"></span>
+                </label>
+              </div>
+              <div class="movement-view-toggle">
+                <span id="btnMoveCardView" class="btnMovementTab">card</span>
+                <span id="btnMoveListView" class="btnMovementTab">lista</span>
+              </div>
+            </div>
+            <div id="classMoves" class="movement-list">
+              <!-- Movimentos da classe serão exibidos aqui -->
             </div>
           </aside>
-          <aside id="classSpells" class="spell_availiable">
-            <div id="mageSpellsSet">
-            <h2>Lista de Magias</h2>
-            <div class="spell-group">
-            <h3><input value="Truques" /></h3>
-            <div class="spell">
-            <input type="checkbox" title="No grimório" class="gold_filling" />
-            <input type="checkbox" title="Preparada" class="blue_filling"/>
-            <input class="spell-name" value="Light" />
+          <aside id="spellContainer" class="spell_availiable">
+            <div id="spellController" class="spells-controller">
+
+              <div class="spell-view-toggle">
+                <span id="btnSpellCardView" class="btnMovementTab">card</span>
+                <span id="btnSpellListView" class="btnMovementTab">lista</span>
+              </div>
             </div>
-            <div class="spell">
-            <input type="checkbox" title="No grimório" class="gold_filling" />
-            <input type="checkbox" title="Preparada" class="blue_filling"/>
-            <input class="spell-name" value="Unseen Servant" />
-            </div>
-            <div class="spell">
-            <input type="checkbox" title="No grimório" class="gold_filling" />
-            <input type="checkbox" title="Preparada" class="blue_filling"/>
-            <input class="spell-name" value="Prestidigitation" />
-            </div>
-            <div class="spell">
-            <input type="checkbox" title="No grimório" class="gold_filling" />
-            <input type="checkbox" title="Preparada" class="blue_filling"/>
-            <input class="spell-name" value="Detect Magic" />
-            </div>
-            </div>
+            <div id="classSpells" class="spell-list">
+              <!-- Magias da classe serão exibidas aqui -->
             </div>
           </aside>
         </div>

@@ -180,7 +180,7 @@ class CharacterSheet {
                 let movement = e;
                 this.character.addMovement()
             })
-        };
+    };
 
     start() {
 
@@ -234,6 +234,9 @@ class CharacterSheet {
         this.updateStrikethrough();
         this.updateAlignmentOptions();
         this.renderClassMoves();
+        console.log('Ficha iniciada com sucesso.');
+        this.applyClassEffects();
+
     }
 
     save(){
@@ -266,12 +269,11 @@ class CharacterSheet {
 
     // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
     renderClassMoves() {
-        const container = document.getElementById('classMovesList');
+        const container = document.getElementById('classMoves');
 
         container.innerHTML = '';
         let movementList = [];
         movementList = this.toggleMovementType ? Mechanics.Movement.getMovementListByClass(this.charClass.value) : Mechanics.Movement.getBasicMovements();
-
 
         if(movementList.length === 0) {
             container.innerHTML = '<div class="movement-list"><em>Não há movimentos disponíveis para esta classe.</em></div>';
@@ -303,12 +305,12 @@ class CharacterSheet {
         return this.classDetails.find((cd) => Utils.canonical(cd.nome) === normalized) || null;
     }
 
-    updateClassSpellsVisibility() {
-        const classSelect = document.getElementById('charClass');
+    renderClassSpells(){
+        console.log('Renderizando magias da classe:', this.charClass.value);
+        if (!this.charClass.value) return;
         const classSpells = document.getElementById('classSpells');
-        if (!classSpells || !classSelect) return;
-        const sel = Utils.canonical(classSelect.value);
-        classSpells.style.display = (sel === 'mago' || sel === 'clerigo') ? '' : 'none';
+        let renderedSpells = Mechanics.Spell.renderSpellGroupbyLevel(this.charClass.value);
+        classSpells.innerHTML = renderedSpells;
     }
 
     applyClassEffects() {
@@ -340,7 +342,8 @@ class CharacterSheet {
             const charLoadInput = document.getElementById('charLoad');
             if (charLoadInput) charLoadInput.value = '';
         }
-        this.updateClassSpellsVisibility();
+        console.log('Efeitos da classe aplicados:', cls);
+        this.renderClassSpells();
     }
 
     // Funções para adicionar itens, magias e movimentos à ficha
