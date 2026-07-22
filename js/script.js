@@ -234,6 +234,7 @@ class CharacterSheet {
         this.updateStrikethrough();
         this.updateAlignmentOptions();
         this.renderClassMoves();
+        console.log('Ficha iniciada com sucesso.');
         this.applyClassEffects();
 
     }
@@ -268,7 +269,7 @@ class CharacterSheet {
 
     // Renderiza movimentos e informações da classe selecionada dentro do elemento #classMoves
     renderClassMoves() {
-        const container = document.getElementById('classMovesList');
+        const container = document.getElementById('classMoves');
 
         container.innerHTML = '';
         let movementList = [];
@@ -305,10 +306,11 @@ class CharacterSheet {
     }
 
     renderClassSpells(){
-        console.log(this.character);
-        if (!this.character.classe || !this.character.classe.spellcaster) return;
+        console.log('Renderizando magias da classe:', this.charClass.value);
+        if (!this.charClass.value) return;
         const classSpells = document.getElementById('classSpells');
-
+        let renderedSpells = Mechanics.Spell.renderSpellGroupbyLevel(this.charClass.value);
+        classSpells.innerHTML = renderedSpells;
     }
 
     applyClassEffects() {
@@ -340,6 +342,7 @@ class CharacterSheet {
             const charLoadInput = document.getElementById('charLoad');
             if (charLoadInput) charLoadInput.value = '';
         }
+        console.log('Efeitos da classe aplicados:', cls);
         this.renderClassSpells();
     }
 

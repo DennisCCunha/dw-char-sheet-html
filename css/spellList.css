@@ -1,0 +1,108 @@
+:root{
+    --card-border:#b4b4b4;
+    --card-description:#ececec;
+    --card-description-even:#cccccc;
+    --card-roll-badge:#6d6d6d;
+    --card-roll-shadow:#525252;
+    --ultra:#00ff00;
+}
+
+.spell-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.spell-list li {
+    margin-bottom: 6px;
+    font-family: var(--font);
+    font-size: 16px;
+    border-bottom: 1px dotted var(--border-color);
+    padding-bottom: 4px;
+}
+
+.spell-list li input[type="checkbox"]:disabled {
+    color: var(--card-roll-shadow);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.spell-list li:nth-child(odd) {
+    background-color: var(--card-description);
+}
+
+.spell-list li:nth-child(even) {
+    background-color: var(--card-description-even);
+}
+
+.spell-list li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+
+/* spell Panel Styles */
+.spell-panel{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+}
+
+.spell-panel-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.spell-panel-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.spell-panel-title input[type="checkbox"]:disabled:checked {
+    color: var(--ultra) !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+.spell-panel-roll{
+    
+}
+.spell-panel-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+.spell-panel-details{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 12px;
+}
+
+.spell-panel-description{
+    background: rgba(216, 216, 216, 0.301);
+    padding: 0.5rem;
+    padding-left: 1rem;
+}
+
+.spell-select{
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid black;
+    background: white;
+    cursor: pointer;
+    position: relative;
+}
+.spell-select:checked{
+    background: black;  
+}

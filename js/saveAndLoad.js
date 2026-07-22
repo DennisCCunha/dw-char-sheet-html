@@ -16,7 +16,7 @@ export default class SaveAndLoad {
         return state;
     }
 
-    static applyState([allInputs, circles], state) {
+    static applyState([allInputs, circles], character, state) {
         allInputs.forEach((input) => {
             if (state[input.id] !== undefined) {
                 if (input.type === 'checkbox') input.checked = state[input.id] === '1';
@@ -30,6 +30,8 @@ export default class SaveAndLoad {
             if (state[circle.id] === '1') circle.classList.add('active');
             else circle.classList.remove('active');
         });
+
+        console.log('State applied:', state);
     }
 
     static encodeState(state) {
@@ -66,7 +68,7 @@ export default class SaveAndLoad {
         const saved = localStorage.getItem('dw_sheet_code');
         if (!saved) return;
         try {
-            SaveAndLoad.applyState([allInputs, circles], SaveAndLoad.decodeState(saved));
+            SaveAndLoad.applyState([allInputs, circles], null, SaveAndLoad.decodeState(saved));
         } catch (e) {
             console.warn('Falha ao restaurar ficha:', e);
         }
@@ -81,6 +83,10 @@ export default class SaveAndLoad {
         try {
             sessionStorage.removeItem('dw_sheet_code');
         } catch (e) { /* silent */ }
+    }
+
+    static SaveCharacterState(char, state) {
+        
     }
 
 }

@@ -233,7 +233,7 @@ export class Movement {
                 //--------------------------------------------------
 
                 if (criterioAtual) {
-                    criterioAtual.efeitos.push(linha);
+                    criterioAtual.efeito += (criterioAtual.efeito ? "\n" : "") + linha;
                 } else {
 
                     resultado.textoFinal =
@@ -439,13 +439,17 @@ export class Spell {
     }
 
     static getSpellListByClassAndLevel(classe, nivel=null) {
-        const spells = dungeonworld.spells.filter(spell => spell.classe.includes(classe));
-        if (nivel !== null) {
-            return spells.filter(spell => spell.nivel === nivel);
-        }
-        else {
-            return spells;
-        }
+        const spells = dungeonworld.lista_spells.filter(spell => {
+            for (const c of spell.classe) {
+                if (c === classe) {
+                    if (nivel === null || spell.nivel === nivel) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+        return spells;
     }
 
     static render(spell, format) {
@@ -454,8 +458,6 @@ export class Spell {
         }
         return Spell.renderSpell(spell, format);
     }
-
-
 
     static renderSpellList(spells, format) {
         spellListContainer.innerHTML = '';
@@ -490,14 +492,30 @@ export class Spell {
         </div>`;
     }
 
-    static renderSpellGroupbyClass(classe) {
-        const spells = Spell.getSpellListByClassAndLevel(classe);
-        const spellGroupContainer = document.getElementById("spells_available");
-        spellGroupContainer.appendChild(document.createElement('h3'))
-            .appendChild(document.createElement("input")).type = "text"
-            .appendChild(document.createElement("input")).value = "${spell.nivel > 0 ? 'Nível ' + spell.nivel : 'Truques'}";
-        
-        // "<div class="spell-group"><h3><input value="Truques" /></h3>"
+    static renderSpellGroupbyLevel(classe) {
+        const lista_spells = Spell.getSpellListByClassAndLevel(classe);
+
+        const groupedSpells = [];
+        for (const spell of lista_spells) {
+            if (!groupedSpells[spell.nivel]) {
+                groupedSpells[spell.nivel] = [];
+            }
+            groupedSpells[spell.nivel].push(spell);
+        }
+
+        const spellGroupContainer = document.createElement('div');
+        for (const [nivel, spells] of Object.entries(groupedSpells)) {
+            const spellsContainer = document.createElement('div');
+            spellsContainer.classList.add('spell-group');
+            const levelHeader = document.createElement('h3');
+            levelHeader.textContent = nivel > 0 ? `Nível ${nivel}` : 'Truques';
+            spellsContainer.appendChild(levelHeader);
+            spells.forEach(spell => {
+                spellsContainer.innerHTML += Spell.render(spell, 'list');
+            });
+            spellGroupContainer.appendChild(spellsContainer);
+        }
+        return spellGroupContainer.innerHTML;
     }
 
 }
