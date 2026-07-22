@@ -98,19 +98,6 @@ export class Equipment {
 
 export class Movement {
     static #parsing(movement) {
-
-
-            // "Quando viajar por um território hostil, escolha um membro do grupo para ser o desbravador, outro para ser o batedor, e outro para ser o contramestre."
-            // "Cada personagem rola+SAB."
-            // "Com <span class='badge'>10+</span>:"
-            // "\n• o contramestre reduz a quantidade de rações necessárias em 1;"
-            // "\n• o desbravador reduz a quantidade de tempo necessária para alcançar o destino (o MJ dirá o quanto);"
-            // "\n• o batedor vai notar qualquer perigo rápido o bastante para que vocês obtenham vantagem."
-            // "Com <span class='badge'>7-9</span>,"
-            // "cada personagem desempenhará seu papel como esperado: a quantidade normal de rações será consumida,"
-            // "a jornada demorará o tempo esperado, e ninguém consegue surpreender o grupo, mas ninguém também será surpreendido."
-
-
             let texto = movement.descricao;
             // Normaliza quebras de linha
             texto = texto.replace(/\r\n/g, "\n").trim();
@@ -233,7 +220,7 @@ export class Movement {
                 //--------------------------------------------------
 
                 if (criterioAtual) {
-                    criterioAtual.efeitos.push(linha);
+                    criterioAtual.efeito += (criterioAtual.efeito ? "\n" : "") + linha;
                 } else {
 
                     resultado.textoFinal =
@@ -274,8 +261,11 @@ export class Movement {
         if (movement.tipo.includes("Especial")) {
             icon = "especial";
         }
-        else if (movement.tipo.includes("Avançado")) {
+        else if (movement.tipo.includes("Avançado 2-5")) {
             icon = "avançado";
+        }
+        else if (movement.tipo.includes("Avançado 6-10")) {
+            icon = "avançado2";
         }
 
         return `<div class="movement-card">
@@ -311,6 +301,13 @@ export class Movement {
         if (movement.tipo === "Inicial" || movement.tipo === "Basico" || movement.tipo === "Especial") {
             inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" checked disabled />`;
         }
+        if(movement.tipo.includes("Avançado") && selectable){
+            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" />`;
+        }
+        if(movement.exclusivo && selectable){
+            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" />`;
+        }
+
         return `<div class="movement-panel">
                     <div class="movement-panel-header">
                         <div class="movement-panel-title">
@@ -432,13 +429,17 @@ export class Spell {
     }
 
     static getSpellListByClassAndLevel(classe, nivel=null) {
-        const spells = dungeonworld.spells.filter(spell => spell.classe.includes(classe));
-        if (nivel !== null) {
-            return spells.filter(spell => spell.nivel === nivel);
-        }
-        else {
-            return spells;
-        }
+        const spells = dungeonworld.lista_spells.filter(spell => {
+            for (const c of spell.classe) {
+                if (c === classe) {
+                    if (nivel === null || spell.nivel === nivel) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+        return spells;
     }
 
     static render(spell, format) {
@@ -447,8 +448,6 @@ export class Spell {
         }
         return Spell.renderSpell(spell, format);
     }
-
-
 
     static renderSpellList(spells, format) {
         spellListContainer.innerHTML = '';
@@ -462,15 +461,27 @@ export class Spell {
     }
 
     static renderSpellCard(spell) {
-        return `<div id="spell-${spell.id}" class="spell-card">
+        return `<div class="spell-card">
                     <div class="spell-card-header">
-                        <h2>${spell.nome}</h2>
-                        <span class="spell-card-level">${spell.nivel > 0 ? 'Nível ' + spell.nivel : 'Truque'}</span>
-                        <span class="spell-card-school">${spell.school}</span>
-                        <span class="spell-card-continuous">${spell.continuo ? 'Contínuo' : ''}</span>
+                        <div class="spell-card-title">
+                            <img class="movement-card-icon" src="../assets/icons/spell.png" alt="spell" />
+                            <h2>${spell.nome}</h2>
+                        </div>
+                        <div class="spell-card-school">
+                            <span>${spell.nivel > 0 ? 'Nível ' + spell.nivel +',': ''} ${spell.school} ${spell.continuo ? ', Contínuo' : ''}</span>
+                        </div>
                     </div>
-                    <div class="spell-card-description">
+
+                    <section class="spell-card-description">
                         <p>${spell.descricao}</p>
+                    </section>
+
+                    <section class="spell-card-result">
+                    </section>
+
+                    <div class="spell-card-footer">
+                        <strong>FEITIÇO</strong>
+                        <strong>${spell.classe}</strong>
                     </div>
                 </div>`;
     }
@@ -483,14 +494,46 @@ export class Spell {
         </div>`;
     }
 
-    static renderSpellGroupbyClass(classe) {
-        const spells = Spell.getSpellListByClassAndLevel(classe);
-        const spellGroupContainer = document.getElementById("spells_available");
-        spellGroupContainer.appendChild(document.createElement('h3'))
-            .appendChild(document.createElement("input")).type = "text"
-            .appendChild(document.createElement("input")).value = "${spell.nivel > 0 ? 'Nível ' + spell.nivel : 'Truques'}";
+    static renderSpellGroupbyLevel(lista_spells, nivel, format="card") {
         
-        // "<div class="spell-group"><h3><input value="Truques" /></h3>"
+
+        const groupedSpells = [];
+        for (const spell of lista_spells) {
+            if (!groupedSpells[spell.nivel]) {
+                groupedSpells[spell.nivel] = [];
+            }
+            groupedSpells[spell.nivel].push(spell);
+        }
+
+        const spellGroupContainer = document.createElement('div');
+
+        for (const [nivel, spells] of Object.entries(groupedSpells)) {
+
+            //Crei o Spell-Group para conter as magias de Cada Nivel
+            const containerA = document.createElement('div');
+            containerA.classList.add('spell-card-group');
+            containerA.id = `spell-group-${nivel}`;
+            
+            //Cabeçalhos das Magias
+            const header = document.createElement('h3');
+            header.textContent = nivel > 0 ? `Nível ${nivel}` : 'Truques';
+            header.id = `spell-group-header-${nivel}`;
+            containerA.appendChild(header);
+            
+            //Container para dos Cards de Magias
+            const spellCardContainer = document.createElement('div');
+            spellCardContainer.classList.add('spell-card-container');
+            spellCardContainer.id = `spell-card-container-${nivel}`;
+            
+            spells.forEach(spell => {
+                spellCardContainer.innerHTML += Spell.render(spell, format);
+            });
+
+            containerA.appendChild(spellCardContainer);
+
+            spellGroupContainer.appendChild(containerA);
+        }
+        return spellGroupContainer.innerHTML;
     }
 
 }

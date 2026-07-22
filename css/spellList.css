@@ -7,13 +7,13 @@
     --ultra:#00ff00;
 }
 
-.movement-list {
+.spell-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.movement-list li {
+.spell-list li {
     margin-bottom: 6px;
     font-family: var(--font);
     font-size: 16px;
@@ -21,29 +21,29 @@
     padding-bottom: 4px;
 }
 
-.movement-list li input[type="checkbox"]:disabled {
+.spell-list li input[type="checkbox"]:disabled {
     color: var(--card-roll-shadow);
     cursor: not-allowed;
     opacity: 0.6;
 }
 
-.movement-list li:nth-child(odd) {
+.spell-list li:nth-child(odd) {
     background-color: var(--card-description);
 }
 
-.movement-list li:nth-child(even) {
+.spell-list li:nth-child(even) {
     background-color: var(--card-description-even);
 }
 
-.movement-list li:last-child {
+.spell-list li:last-child {
     margin-bottom: 0;
     border-bottom: none;
     padding-bottom: 0;
 }
 
 
-/* Movement Panel Styles */
-.movement-panel{
+/* spell Panel Styles */
+.spell-panel{
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -52,49 +52,49 @@
     padding-bottom: 0.8rem;
 }
 
-.movement-panel-header{
+.spell-panel-header{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 
 }
-.movement-panel-title{
+.spell-panel-title{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 12px;
 }
 
-.movement-panel-title input[type="checkbox"]:disabled:checked {
+.spell-panel-title input[type="checkbox"]:disabled:checked {
     color: var(--ultra) !important;
     cursor: not-allowed;
     opacity: 0.6;
 }
 
 
-.movement-panel-roll{
+.spell-panel-roll{
     
 }
-.movement-panel-info{
+.spell-panel-info{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 12px;
 }
-.movement-panel-details{
+.spell-panel-details{
     display: flex;
     flex-direction: row-reverse;
     gap: 12px;
 }
 
-.movement-panel-description{
+.spell-panel-description{
     background: rgba(216, 216, 216, 0.301);
     padding: 0.5rem;
     padding-left: 1rem;
 }
 
-.movement-select{
+.spell-select{
     appearance: none;
     width: 15px;
     height: 15px;
@@ -103,6 +103,6 @@
     cursor: pointer;
     position: relative;
 }
-.movement-select:checked{
+.spell-select:checked{
     background: black;  
 }

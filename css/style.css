@@ -4,6 +4,9 @@
 @import url('./movementCard.css');
 @import url('./movementList.css');
 
+@import url('./spellCard.css');
+@import url('./spellList.css');
+
 :root {
     --font: 'Cinzel', serif;
     --border-color: #000;
@@ -14,6 +17,7 @@
     --blue: rgb(36, 66, 86);
     --green: rgb(39, 84, 45);
     --red: rgb(143, 0, 17);
+    --amber: rgba(255, 136, 0, 0.76);
     --white: #fff;
 }
 
@@ -66,16 +70,21 @@ body{
 .sheet-container{
     display: flex;
     flex-direction: row;
-    gap: 24px;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
 }
 
 .sheet-header{
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     flex:1;
+    justify-content: space-between;
     align-items: flex-end;
     alignment-baseline: central;
     gap: 12px;
+    border-bottom: 1px solid #000;
+    width: 90vw;
 }
 
 .equipment-sheet {
@@ -96,11 +105,14 @@ input, select, textarea {
     background: transparent;
     border: none;
     outline: none;
+    font-weight: bold;
 }
+
 input::placeholder, select::placeholder, textarea::placeholder {
     color: var(--gold);
     font-weight: bold;
 }
+
 select option:hover {
     color: var(--gold);
 }
@@ -186,6 +198,14 @@ h3 {
     border: none;
     border-bottom: 1px solid var(--border-color);
     width: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--gold);
+}
+
+.alignment{
+    flex: auto;
 }
 
 #charAlignment{
@@ -200,7 +220,7 @@ h3 {
     border-radius: 25px;
     padding: 12px;
     text-align: center;
-    background: rgba(219, 219, 219, 0.162);
+    background: rgba(219, 219, 219, 0.192);
 }
 
 .card label {
@@ -230,8 +250,19 @@ h3 {
     border: none;
     border-bottom: 1px solid var(--border-color);
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5rem;
     background: transparent;
+}
+
+.pv-pair input:placeholder-shown{
+    width: 50%;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.8rem;
+    background: transparent;
+    padding-bottom: 5%;
 }
 
 
@@ -253,6 +284,7 @@ th {
     font-family: var(--font);
     font-weight: bold;
     background: rgba(219, 219, 219, 0.162);
+
 }
 
 td input {
@@ -264,24 +296,25 @@ td input {
     font-size: 20px;
 }
 
-.debilidade {
-    color: var(--red);
-    font-size: 0.8rem;
-    font-weight: 200;
+.table-attribute-title {
+    font-weight: bold;
+    color: var(--dark);
+    font-size: 16px;
 }
 
-td:has(.deb-Modifier-active){      
-    background: rgba(180,140,60,0.5);
+.table-row-debilidade td{
+    background: rgba(180, 84, 60, 0.1);
     padding: 2px 5px;
 }
 
-.deb-Modifier-active {
-    color: var(--white);
-    font-weight: bold;
-    background: rgba(180,140,60,0.5);
-    padding: 10px 0px;  
-}
 
+
+
+.debilidade {
+    color: var(--red);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
 
 .bondsArea{
     display: flex;
@@ -311,6 +344,7 @@ td:has(.deb-Modifier-active){
     color: var(--dark);
     font-size: 16px;
 }
+
 .bond-end{
     background-color: var(--red);
     font-family: var(--font);
@@ -320,27 +354,43 @@ td:has(.deb-Modifier-active){
     border-radius: 4px;
 }
 
-
+.movement-controller{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    alignment-baseline: central;
+    margin-bottom: 1rem;
+}
 
 .movement_availiable{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    flex-basis: 24rem;
+    flex-grow: 3;
 }
-
 
 .spells {
     border-left: 2px solid var(--border-color);
     padding-left: 20px;
 }
 
+.spells-controller{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    alignment-baseline: central;
+    margin-bottom: 1rem;
+}
+
 .spell_availiable {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    gap: 12px;
-    align-items: flex-start;
-    align-self: flex-start;
+    flex-wrap: wrap;
+    flex-basis: 10rem;
+    flex-grow: 3;
 }
 
 .spell-group {
@@ -362,8 +412,24 @@ td:has(.deb-Modifier-active){
     border-radius: 10px;
 }
 
-.spell:has(.blue_filling:checked) {
+.spell input[type="checkbox"] {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+}
+
+.spell input[type="checkbox"]:checked {
+    background-color: var(--gold);
+    border-color: var(--gold);
+}
+
+.spell:has(.gold_filling:checked) {
     background: rgba(180,140,60,0.5);
+}
+
+.spell:has(.blue_filling:checked):has(.gold_filling:checked) {
     .spell-name{
         color: var(--white);
         background: rgba(180,140,60,0.5);
@@ -373,7 +439,7 @@ td:has(.deb-Modifier-active){
     .blue_filling, .gold_filling {
         accent-color: var(--gold);
     }
-    
+
 }
 
 .spell-name {
@@ -602,8 +668,18 @@ footer p a:hover{
 }
 
 
+
+.movement-view-toggle{
+    display: flex;
+    flex-direction: row;
+
+    gap: 8px;
+}
+
 .btnMovementTab{
+    height: 20px;
     padding: 6px 12px;
+    margin-bottom: 1px;
     background: #222;
     color: var(--white);
     border: none;
@@ -611,8 +687,7 @@ footer p a:hover{
     font-family: var(--font);
     font-size: 14px;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    align-self: center;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */
 }
 .btnMovementTab.selected{
     background: var(--gold);
@@ -629,11 +704,22 @@ footer p a:hover{
 }
 
 /* Slider Toggle */
+
+.toggleLabel {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--dark);
+    margin-right: 8px;
+    vertical-align: sub;
+}
+
+
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
+  margin-bottom: 1px;
 }
 
 .switch input { 
