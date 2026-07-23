@@ -355,6 +355,32 @@ td input {
     border-radius: 4px;
 }
 
+
+/* general movement */
+
+.movement-view-toggle{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.btnMovementTab{
+    height: 20px;
+    padding: 6px 12px;
+    margin-bottom: 1px;
+    background: #222;
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-family: var(--main_font);
+    font-size: 14px;
+    border-radius: 4px;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */
+}
+.btnMovementTab.selected{
+    background: var(--gold);
+}
+
 .movement-controller{
     display: flex;
     flex-direction: row;
@@ -372,10 +398,7 @@ td input {
     flex-grow: 3;
 }
 
-.spells {
-    border-left: 2px solid var(--border-color);
-    padding-left: 20px;
-}
+/* general spells */
 
 .spells-controller{
     display: flex;
@@ -394,86 +417,17 @@ td input {
     flex-grow: 3;
 }
 
-.spell-group {
-    margin-bottom: 20px;
+.spell-level-group {
+    margin-bottom: 1.25rem;
 }
 
-.spell-group h3 {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 6px;
-    margin-bottom: 10px;
+.spell-level-group h3 {
+    border-bottom: 0.063rem solid var(--border-color);
+    padding-bottom: 0.375rem;
+    margin-bottom: 0.625rem;
 }
 
-.spell {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-    font-size: 16px;
-    border-radius: 10px;
-}
 
-.spell input[type="checkbox"] {
-    appearance: none;
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-}
-
-.spell input[type="checkbox"]:checked {
-    background-color: var(--gold);
-    border-color: var(--gold);
-}
-
-.spell:has(.gold_filling:checked) {
-    background: rgba(180,140,60,0.5);
-}
-
-.spell:has(.blue_filling:checked):has(.gold_filling:checked) {
-    .spell-name{
-        color: var(--white);
-        background: rgba(180,140,60,0.5);
-        border-radius: 10px;
-        padding-left: 11px;
-    }
-    .blue_filling, .gold_filling {
-        accent-color: var(--gold);
-    }
-
-}
-
-.spell-name {
-    border: none;
-    border-bottom: 1px dashed transparent;
-    font-family: var(--main_font);
-    font-size: 16px;
-    width: 100%;
-    outline: none;
-    transition: border-color 0.2s ease;
-}
-
-.spell-name:focus {
-    border-bottom: 1px dashed var(--border-color);
-}
-
-.spell input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-}
-
-.gold_filling {
-    accent-color: var(--gold);
-}
-.blue_filling{
-    accent-color: var(--blue);
-}
-.red_filling{
-    accent-color: var(--red);
-}
-.grey_filling{
-    accent-color: var(--muted);
-}
 
 .addConsumable {
     cursor: pointer;
@@ -670,39 +624,7 @@ footer p a:hover{
 
 
 
-.movement-view-toggle{
-    display: flex;
-    flex-direction: row;
 
-    gap: 8px;
-}
-
-.btnMovementTab{
-    height: 20px;
-    padding: 6px 12px;
-    margin-bottom: 1px;
-    background: #222;
-    color: var(--white);
-    border: none;
-    cursor: pointer;
-    font-family: var(--main_font);
-    font-size: 14px;
-    border-radius: 4px;
-    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */
-}
-.btnMovementTab.selected{
-    background: var(--gold);
-}
-
-.movement-available{
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 600px;
-    overflow-y: auto;
-    padding-bottom: 0.8rem;
-}
 
 /* Slider Toggle */
 

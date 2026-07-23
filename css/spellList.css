@@ -1,108 +1,99 @@
-:root{
-    --card-border:#b4b4b4;
-    --card-description:#ececec;
-    --card-description-even:#cccccc;
-    --card-roll-badge:#6d6d6d;
-    --card-roll-shadow:#525252;
-    --ultra:#00ff00;
-}
-
-.spell-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.spell-list li {
-    margin-bottom: 6px;
-    font-family: var(--main_font);
-    font-size: 16px;
-    border-bottom: 1px dotted var(--border-color);
-    padding-bottom: 4px;
-}
-
-.spell-list li input[type="checkbox"]:disabled {
-    color: var(--card-roll-shadow);
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.spell-list li:nth-child(odd) {
-    background-color: var(--card-description);
-}
-
-.spell-list li:nth-child(even) {
-    background-color: var(--card-description-even);
-}
-
-.spell-list li:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
-    padding-bottom: 0;
+:root {
+    --card-border: #b4b4b4;
+    --card-description: #ececec;
+    --card-description-even: rgb(204, 204, 204);
+    --card-roll-badge: rgb(109, 109, 109);
+    --card-roll-shadow: #525252;
+    --ultra: #00ff00;
 }
 
 
 /* spell Panel Styles */
-.spell-panel{
+.spell-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-height: 600px;
-    overflow-y: auto;
-    padding-bottom: 0.8rem;
+    gap: 1.563rem;
+    overflow-x: auto;
+    margin-left: 0.313rem;
 }
 
-.spell-panel-header{
+.spell {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-
-}
-.spell-panel-title{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    border-radius: 10px;
 }
 
-.spell-panel-title input[type="checkbox"]:disabled:checked {
-    color: var(--ultra) !important;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-
-.spell-panel-roll{
-    
-}
-.spell-panel-info{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-}
-.spell-panel-details{
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 12px;
-}
-
-.spell-panel-description{
-    background: rgba(216, 216, 216, 0.301);
-    padding: 0.5rem;
-    padding-left: 1rem;
-}
-
-.spell-select{
+.spell input[type="checkbox"] {
     appearance: none;
-    width: 15px;
-    height: 15px;
-    border: 2px solid black;
-    background: white;
-    cursor: pointer;
-    position: relative;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
 }
-.spell-select:checked{
-    background: black;  
+
+.spell input[type="checkbox"]:checked {
+    background-color: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0.01rem 0.01rem 0.2rem inset rgba(246, 244, 244, 0.9);
+}
+
+.spell:has(.gold_filling:checked) {
+    background: rgba(180, 140, 60, 0.6);
+    box-shadow: 0.2rem 0.2rem 1rem inset rgba(255, 255, 255, 0.9);
+
+}
+
+.spell:has(.blue_filling:checked):has(.gold_filling:checked) {
+    margin-bottom: 0.6rem;
+    .spell-name {
+        color: var(--white);
+        background: rgba(180, 140, 60, .5);
+
+        box-shadow: 0.0rem 0 0.25rem var(--danger);
+        border-left: none;
+        border-radius: 0.625rem;
+        padding-left: 0.688rem;
+       
+    }
+
+
+}
+
+.spell-name {
+    border: none;
+    border-bottom: 1px dashed transparent;
+    font-family: var(--main_font);
+    font-size: 16px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.spell-name:focus {
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.spell input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.spells {
+    border-left: 2px solid var(--border-color);
+    padding-left: 20px;
+}
+
+.gold_filling {}
+
+.blue_filling {}
+
+.red_filling {
+    accent-color: var(--red);
+}
+
+.grey_filling {
+    accent-color: var(--muted);
 }
