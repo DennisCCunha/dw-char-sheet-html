@@ -181,39 +181,47 @@
           </table>
 
           <div id="charXPBonds">
-            <div class="xp">
-              <strong>Nível</strong>
-              <input type="text" id="charLevel" value="1" placeholder="Nível" class="charLevelInput" />
-              <strong>XP</strong>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-            </div>
-            <div class="alignment">
-              <strong>Alinhamento</strong>
-              <select id="charAlignment">
-                <option value="">Selecione</option>
-              </select>
+            <div class="xp-alignment-box">
+              <div class="xp">
+                <strong>Nível</strong>
+                <input type="text" id="charLevel" value="1" placeholder="Nível" class="charLevelInput" />
+                <strong>XP</strong>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+              </div>
+              <div class="alignment">
+                <strong>Alinhamento</strong>
+                <select id="charAlignment">
+                  <option value="">Selecione</option>
+                </select>
+              </div>
             </div>
             <div class="bonds">
               <strong>Vínculos</strong>
-                <input class="bond_input" type="" id="charBonds" value="" placeholder="Vínculos do personagem" />
+              <select id="bondTemplate">
+                <option value="">Selecione</option>
+              </select>
+              <div class="bond-inputs-box">
+                <input class="bond_input" type="text" id="charBonds" value="" placeholder="Vínculos do personagem" />
+                <input class="bond_input" type="text" id="bondTarget" value="" placeholder="Alvo do vínculo" />
                 <button id="btnAddBond" class='addConsumable'>&#x2b</button>
+              </div>
               <div class="bonds_area" id="bondsArea">
                 <!-- Vínculos do personagem serão exibidos aqui -->
               </div>
