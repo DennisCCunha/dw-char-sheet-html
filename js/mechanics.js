@@ -72,21 +72,32 @@ export class Consumable {
 
 export class Equipment {
 
-    static create(id = 0, nome = "", descricao = "", usos = 0, peso = 0, tags = [], notes = "") {
+    static getEquipmentList() {
+        return dungeonworld.lista_equipamentos;
+    }
+
+    static getTagsList() {
+        return dungeonworld.lista_tags;
+    }
+
+    static create(id = 0, nome = "", descricao = "", usos = 0, peso = 0, moedas = 0, tags = [], notes = "") {
         return {
             nome: nome,
             descricao: descricao,
             peso: peso,
+            moedas: moedas,
             tags: tags
         };
     }
-    static render(equipment = {nome: "", descricao: "", peso: 0, tags: [], notes: ""}) {
-        let eqp = `<div class='list-item equipment-item'>"
-            "<input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />"
-            "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />"
-            "<input class='spell-name' type='text' placeholder='Descrição' style='flex:3' />"
-            "<input class='spell-name' type='text' placeholder='Notas' style='flex:3' />"
-        "<select multiple></select>`;
+
+    static render(equipment = {nome: "", descricao: "", peso: 0, moedas: 0, tags: [], notes: ""}) {
+        let eqp = `<div class='list-item equipment-item'>
+            <input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />
+            <input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />
+            <input class='spell-name' type='text' placeholder='Descrição' style='flex:3' />
+            <select multiple>${equipment.tags.map((tag, i) => `<option value='${i}'>${tag}</option>`).join('')}</select>
+            <input class='spell-name' type='text' placeholder='Notas' style='flex:3' />
+        <select multiple></select>`;
         for (let i = 0; i < 5; i++) {
             eqp += "<option value='" + i + "'>Tag " + (i + 1) + "</option>";
         }
@@ -345,7 +356,6 @@ export class Movement {
         return Movement.render(movement, format, true);
     }
 
-
     static renderFormattedCard(movement) {
         console.log(movement);
 
@@ -388,6 +398,44 @@ export class Movement {
                         <strong>${movement.tipo.toUpperCase()}</strong>
                     </div>
                 </div>`;
+    }
+
+
+    static movementRooster (character) {
+        let roostersizer = character.movimentos.length;
+        if(character.classe.value){
+            getMovementListByClass(character.classe.value).forEach(movement => {
+                if(!character.movimentos.some(m => m.id === movement.id)){
+                     if(movement.tipo.includes("Inicial")){
+                        if(!movement.exclusivo){
+                            character.movimentos.push(movement);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // WIP - Seleciona um movimento de outra classe,
+    // TargetClass: classe de onde o movimento será selecionado Se vazio listará todos os movimentos de todas as classes.
+    static selectFromOtherClass(targetClass = "", character) {
+    
+    }
+
+    // WIP - Seleciona um movimento exclusivo, removendo outros movimentos exclusivos do personagem
+    static selectExclusiveMovement(movement, character) {
+        if (movement.exclusivo) {
+            character.movimentos = character.movimentos.filter(m => m.id !== movement.id);
+            character.movimentos.push(movement);
+        }
+    }
+
+    static selectReplacementMovement(movement, character) {
+
+    }
+    // WIP - Seleciona um feitiço de outra classe,
+    static selectSpellFromOtherClass(targetClass = "", character) {
+
     }
 
 }
