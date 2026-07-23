@@ -8,7 +8,8 @@
 @import url('./spellList.css');
 
 :root {
-    --font: 'Cinzel', serif;
+    --main_font: 'Cinzel', serif;
+    --secondary_font: "Cormorant Garamond", serif;
     --border-color: #000;
     --muted: #777;
     --danger: rgba(90,0,10,0.9);
@@ -22,7 +23,7 @@
 }
 
 html{
-    font-family: var(--font);
+    font-family: var(--main_font);
 }
 
 body{
@@ -50,7 +51,7 @@ body{
 }
 
 .pagina {
-    font-family: var(--font);
+    font-family: var(--main_font);
     margin: 1.5rem;
     color: #111;
 }
@@ -99,7 +100,7 @@ body{
 }
 
 input, select, textarea {
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-size: 1rem;
     color: #111;
     background: transparent;
@@ -128,7 +129,7 @@ h1,
 h2,
 h3 {
     margin: 0;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-weight: 700;
 }
 
@@ -149,7 +150,7 @@ h3 {
     font-size: 40px;
     border: none;
     outline: none;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-weight: 800;
 }
 
@@ -170,7 +171,7 @@ h3 {
     font-size: 24px;
     border: none;
     outline: none;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-weight: bold;
 }
 
@@ -225,7 +226,7 @@ h3 {
 
 .card label {
     display: block;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-weight: bold;
     margin-bottom: 8px;
 }
@@ -281,14 +282,14 @@ td {
 }
 
 th {
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-weight: bold;
     background: rgba(219, 219, 219, 0.162);
 
 }
 
 td input {
-    font-family: var(--font);
+    font-family: var(--main_font);
     width: 100%;
     border: none;
     text-align: center;
@@ -347,7 +348,7 @@ td input {
 
 .bond-end{
     background-color: var(--red);
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-weight: bold;
     color: var(--white);
     border: none;
@@ -445,7 +446,7 @@ td input {
 .spell-name {
     border: none;
     border-bottom: 1px dashed transparent;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-size: 16px;
     width: 100%;
     outline: none;
@@ -540,7 +541,7 @@ nav button {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-size: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -570,7 +571,7 @@ nav .save_buttons {
     padding: 28px;
     max-width: 520px;
     width: 92%;
-    font-family: var(--font);
+    font-family: var(--main_font);
 }
 
 .dw-modal h3 {
@@ -586,7 +587,7 @@ nav .save_buttons {
 .dw-modal textarea {
     width: 100%;
     box-sizing: border-box;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-size: 12px;
     padding: 8px;
     border: 1px solid var(--dark);
@@ -606,7 +607,7 @@ nav .save_buttons {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-size: 14px;
 }
 
@@ -657,14 +658,14 @@ footer p a:hover{
 
 /* Change the font of the actual text inside the editor */
 .ql-container.ql-snow .ql-editor {
-  font-family: var(--font);
+  font-family: var(--main_font);
   font-size: 16px;
 }
 
 /* Ensure the toolbar dropdown reflects your new default label */
 .ql-snow .ql-picker.ql-font .ql-picker-label::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
-  font-family: var(--font);
+  font-family: var(--main_font);
 }
 
 
@@ -684,7 +685,7 @@ footer p a:hover{
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-size: 14px;
     border-radius: 4px;
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */

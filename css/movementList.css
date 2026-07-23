@@ -15,14 +15,14 @@
 
 .movement-list li {
     margin-bottom: 6px;
-    font-family: var(--font);
+    font-family: var(--main_font);
     font-size: 16px;
     border-bottom: 1px dotted var(--border-color);
     padding-bottom: 4px;
 }
 
 .movement-list li input[type="checkbox"]:disabled {
-    color: var(--card-roll-shadow);
+    color: var(--green);
     cursor: not-allowed;
     opacity: 0.6;
 }
@@ -40,7 +40,6 @@
     border-bottom: none;
     padding-bottom: 0;
 }
-
 
 /* Movement Panel Styles */
 .movement-panel{
@@ -67,9 +66,12 @@
 }
 
 .movement-panel-title input[type="checkbox"]:disabled:checked {
-    color: var(--ultra) !important;
-    cursor: not-allowed;
-    opacity: 0.6;
+    background-color: var(--green) !important;
+    border-top-color: var(--ultra);
+    border-left-color: var(--ultra);
+    box-shadow: 0.1rem 0.1rem 0.1rem inset var(--ultra);
+
+    cursor: not-allowed;    
 }
 
 
@@ -89,9 +91,22 @@
 }
 
 .movement-panel-description{
+    font-family: var(--secondary_font);
+    font-size: 1.09rem;
     background: rgba(216, 216, 216, 0.301);
+    
     padding: 0.5rem;
     padding-left: 1rem;
+    
+}
+
+.movement-panel-description .badge{
+    font-weight: 800;
+} 
+
+.movement-panel:has(input[type="checkbox"]:disabled:checked)
+    .movement-panel-description {
+        box-shadow: 0.3125rem 0.3125rem 0.625rem inset var(--card-roll-shadow);
 }
 
 .movement-select{
@@ -104,5 +119,13 @@
     position: relative;
 }
 .movement-select:checked{
-    background: black;  
+    background: black;
+    box-shadow: 0.2rem 0.2rem 0.25rem inset var(--blue);
+    border-top-color: var(--blue);
+    border-left-color: var(--blue);
+}
+
+.movement-panel:has(input[type="checkbox"]:checked)
+    .movement-panel-description {
+        box-shadow: 0.3125rem 0.3125rem 0.625rem inset var(--blue);
 }
