@@ -1855,7 +1855,6 @@
         }
     ],
     "lista_movimentos": [
-        
         {"classe":"basico","tipo":"Basico","id":0,"nome":"Matar e pilhar","rolagem":"+FOR","descricao":"Quando atacar um adversário em combate corpo a corpo, role+FOR. Com <span class='badge'>10+</span>, cause dano ao adversário e evite seu ataque. Opcionalmente, você pode causar +1d6 de dano, expondo-se ao contra ataque. Com <span class='badge'>7-9</span>, cause dano ao adversário, e ele fará um ataque contra você."},
         {"classe":"basico","tipo":"Basico","id":1,"nome":"Disparar","rolagem":"+DES","descricao":"Quando mirar uma arma e dispará-la contra um adversário à distância, role+DES. Com <span class='badge'>10+</span>, você conseguiu um tiro preciso - cause seu dano. Com <span class='badge'>7-9</span>, escolha um (cause dano independente da escolha):\n•\tVocê é forçado a se mover para conseguir uma linha de tiro, colocando-se em perigo conforme escolha do MJ;\n•\tVocê é forçado a disparar de qualquer jeito: -1d6 de dano;\n•\tVocê é forçado a disparar várias vezes, reduzindo sua munição em 1."},
         {"classe":"basico","tipo":"Basico","id":2,"nome":"Desafiar o Perigo","rolagem":"+ATR","descricao":"Quando agir apesar de qualquer perigo iminente ou sofrer alguma calamidade, diga como lidará com a situação e role. Se o fizer..."},
@@ -2134,45 +2133,8 @@
         {"classe":"Mago","tipo":"Avançado 6-10","id":275,"nome":"Fios Místicos de Marionete","descricao":"Quando utilizar feitiços para controlar as ações de outras pessoas, elas não se lembrarão do que fizeram sob suas ordens, e não lhe desejarão nenhum mal."},
         {"classe":"Mago","tipo":"Avançado 6-10","id":276,"nome":"Ampliação Mágica","descricao":"Quando causar dano em uma criatura, você pode aplicar a energia de um feitiço diretamente contra ela. Encerre um de seus feitiços contínuos e adicione seu nível ao dano causado."},
         {"classe":"Mago","tipo":"Avançado 6-10","id":277,"nome":"Autossuficiente","descricao":"Quando tiver tempo, materiais arcanos, e um lugar seguro, você pode criar seu próprio local de poder. Descreva para o MJ que tipo de poder é esse e como irá vinculá-lo ao local. O MJ lhe informará um tipo de criatura que terá interesse em seus trabalhos."}
-
-
-
-
-
     ],
-    "lista_tags": [
-        {"id":20001,"nome":"Aplicado","descricao":"somente é útil quando aplicado cuidadosamente em uma pessoa, ou a algo que ela coma ou beba."},
-        {"id":20002,"nome":"Desajeitado","descricao":" é difícil de segurar e de usar."},
-        {"id":20003,"nome":"+Bônus","descricao":"modifica sua capacidade em determinada situação. Pode ser “+1 adiante pra falar difícil” ou “-1 constante para matar e pilhar”."},
-        {"id":20004,"nome":"n moedas","descricao":"quanto algo custa para ser comprado, normalmente. Se o custo incluir “-Carisma”, isso indica que uma pequena negociação pode subtrair o valor de Carisma do personagem que estiver pechinchando (não o modificador) do preço final do produto."},
-        {"id":20005,"nome":"Perigoso","descricao":"é fácil algo dar errado durante o uso do item. Se interagir com ele sem as devidas precauções, o MJ poderá livremente invocar algumas consequências para suas tolas ações."},
-        {"id":20006,"nome":"Ração","descricao":" é comestível, ou praticamente comestível."},
-        {"id":20007,"nome":"Requer","descricao":"somente é útil para determinadas pessoas. Se você não cumprir os requisitos, o item funcionará mal, se funcionar."},
-        {"id":20008,"nome":"Lento","descricao":"demora pelo menos alguns minutos para ser usado."},
-        {"id":20009,"nome":"Toque","descricao":"para funcionar, é necessário que toque a pele do alvo."},
-        {"id":20010,"nome":"Duas Mãos","descricao":"precisa ser utilizado com duas mãos."},
-        {"id":20011,"nome":"Peso n","descricao":"some os pesos para verificar sua Carga. Algo que não possui um peso listado não foi feito para ser carregado. 100 moedas padrão possuem peso 1, mas o mesmo valor em gemas ou peças de arte pode ser mais leve ou mais pesado."},
-        {"id":20012,"nome":"Vestido","descricao":"para usar o item, é necessário vesti-lo."},
-        {"id":20013,"nome":"n usos","descricao":"somente pode ser utilizado n vezes."},
-        {"id":20014,"nome":"Munição n","descricao":"conta como munição para armas de longo alcance apropriadas. O número indicado não representa a quantidade de flechas ou pedras individuais, mas sim uma quantidade que lhe resta à mão."},
-        {"id":20015,"nome":"Poderoso","descricao":"pode jogar o alvo para trás, e talvez até mesmo derrubá-lo."},
-        {"id":20016,"nome":"+n de Dano","descricao":"é particularmente danosa para seus inimigos. Quando causar dano, some n a ele."},
-        {"id":20017,"nome":"Ignora Armadura","descricao":"não subtraia armadura do dano causado."},
-        {"id":20018,"nome":"Grotesco","descricao":"causa danos de uma forma particularmente destrutiva, destroçando coisas e pessoas."},
-        {"id":20019,"nome":"n Penetrante","descricao":"atravessa armaduras. Quando causar dano com n Penetrante, subtraia n da armadura do alvo apenas durante aquele ataque."},
-        {"id":20020,"nome":"Preciso","descricao":"recompensa ataques cuidadosos. Use DES para matar e pilhar com esta arma, e não FOR."},
-        {"id":20021,"nome":"Recarga","descricao":"após atacar com ela, você precisa de mais do que apenas um momento para reposicionar a arma para um novo ataque."},
-        {"id":20022,"nome":"Atordoador","descricao":"ataques com essa arma causam dano atordoante no lugar de dano normal."},
-        {"id":20023,"nome":"Arremesso","descricao":"jogue-a em alguém para ferir aquela pessoa. Se disparar com essa arma, você não pode optar por reduzir sua munição com um resultado de 7-9; uma vez que ela foi arremessada, esta arma ficará indisponível até que consiga pegá-la de volta."},
-        {"id":20024,"nome":"Mão","descricao":"é útil para atacar alguém dentro de seu alcance, e nada mais."},
-        {"id":20025,"nome":"Corpo a Corpo","descricao":"é útil para atacar alguém até o alcance de seu braço, mais uns cinquenta ou sessenta centímetros."},
-        {"id":20026,"nome":"Alcance","descricao":"é útil para atacar algo que esteja a alguns poucos metros de distância, talvez uns três."},
-        {"id":20027,"nome":"Próximo","descricao":"é útil para atacar se você puder ver o branco dos olhos de seu inimigo."},
-        {"id":20028,"nome":"Distante","descricao":"é útil para atacar alguém à distância de um grito."},
-        {"id":20029,"nome":"Armadura n","descricao":"lhe protege de ferimentos e absorve danos. Quando o personagem sofrer algum dano, subtraia sua armadura do total. Se possuir mais de um item com armadura n, utilize apenas o valor mais alto."},
-        {"id":20030,"nome":"Armadura +n","descricao":"lhe protege e soma a outras armaduras. Adicione este valor à sua armadura total."},
-        {"id":20031,"nome":"Desengonçado","descricao":"é difícil se mover usando isso. -1 constante enquanto estiver vestindo. A penalidade é cumulativa."}
-    ],
+
     "lista_spells": [
         {"id":10000, "classe":["Clérigo","Mago"], "nome": "Luz", "nivel": 0, "school": "Truque", "continuo": false, "descricao": "Um item tocado por você brilha com luz arcana, com a mesma intensidade de uma tocha. Essa luz não emite calor ou som e nem precisa de combustível para queimar, mas funciona como uma tocha comum para todos os outros efeitos. Você possui total controle sobre a cor da luz. O feitiço dura enquanto o item estiver em sua presença." },
         {"id":10001, "classe":["Clérigo"], "nome": "Santificar", "nivel": 0, "school": "Oração", "continuo": false, "descricao": "Qualquer comida ou água que estiver em suas mãos enquanto conjura este feitiço será consagrada por sua divindade. Além de se tornar sagrada ou profana, a substância afetada é purificada de qualquer resíduo mundano." },
@@ -2237,6 +2199,39 @@
         {"id":10061, "classe":["Mago"], "nome": "Invocação perfeita", "nivel": 9, "school": "Invocação", "continuo": false, "descricao": "Você teleporta uma criatura para sua presença. Diga o nome de uma criatura específica ou uma curta descrição de um tipo de criatura. A criatura nomeada, ou uma criatura do tipo descrito, surge diante de você." }
 
     ],
+    "lista_tags": [
+        {"id":20001,"nome":"Aplicado","descricao":"somente é útil quando aplicado cuidadosamente em uma pessoa, ou a algo que ela coma ou beba."},
+        {"id":20002,"nome":"Desajeitado","descricao":" é difícil de segurar e de usar."},
+        {"id":20003,"nome":"+Bônus","descricao":"modifica sua capacidade em determinada situação. Pode ser “+1 adiante pra falar difícil” ou “-1 constante para matar e pilhar”."},
+        {"id":20004,"nome":"n moedas","descricao":"quanto algo custa para ser comprado, normalmente. Se o custo incluir “-Carisma”, isso indica que uma pequena negociação pode subtrair o valor de Carisma do personagem que estiver pechinchando (não o modificador) do preço final do produto."},
+        {"id":20005,"nome":"Perigoso","descricao":"é fácil algo dar errado durante o uso do item. Se interagir com ele sem as devidas precauções, o MJ poderá livremente invocar algumas consequências para suas tolas ações."},
+        {"id":20006,"nome":"Ração","descricao":" é comestível, ou praticamente comestível."},
+        {"id":20007,"nome":"Requer","descricao":"somente é útil para determinadas pessoas. Se você não cumprir os requisitos, o item funcionará mal, se funcionar."},
+        {"id":20008,"nome":"Lento","descricao":"demora pelo menos alguns minutos para ser usado."},
+        {"id":20009,"nome":"Toque","descricao":"para funcionar, é necessário que toque a pele do alvo."},
+        {"id":20010,"nome":"Duas Mãos","descricao":"precisa ser utilizado com duas mãos."},
+        {"id":20011,"nome":"Peso n","descricao":"some os pesos para verificar sua Carga. Algo que não possui um peso listado não foi feito para ser carregado. 100 moedas padrão possuem peso 1, mas o mesmo valor em gemas ou peças de arte pode ser mais leve ou mais pesado."},
+        {"id":20012,"nome":"Vestido","descricao":"para usar o item, é necessário vesti-lo."},
+        {"id":20013,"nome":"n usos","descricao":"somente pode ser utilizado n vezes."},
+        {"id":20014,"nome":"Munição n","descricao":"conta como munição para armas de longo alcance apropriadas. O número indicado não representa a quantidade de flechas ou pedras individuais, mas sim uma quantidade que lhe resta à mão."},
+        {"id":20015,"nome":"Poderoso","descricao":"pode jogar o alvo para trás, e talvez até mesmo derrubá-lo."},
+        {"id":20016,"nome":"+n de Dano","descricao":"é particularmente danosa para seus inimigos. Quando causar dano, some n a ele."},
+        {"id":20017,"nome":"Ignora Armadura","descricao":"não subtraia armadura do dano causado."},
+        {"id":20018,"nome":"Grotesco","descricao":"causa danos de uma forma particularmente destrutiva, destroçando coisas e pessoas."},
+        {"id":20019,"nome":"n Penetrante","descricao":"atravessa armaduras. Quando causar dano com n Penetrante, subtraia n da armadura do alvo apenas durante aquele ataque."},
+        {"id":20020,"nome":"Preciso","descricao":"recompensa ataques cuidadosos. Use DES para matar e pilhar com esta arma, e não FOR."},
+        {"id":20021,"nome":"Recarga","descricao":"após atacar com ela, você precisa de mais do que apenas um momento para reposicionar a arma para um novo ataque."},
+        {"id":20022,"nome":"Atordoador","descricao":"ataques com essa arma causam dano atordoante no lugar de dano normal."},
+        {"id":20023,"nome":"Arremesso","descricao":"jogue-a em alguém para ferir aquela pessoa. Se disparar com essa arma, você não pode optar por reduzir sua munição com um resultado de 7-9; uma vez que ela foi arremessada, esta arma ficará indisponível até que consiga pegá-la de volta."},
+        {"id":20024,"nome":"Mão","descricao":"é útil para atacar alguém dentro de seu alcance, e nada mais."},
+        {"id":20025,"nome":"Corpo a Corpo","descricao":"é útil para atacar alguém até o alcance de seu braço, mais uns cinquenta ou sessenta centímetros."},
+        {"id":20026,"nome":"Alcance","descricao":"é útil para atacar algo que esteja a alguns poucos metros de distância, talvez uns três."},
+        {"id":20027,"nome":"Próximo","descricao":"é útil para atacar se você puder ver o branco dos olhos de seu inimigo."},
+        {"id":20028,"nome":"Distante","descricao":"é útil para atacar alguém à distância de um grito."},
+        {"id":20029,"nome":"Armadura n","descricao":"lhe protege de ferimentos e absorve danos. Quando o personagem sofrer algum dano, subtraia sua armadura do total. Se possuir mais de um item com armadura n, utilize apenas o valor mais alto."},
+        {"id":20030,"nome":"Armadura +n","descricao":"lhe protege e soma a outras armaduras. Adicione este valor à sua armadura total."},
+        {"id":20031,"nome":"Desengonçado","descricao":"é difícil se mover usando isso. -1 constante enquanto estiver vestindo. A penalidade é cumulativa."}
+    ],
     "lista_itens": [
         {"id":100000,"nome":"Couro, Cota de malha","descricao":"","tags":["armadura 1","vestida","peso 1","10 moedas"]},
         {"id":100001,"nome":"Armadura de Escamas","descricao":"","tags":["armadura 2","vestida","desengonçada","peso 3","50 moedas"]},
@@ -2275,52 +2270,43 @@
         {"id":100033,"nome":"Raiz Dourada","descricao":"O alvo trata a próxima criatura que ver como um aliado confiável, até que se prove o contrário.","tags":["perigoso","aplicado","20 moedas","peso 0"]},
         {"id":100034,"nome":"Lágrimas da Serpente","descricao":"Qualquer pessoa que role para causar dano no alvo deve rolar duas vezes o dado e utilizar o melhor resultado.","tags":["perigoso","toque","10 moedas","peso 0"]}
     ],
-
     "lista_bonds":[
-        {"sujeito":"","classe":"Barbáro","template": "<input type=text class='spell'> é fraco e tolo, mas me diverte."},
-        {"sujeito":"","classe":"Barbáro","template": "Os modos de <input type=text class='spell'> são estranhos e confusos."},
-        {"sujeito":"","classe":"Barbáro","template": "<input type=text class='spell'> está sempre entrando em apuros. eu preciso protegê-lo de si mesmo."},
-        {"sujeito":"","classe":"Barbáro","template": "<input type=text class='spell'> compartilha minha fome por glória; a terra tremerá diante de nós!"},
-
-        {"sujeito":"","classe":"Bárdo","template": "Esta não é minha primeira aventura com <input type=text class='spell'>."},
-        {"sujeito":"","classe":"Bárdo","template": "Já cantei histórias sobre <input type=text class='spell'> bem antes de nos conhecermos pessoalmente."},
-        {"sujeito":"","classe":"Bárdo","template": "<input type=text class='spell'> é normalmente o alvo de minhas piadas."},
-        {"sujeito":"","classe":"Bárdo","template": "Estou escrevendo uma balada a respeito das aventuras de <input type=text class='spell'>."},
-        {"sujeito":"","classe":"Bárdo","template": "<input type=text class='spell'> me confidenciou um segredo."},
-        {"sujeito":"","classe":"Bárdo","template": "<input type=text class='spell'> não confia em mim, e com boas razões."},
-
-        {"sujeito":"","classe":"Clérigo","template": "<input type=text class='spell'> insultou minha divindade; eu não confio nele."},
-        {"sujeito":"","classe":"Clérigo","template": "<input type=text class='spell'> é uma pessoa boa e fiel; eu confio nele implicitamente."},
-        {"sujeito":"","classe":"Clérigo","template": "<input type=text class='spell'> está em constantemente em perigo, mas o(a) manterei a salvo."},
-        {"sujeito":"","classe":"Clérigo","template": "Estou trabalhando para converter <input type=text class='spell'> à minha fé."},
-
-        {"sujeito":"","classe":"Druida","template":"<input type=text class='spell'> tem cheiro de caça, e não de caçador."},
-        {"sujeito":"","classe":"Druida","template":"Os espíritos me alertaram acerca de um grande perigo que ronda <input type=text class='spell'>."},
-        {"sujeito":"","classe":"Druida","template":"Eu mostrei a <input type=text class='spell'> um ritual secreto da Terra."},
-        {"sujeito":"","classe":"Druida","template":"<input type=text class='spell'> provou meu sangue, e eu o seu. Estamos unidos por isso."},
-
-        {"sujeito":"","classe":"Guerreiro","template":"<input type=text class='spell'> me deve sua vida, quer admita isso ou não."},
-        {"sujeito":"","classe":"Guerreiro","template":"Eu jurei proteger <input type=text class='spell'>."},
-        {"sujeito":"","classe":"Guerreiro","template":"Eu me preocupo com a capacidade de <input type=text class='spell'> de sobreviver dentro das masmorras."},
-        {"sujeito":"","classe":"Guerreiro","template":"<input type=text class='spell'> é muito mole, mas o tornarei resistente como eu."},
-
-        {"sujeito":"","classe":"Ladrão","template":"Eu roubei algo de <input type=text class='spell'>."},
-        {"sujeito":"","classe":"Ladrão","template":"<input type=text class='spell'>  estará comigo se algo der errado."},
-        {"sujeito":"","classe":"Ladrão","template":"<input type=text class='spell'> conhece detalhes incriminadores a meu respeito."},
-        {"sujeito":"","classe":"Ladrão","template":"<input type=text class='spell'> e eu estamos fazendo uma falcatrua."},
-
-        {"sujeito":"","classe":"Mago","template":"<input type=text class='spell'> terá um importante papel a desempenhar em eventos vindouros. Assim dizem minhas previsões!"},
-        {"sujeito":"","classe":"Mago","template":"<input type=text class='spell'> está escondendo de mim um importante segredo."},
-        {"sujeito":"","classe":"Mago","template":"<input type=text class='spell'> é totalmente ignorante sobre o funcionamento deste mundo. Eu lhe ensinarei tudo o que puder."},
-
-        {"sujeito":"","classe":"Paladino","template":"O comportamento inadequado de <input type=text class='spell'> coloca em risco sua própria alma!"},
-        {"sujeito":"","classe":"Paladino","template":"<input type=text class='spell'> já batalhou ao meu lado e tem minha total confiança."},
-        {"sujeito":"","classe":"Paladino","template":"Eu respeito as crenças de <input type=text class='spell'>, mas espero que ele(a) enxergue a verdade um dia."},
-        {"sujeito":"","classe":"Paladino","template":"<input type=text class='spell'> é uma alma corajosa, uma pessoa com a qual tenho muito o que aprender."},
-
-        {"sujeito":"","classe":"Ranger","template":"Eu já havia guiado <input type=text class='spell'> anteriormente, e ele(a) ainda me deve por isso."},
-        {"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> nutre amizade pela natureza, e por isso, também lhe ofereci a minha."},
-        {"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> não respeita a natureza, logo, também não tem meu respeito."},
-        {"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> não entende a vida selvagem, mas eu lhe ensinarei."}
+        {"id":85001,"sujeito":"","classe":"Barbáro","template": "<input type=text class='spell'> é fraco e tolo, mas me diverte."},
+        {"id":85002,"sujeito":"","classe":"Barbáro","template": "Os modos de <input type=text class='spell'> são estranhos e confusos."},
+        {"id":85003,"sujeito":"","classe":"Barbáro","template": "<input type=text class='spell'> está sempre entrando em apuros. eu preciso protegê-lo de si mesmo."},
+        {"id":85004,"sujeito":"","classe":"Barbáro","template": "<input type=text class='spell'> compartilha minha fome por glória; a terra tremerá diante de nós!"},
+        {"id":85005,"sujeito":"","classe":"Bardo","template": "Esta não é minha primeira aventura com <input type=text class='spell'>."},
+        {"id":85006,"sujeito":"","classe":"Bardo","template": "Já cantei histórias sobre <input type=text class='spell'> bem antes de nos conhecermos pessoalmente."},
+        {"id":85007,"sujeito":"","classe":"Bardo","template": "<input type=text class='spell'> é normalmente o alvo de minhas piadas."},
+        {"id":85008,"sujeito":"","classe":"Bardo","template": "Estou escrevendo uma balada a respeito das aventuras de <input type=text class='spell'>."},
+        {"id":85009,"sujeito":"","classe":"Bardo","template": "<input type=text class='spell'> me confidenciou um segredo."},
+        {"id":85010,"sujeito":"","classe":"Bardo","template": "<input type=text class='spell'> não confia em mim, e com boas razões."},
+        {"id":85011,"sujeito":"","classe":"Clérigo","template": "<input type=text class='spell'> insultou minha divindade; eu não confio nele."},
+        {"id":85012,"sujeito":"","classe":"Clérigo","template": "<input type=text class='spell'> é uma pessoa boa e fiel; eu confio nele implicitamente."},
+        {"id":85013,"sujeito":"","classe":"Clérigo","template": "<input type=text class='spell'> está em constantemente em perigo, mas o(a) manterei a salvo."},
+        {"id":85014,"sujeito":"","classe":"Clérigo","template": "Estou trabalhando para converter <input type=text class='spell'> à minha fé."},
+        {"id":85015,"sujeito":"","classe":"Druida","template":"<input type=text class='spell'> tem cheiro de caça, e não de caçador."},
+        {"id":85016,"sujeito":"","classe":"Druida","template":"Os espíritos me alertaram acerca de um grande perigo que ronda <input type=text class='spell'>."},
+        {"id":85017,"sujeito":"","classe":"Druida","template":"Eu mostrei a <input type=text class='spell'> um ritual secreto da Terra."},
+        {"id":85018,"sujeito":"","classe":"Druida","template":"<input type=text class='spell'> provou meu sangue, e eu o seu. Estamos unidos por isso."},
+        {"id":85019,"sujeito":"","classe":"Guerreiro","template":"<input type=text class='spell'> me deve sua vida, quer admita isso ou não."},
+        {"id":85020,"sujeito":"","classe":"Guerreiro","template":"Eu jurei proteger <input type=text class='spell'>."},
+        {"id":85021,"sujeito":"","classe":"Guerreiro","template":"Eu me preocupo com a capacidade de <input type=text class='spell'> de sobreviver dentro das masmorras."},
+        {"id":85022,"sujeito":"","classe":"Guerreiro","template":"<input type=text class='spell'> é muito mole, mas o tornarei resistente como eu."},
+        {"id":85023,"sujeito":"","classe":"Ladrão","template":"Eu roubei algo de <input type=text class='spell'>."},
+        {"id":85024,"sujeito":"","classe":"Ladrão","template":"<input type=text class='spell'>  estará comigo se algo der errado."},
+        {"id":85025,"sujeito":"","classe":"Ladrão","template":"<input type=text class='spell'> conhece detalhes incriminadores a meu respeito."},
+        {"id":85026,"sujeito":"","classe":"Ladrão","template":"<input type=text class='spell'> e eu estamos fazendo uma falcatrua."},
+        {"id":85027,"sujeito":"","classe":"Mago","template":"<input type=text class='spell'> terá um importante papel a desempenhar em eventos vindouros. Assim dizem minhas previsões!"},
+        {"id":85028,"sujeito":"","classe":"Mago","template":"<input type=text class='spell'> está escondendo de mim um importante segredo."},
+        {"id":85029,"sujeito":"","classe":"Mago","template":"<input type=text class='spell'> é totalmente ignorante sobre o funcionamento deste mundo. Eu lhe ensinarei tudo o que puder."},
+        {"id":85030,"sujeito":"","classe":"Paladino","template":"O comportamento inadequado de <input type=text class='spell'> coloca em risco sua própria alma!"},
+        {"id":85031,"sujeito":"","classe":"Paladino","template":"<input type=text class='spell'> já batalhou ao meu lado e tem minha total confiança."},
+        {"id":85032,"sujeito":"","classe":"Paladino","template":"Eu respeito as crenças de <input type=text class='spell'>, mas espero que ele(a) enxergue a verdade um dia."},
+        {"id":85033,"sujeito":"","classe":"Paladino","template":"<input type=text class='spell'> é uma alma corajosa, uma pessoa com a qual tenho muito o que aprender."},
+        {"id":85034,"sujeito":"","classe":"Ranger","template":"Eu já havia guiado <input type=text class='spell'> anteriormente, e ele(a) ainda me deve por isso."},
+        {"id":85035,"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> nutre amizade pela natureza, e por isso, também lhe ofereci a minha."},
+        {"id":85036,"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> não respeita a natureza, logo, também não tem meu respeito."},
+        {"id":85037,"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> não entende a vida selvagem, mas eu lhe ensinarei."}
     ]
 }
