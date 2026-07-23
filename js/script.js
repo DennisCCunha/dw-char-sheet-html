@@ -36,6 +36,10 @@ class CharacterSheet {
         this.spellListFormat    = 'card';
         this.showClassMoves     = false; // false = movimentos básicos, true = movimentos de classe
 
+        this.bondInput = document.getElementById('charBonds');
+        
+        this.bondOption = null;
+
         this.#assignMissingIds();
         this.#registerEvents();
         this.#startup();
@@ -62,6 +66,7 @@ class CharacterSheet {
         this.renderClassMoves();
         this.renderClassSpells();
         this.applyClassEffects();
+        this.updateBondOptions()
         console.log('Ficha iniciada com sucesso.');
     }
 
@@ -227,6 +232,8 @@ class CharacterSheet {
             this.#syncClassRaceSelectors();
             this.applyClassEffects();
             this.renderClassMoves();
+            this.updateBondOptions();
+            this.updateAlignmentOptions();
             this.save();
         });
 
@@ -236,6 +243,7 @@ class CharacterSheet {
             this.#syncClassRaceSelectors();
             this.applyClassEffects();
             this.renderClassMoves();
+            this.updateBondOptions();
             this.updateAlignmentOptions();
             this.save();
         });
@@ -259,6 +267,25 @@ class CharacterSheet {
         });
         document.getElementById('spellSearch')?.addEventListener('input', (e) => {
             this.renderClassSpells(e.target.value);
+        });
+    }
+
+    #registerBondEvents() {
+        document.getElementById('btnAddBond').addEventListener('click', (e) => {
+            this.addBondToActiveList(
+                document.getElementById('bondTemplate').id > 0 ? document.getElementById('bondTemplate').id : null, //ID
+                document.getElementById('bondTemplate').value ? this.charClass.value : "custom", // bond Name
+                document.getElementById('bondTemplate').value || document.getElementById('charBonds').value.trim(), // Bond Template
+                document.getElementById('bondTarget').value.trim() // Bond Target
+            )
+            document.getElementById('bondTarget').value = '';
+            document.getElementById('bondTemplate').selectedIndex = 0;
+            document.getElementById('charBonds').value = '';
+            e.preventDefault();
+        });
+
+        document.getElementById('bondTemplate').addEventListener('change', (e) => {
+            this.bondOption = e.target.value || null;
         });
     }
 
@@ -290,12 +317,6 @@ class CharacterSheet {
             () => this.addConsumableToList('consumablesContainer'));
         document.getElementById('btnAddMovement')?.addEventListener('click',
             () => this.character.addMovement());
-    }
-
-    #registerBondEvents() {
-        document.getElementById('btnAddBond').addEventListener('click', () => {
-            this.addBondToActiveList(document.getElementById('charBonds').value.trim());
-        });
     }
 
     #registerMovementTypeToggle() {
@@ -351,6 +372,7 @@ class CharacterSheet {
         // Alignment options depend on class, so refresh them before setting the value
         this.updateAlignmentOptions();
         setVal('charAlignment', character.alinhamento);
+        this.updateBondOptions();
 
         ATTR_MAP.forEach(({ val, deb, key }) => {
             setVal(val, character.atributos[key] || '');
@@ -366,6 +388,8 @@ class CharacterSheet {
             try   { this.quill.setContents(JSON.parse(character.notas)); }
             catch { this.quill.setText(character.notas); }
         }
+
+        this.#renderBondsList(); // show bonds that were loaded from storage
     }
 
     // ─── Rendering ───────────────────────────────────────────────────────────
@@ -405,20 +429,34 @@ class CharacterSheet {
 
     renderClassSpells(searchQuery = '') {
         if (!this.charClass.value) return;
-        const container = document.getElementById('classSpells');
-        container.innerHTML = '';
+        
+        const cls = this.#findClassByName(this.charClass.value);
 
-        const box = document.createElement('div');
-        box.classList.add(this.spellListFormat === 'card' ? 'spell-cardbox' : 'spell-list');
+        if(cls.spellcaster){
+            document.getElementById('classSpells').style.display = '';
+            document.getElementById('spellContainer').style.display = '';
 
-        let lista_spells = Mechanics.Spell.getSpellListByClassAndLevel(this.charClass.value);
+            const container = document.getElementById('classSpells');
+            container.innerHTML = '';
 
-        if (searchQuery) {
+            const box = document.createElement('div');
+            box.classList.add(this.spellListFormat === 'card' ? 'spell-cardbox' : 'spell-list');
+
+            let lista_spells = Mechanics.Spell.getSpellListByClassAndLevel(this.charClass.value);
+
+            if (searchQuery) {
             lista_spells = this.searchItems(lista_spells, searchQuery);
+            }
+
+            box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells);
+            container.appendChild(box);
+        }
+        else{
+            document.getElementById('classSpells').style.display = 'none';
+            document.getElementById('spellContainer').style.display = 'none';
         }
 
-        box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells);
-        container.appendChild(box);
+
     }
 
     // Search Movements and Spells
@@ -431,9 +469,7 @@ class CharacterSheet {
     return items.filter(item =>
         terms.every(term => Utils.searchFilter(item, term))
     );
-}
-
-
+    }
 
     // ─── Attributes & modifiers ───────────────────────────────────────────────
 
@@ -465,6 +501,7 @@ class CharacterSheet {
 
     /** Refreshes both dropdowns so they reflect each other's current selection. */
     #syncClassRaceSelectors() {
+        console.log('Sincronizando seletores de classe e raça...');
         this.#updateClassOptions();
         this.#updateRaceOptions();
     }
@@ -612,10 +649,12 @@ class CharacterSheet {
 
     // ─── Bonds ───────────────────────────────────────────────────────────────
 
-    addBondToActiveList(bondName) {
-        if (!bondName) return;
-        this.character.bonds.push(Mechanics.Bond.create('custom', bondName, false));
+    addBondToActiveList(id, origin, bondName, bondTarget) {
+        if (!bondName || !bondTarget) return;
+        let bondId = id || this.character.bonds.length;
+        this.character.bonds.push(Mechanics.Bond.create(bondId, origin, bondName, bondTarget, false));
         this.#renderBondsList();
+        this.save();
     }
 
     #renderBondsList() {
@@ -624,6 +663,19 @@ class CharacterSheet {
         listEl.innerHTML = this.character.bonds.length
             ? this.character.bonds.map(Mechanics.Bond.render).join('')
             : '<em>Não há vínculos ativos.</em>';
+    }
+
+    updateBondOptions() {
+        const bonds = Mechanics.Bond.getBondListByClass(this.charClass.value);
+        const bondTemplateSelect = document.getElementById("bondTemplate");
+        bondTemplateSelect.innerHTML = '<option value="">Selecione</option>';
+        bonds.forEach(item => {
+            const option = document.createElement("option");
+            option.value = item.template;
+            option.textContent = item.template;
+            option.id = item.id;
+            bondTemplateSelect.appendChild(option);
+        });
     }
 
     // ─── Sheet lifecycle ──────────────────────────────────────────────────────
@@ -642,9 +694,9 @@ class CharacterSheet {
         this.character = new Character(); // reset model first
         this.clearInputs();
         this.#syncClassRaceSelectors(); // re-enable any previously disabled options
-
         this.updateModifiers();
         this.updateAlignmentOptions();
+        this.updateBondOptions();
         this.updateStrikethrough();
         this.applyClassEffects();
         this.renderClassMoves();
