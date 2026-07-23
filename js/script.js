@@ -256,6 +256,7 @@ class CharacterSheet {
             this.renderClassMoves();
         });
         this.#addViewToggle('btnSpellCardView', 'btnSpellListView', (fmt) => {
+            
             this.spellListFormat = fmt;
             this.renderClassSpells();
         });
@@ -439,16 +440,19 @@ class CharacterSheet {
             const container = document.getElementById('classSpells');
             container.innerHTML = '';
 
+            
+            
             const box = document.createElement('div');
+            box.innerHTML = '';
             box.classList.add(this.spellListFormat === 'card' ? 'spell-cardbox' : 'spell-list');
-
-            let lista_spells = Mechanics.Spell.getSpellListByClassAndLevel(this.charClass.value);
+            
+            let lista_spells = Mechanics.Spell.getSpellListByClassAndLevel(this.charClass.value);            
 
             if (searchQuery) {
             lista_spells = this.searchItems(lista_spells, searchQuery);
             }
 
-            box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells);
+            box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells,this.spellListFormat);
             container.appendChild(box);
         }
         else{

@@ -453,6 +453,8 @@ export class Spell {
     static renderSpellList(spells, format) {
         spellListContainer.innerHTML = '';
         spells.forEach(spell => {
+            console.log("entrei");
+            
             const spellElement = document.createElement('div');
             spellElement.classList.add(`spell ${format}`);
             spellElement.innerHTML = Spell.render(spell, format);
@@ -495,9 +497,8 @@ export class Spell {
         </div>`;
     }
 
-    static renderSpellGroupbyLevel(lista_spells, nivel, format="card") {
+    static renderSpellGroupbyLevel(lista_spells, format="card", nivel) {     
         
-
         const groupedSpells = [];
         for (const spell of lista_spells) {
             if (!groupedSpells[spell.nivel]) {
@@ -506,14 +507,14 @@ export class Spell {
             groupedSpells[spell.nivel].push(spell);
         }
 
-        const spellGroupContainer = document.createElement('div');
-
+        const spellGroupContainer = document.createElement('div');   
+        
         for (const [nivel, spells] of Object.entries(groupedSpells)) {
-
+            
             //Crei o Spell-Group para conter as magias de Cada Nivel
             const containerA = document.createElement('div');
-            containerA.classList.add('spell-card-group');
-            containerA.id = `spell-group-${nivel}`;
+            containerA.classList.add('spell-level-group');
+            containerA.id = `spell-group-${nivel}`;            
             
             //Cabeçalhos das Magias
             const header = document.createElement('h3');
@@ -522,17 +523,30 @@ export class Spell {
             containerA.appendChild(header);
             
             //Container para dos Cards de Magias
-            const spellCardContainer = document.createElement('div');
-            spellCardContainer.classList.add('spell-card-container');
-            spellCardContainer.id = `spell-card-container-${nivel}`;
+            const spellContainer = document.createElement('div');
+            if (format == "card"){
+                
+                spellContainer.classList.add('spell-card-container');
+                spellContainer.id = `spell-card-container-${nivel}`;
+            }
+            else{
+                spellContainer.classList.add('spell-list-container');
+                spellContainer.id = `spell-list-container-${nivel}`;
+            }
+
+            
+            
             
             spells.forEach(spell => {
-                spellCardContainer.innerHTML += Spell.render(spell, format);
+                               
+                spellContainer.innerHTML += Spell.render(spell, format);
+                
             });
 
-            containerA.appendChild(spellCardContainer);
+            containerA.appendChild(spellContainer);
 
             spellGroupContainer.appendChild(containerA);
+            
         }
         return spellGroupContainer.innerHTML;
     }
