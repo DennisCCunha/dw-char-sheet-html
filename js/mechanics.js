@@ -1,12 +1,13 @@
 import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 
 export class Bond {
-    static create(nome ="", template="", finalizado = false) {
+    static create(id = 0, nome ="", template="", alvo= "", finalizado = false) {
         return {
-            id:0,
+            id: id,
             nome: nome,
             template: template,
-            finalizado: finalizado           
+            finalizado: finalizado,
+            alvo: alvo,
         };
     }
 
@@ -27,8 +28,9 @@ export class Bond {
 
     static render(bond) {
         return `<div class="bond" id="bond-${bond.id}">
-        <label class="bond-name">${bond.nome}</label> 
+
         <label class="bond-template">${bond.template}</label> 
+        <label class="bond-name">${bond.alvo}</label>
         <button id="btn-end-bond" class="bond-end">END</button>
         </div>`;
     }
@@ -94,7 +96,6 @@ export class Equipment {
         return eqp;
     }
 }
-
 
 export class Movement {
     static #parsing(movement) {
