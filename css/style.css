@@ -8,22 +8,26 @@
 @import url('./spellList.css');
 
 :root {
-    --main_font: 'Cinzel', serif;
-    --secondary_font: "Cormorant Garamond", serif;
+    --main-font: 'Cinzel', serif;
+    --secondary-font: "Cormorant Garamond", serif;
+    --tertiary-font : "Crimson Text", serif;
     --border-color: #000;
     --muted: #777;
     --danger: rgba(90,0,10,0.9);
     --gold: rgba(180,140,60,1);
+    --yellow: rgb(255, 186, 8);
     --dark: rgba(10,12,15,1);
     --blue: rgb(36, 66, 86);
     --green: rgb(39, 84, 45);
     --red: rgb(143, 0, 17);
-    --amber: rgba(255, 136, 0, 0.76);
+    --amber: rgba(255, 136, 0, 0.76);    
     --white: #fff;
+    --ultra: rgb(0, 255, 0);
+
 }
 
 html{
-    font-family: var(--main_font);
+    font-family: var(--main-font);
 }
 
 body{
@@ -51,7 +55,7 @@ body{
 }
 
 .pagina {
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     margin: 1.5rem;
     color: #111;
 }
@@ -100,7 +104,7 @@ body{
 }
 
 input, select, textarea {
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-size: 1rem;
     color: #111;
     background: transparent;
@@ -129,7 +133,7 @@ h1,
 h2,
 h3 {
     margin: 0;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-weight: 700;
 }
 
@@ -150,7 +154,7 @@ h3 {
     font-size: 40px;
     border: none;
     outline: none;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-weight: 800;
 }
 
@@ -171,7 +175,7 @@ h3 {
     font-size: 24px;
     border: none;
     outline: none;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-weight: bold;
 }
 
@@ -216,6 +220,8 @@ h3 {
     width: 80%;
 }
 
+/* cards */
+
 .card {
     border: 0px dotted var(--border-color);
     border-radius: 25px;
@@ -226,17 +232,17 @@ h3 {
 
 .card label {
     display: block;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .card input {
     width: 80%;
     border: none;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 0.063rem solid var(--border-color);
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5rem;
     background: transparent;
 }
 
@@ -282,14 +288,14 @@ td {
 }
 
 th {
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-weight: bold;
     background: rgba(219, 219, 219, 0.162);
 
 }
 
 td input {
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     width: 100%;
     border: none;
     text-align: center;
@@ -348,7 +354,7 @@ td input {
 
 .bond-end{
     background-color: var(--red);
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-weight: bold;
     color: var(--white);
     border: none;
@@ -372,7 +378,7 @@ td input {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-size: 14px;
     border-radius: 4px;
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); */
@@ -495,7 +501,7 @@ nav button {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-size: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -525,7 +531,7 @@ nav .save_buttons {
     padding: 28px;
     max-width: 520px;
     width: 92%;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
 }
 
 .dw-modal h3 {
@@ -541,7 +547,7 @@ nav .save_buttons {
 .dw-modal textarea {
     width: 100%;
     box-sizing: border-box;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-size: 12px;
     padding: 8px;
     border: 1px solid var(--dark);
@@ -561,7 +567,7 @@ nav .save_buttons {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-size: 14px;
 }
 
@@ -612,14 +618,14 @@ footer p a:hover{
 
 /* Change the font of the actual text inside the editor */
 .ql-container.ql-snow .ql-editor {
-  font-family: var(--main_font);
+  font-family: var(--main-font);
   font-size: 16px;
 }
 
 /* Ensure the toolbar dropdown reflects your new default label */
 .ql-snow .ql-picker.ql-font .ql-picker-label::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
-  font-family: var(--main_font);
+  font-family: var(--main-font);
 }
 
 

@@ -4,7 +4,7 @@
     --card-description-even:rgb(204, 204, 204);
     --card-roll-badge:#6d6d6d;
     --card-roll-shadow:rgb(82, 82, 82);
-    --ultra:#00ff00;
+    
 }
 
 .movement-list {
@@ -64,7 +64,7 @@
 
 .movement-panel-description{
     background: rgba(204, 204, 204,0.8);
-    font-family: var(--secondary_font);
+    font-family: var(--secondary-font);
     font-size: 1.09rem;
     padding: 0.5rem;
     padding-left: 1rem;

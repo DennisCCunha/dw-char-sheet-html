@@ -4,7 +4,6 @@
     --card-description-even: rgb(204, 204, 204);
     --card-roll-badge: rgb(109, 109, 109);
     --card-roll-shadow: #525252;
-    --ultra: #00ff00;
 }
 
 
@@ -65,7 +64,7 @@
 .spell-name {
     border: none;
     border-bottom: 1px dashed transparent;
-    font-family: var(--main_font);
+    font-family: var(--main-font);
     font-size: 16px;
     width: 100%;
     outline: none;

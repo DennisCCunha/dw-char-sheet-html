@@ -290,7 +290,7 @@ export class Movement {
                     <section class="movement-card-result">
                     </section>
 
-                    <div class="movement-card-footer">
+                    <div class="movement-card-footer movement-${movement.tipo}">
                         <strong>MOVIMENTO</strong>
                         <strong>${movement.tipo.toUpperCase()}</strong>
                     </div>
