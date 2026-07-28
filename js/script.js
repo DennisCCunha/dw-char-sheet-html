@@ -370,7 +370,6 @@ class CharacterSheet {
             
         }
         else {
-            console.log('3');
             this.movementListFormat = 'card';
             this.spellListFormat = 'card';
         }

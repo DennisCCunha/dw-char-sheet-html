@@ -1,11 +1,7 @@
 :root{
-    --card-border:#696969;
-    --card-description:#ececec;
-    --card-description-even:#cccccc;
-    --card-roll-badge:#6d6d6d;
-    --card-roll-shadow:#525252;
-    --wizard:#A6808C;
-    --cleric:#B7D5D4;
+    
+    --wizard:rgb(89, 47, 84, 0.9);
+    --cleric:rgba(36, 66, 86, 0.8);
 }
 
 .spell-cardbox{
@@ -65,7 +61,7 @@
 }
 
 .spell-card-header{
-    background: inherit;
+    background: transparent;
     padding: 10px 5px 5px 10px;
     display:flex;
     flex-direction:column;
@@ -95,10 +91,16 @@
     font-size: 1rem;
     margin:0;
     margin-left: 10px;
-    color:white;
+    
     font-weight:bold;
     text-align:left;
     max-width: 200px;
+
+    background: linear-gradient(0deg, var(--yellow) 20%, var(--white) 50%, var(--white)100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
 }
 
 .spell-card-school{
@@ -114,7 +116,7 @@
 .spell-card-school span{
     font-size:0.8rem;
     text-align:center;
-    color:var(--yellow);
+    color:var(--white);
 }
 
 .spell-card-description{
@@ -144,10 +146,6 @@
     display:flex;
     align-items:center;
     background:transparent;
-}
-
-.even{
-    background:var(--card-description-even);
 }
 
 .spell-card-result-badge{
@@ -184,14 +182,7 @@
     text-transform:uppercase;
     font-size:0.6rem;
     /* align-self:flex-end; */
-
-    background: linear-gradient(45deg, var(--danger), var(--red));
-    -webkit-background-clip: text;
-    background-clip: text;
-    z-index: 1;
-    color: transparent;
-    /* Para alguns navegadores */
-    -webkit-text-fill-color: transparent;
+    color: var(--white);
 }
 
 .spell-card-description .badge {

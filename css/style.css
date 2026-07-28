@@ -28,6 +28,12 @@
     --amber: rgba(255, 136, 0, 0.76);    
     --white: #fff;
     --ultra: rgb(0, 255, 0);
+    --purple: rgb(89, 47, 84);
+
+    --card-border:#696969;
+    --card-description:#f4f4f4;
+    --card-roll-badge:#6d6d6d;
+    --card-roll-shadow:#525252;
 
 }
 
