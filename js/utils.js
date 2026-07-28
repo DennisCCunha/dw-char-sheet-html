@@ -1,5 +1,5 @@
 export default class Utils {
-// Canonicalização: remove acentos e normaliza para lower-case
+    // Canonicalização: remove acentos e normaliza para lower-case
     static canonical(text) {
         return (text || '')
             .toString()
@@ -10,7 +10,7 @@ export default class Utils {
     }
 
     static capitalize(s) {
-    if (!s) return s;
+        if (!s) return s;
         return s[0].toUpperCase() + s.slice(1).toLowerCase();
     }
 
@@ -28,5 +28,31 @@ export default class Utils {
             return Object.values(obj).some(value => Utils.walk(value, search));
         }
         return false;
+    }
+
+    static carousel(cardsItens) {
+        return `<div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                    <img src="..." class="d-block w-100" alt="...">
+                    </div>
+                    
+                    
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                </div>`
+    }
+
+    static carouselItem(card){
+        return `<div class="carousel-item">
+                    ${card}
+                </div>`
     }
 }

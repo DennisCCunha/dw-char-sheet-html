@@ -269,7 +269,7 @@ export class Movement {
             icon = "avançado2";
         }
 
-        return `<div class="movement-card">
+        return `<div class="movement-card movement-${movement.tipo}">
                     <div class="movement-card-header">
                         <div class="movement-card-title">
                             <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
@@ -290,7 +290,7 @@ export class Movement {
                     <section class="movement-card-result">
                     </section>
 
-                    <div class="movement-card-footer movement-${movement.tipo}">
+                    <div class="movement-card-footer ">
                         <strong>MOVIMENTO</strong>
                         <strong>${movement.tipo.toUpperCase()}</strong>
                     </div>
@@ -347,7 +347,6 @@ export class Movement {
 
 
     static renderFormattedCard(movement) {
-        console.log(movement);
 
         let criteirios = movement.parsedMovement.criteriosRolagem.map(criterio => `<span>${criterio.criterio}</span>`).join('');
   
@@ -453,7 +452,6 @@ export class Spell {
     static renderSpellList(spells, format) {
         spellListContainer.innerHTML = '';
         spells.forEach(spell => {
-            console.log("entrei");
             
             const spellElement = document.createElement('div');
             spellElement.classList.add(`spell ${format}`);
