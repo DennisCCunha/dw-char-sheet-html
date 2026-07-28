@@ -1,13 +1,3 @@
-:root{
-    --card-border:rgb(180, 180, 180);
-    --card-description:#ececec;
-    --card-description-even:rgb(204, 204, 204);
-    --card-roll-badge:#6d6d6d;
-    --card-roll-shadow:#525252;
-    --ultra:#00ff00;
-
-}
-
 .movement-list {
     list-style-type: none;
     padding: 0;
