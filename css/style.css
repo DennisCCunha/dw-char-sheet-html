@@ -8,6 +8,7 @@
 @import url('./spellList.css');
 
 @import url('./atributesCard.css');
+@import url('./carousel.css');
 /* @import url('./altStatCard.css'); */
 
 
@@ -856,6 +857,8 @@ input:checked + .slider:before {
 .result:hover{
     background:#eee;
 }
+
+
 
 
 /* Mobile First - Base para dispositivos móveis */

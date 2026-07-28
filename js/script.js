@@ -74,16 +74,12 @@ class CharacterSheet {
         this.updateModifiers();
         this.updateStrikethrough();
         this.updateAlignmentOptions();
-        this.renderClassMoves();
+        this.renderBasicMoves();
+        // this.renderClassMoves();
         this.renderClassSpells();
         this.applyClassEffects();
         this.updateBondOptions()
         console.log('Ficha iniciada com sucesso.');
-
-
-
-
-
     }
 
     // ─── Event registration ───────────────────────────────────────────────────
@@ -483,6 +479,16 @@ class CharacterSheet {
 
 
     }
+
+    renderBasicMoves(searchQuery = '') {
+        const container = document.getElementById('basicMoves');
+        container.innerHTML = '';
+        const moves = Mechanics.Movement.getBasicMovements();
+        for (const move of moves) {
+            container.innerHTML += Mechanics.Movement.render(move, this.movementListFormat, true);
+        }    
+    }
+
 
     // Search Movements and Spells
     searchItems(items, query) {

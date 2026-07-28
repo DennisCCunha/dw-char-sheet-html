@@ -18,7 +18,6 @@
 .movement-card{
     width:20rem;
     min-height: 36rem;
-    height:fit-content;
     background: var(--gold);
     border-radius:14px;
     overflow:hidden;
