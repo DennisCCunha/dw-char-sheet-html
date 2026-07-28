@@ -103,7 +103,7 @@
 .spell-card-school span{
     font-size:0.8rem;
     text-align:center;
-    color:var(--card-description);
+    color:var(--yellow);
 }
 
 .spell-card-description{
@@ -169,13 +169,19 @@
     font-weight:bold;
 }
 
-.spell-card-footer{
-    background:var(--card-border);
-    color:white;
+.spell-card-footer{    
     padding:5px 15px 10px 15px;
     text-transform:uppercase;
     font-size:0.6rem;
     /* align-self:flex-end; */
+
+    background: linear-gradient(45deg, var(--danger), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    z-index: 1;
+    color: transparent;
+    /* Para alguns navegadores */
+    -webkit-text-fill-color: transparent;
 }
 
 .spell-card-description .badge {

@@ -171,67 +171,15 @@
 
 .movement-card-footer {
     font-family: var(--tertiary-font);
-    font-weight: 300;
+    font-weight: 350;
     background: var(--card-border);
-    color: white;
+    color: var(--yellow);
     padding: 5px 15px 10px 15px;
     text-transform: uppercase;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     /* align-self:flex-end; */
-}
-
-.movement-Basico, .movement-Racial{
-    background: radial-gradient(circle,
-            var(--ultra) 0%,
-            var(--ultra) 90%,
-            var(--green) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Para alguns navegadores */
-    -webkit-text-fill-color: transparent;
-    z-index: 1;
-
-}
-
-.movement-Especial, .movement-Inicial{
-   background: radial-gradient(circle,
-            var(--yellow) 0%,
-            var(--yellow) 89%,
-            var(--dark) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Para alguns navegadores */
-    -webkit-text-fill-color: transparent;
     
 }
-
-.movement-card-footer.movement-Avançado.\32-5 {
-    background: radial-gradient(circle,
-            var(--red) 0%,
-            var(--red) 89%,
-            var(--dark) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Para alguns navegadores */
-    -webkit-text-fill-color: transparent;
-}
-
-.movement-card-footer.movement-Avançado.\36-10{
-    background: radial-gradient(circle,
-            var(--dark) 0%,
-            var(--amber) 5%,
-            var(--amber) 89%,
-            var(--dark) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Para alguns navegadores */
-    -webkit-text-fill-color: transparent;
-}
-
 
 .movement-card-description .badge {
     width: 30px;
