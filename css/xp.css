@@ -1,101 +1,43 @@
-:root{
-    --XP1: rgb(143, 0, 17);
-    --XP2: rgb(145, 8, 20);
-    --XP3: rgb(147, 16, 22);
-    --XP4: rgb(150, 25, 25);
-    --XP5: rgb(152, 33, 27);
-    --XP6: rgb(154, 41, 30);
-    --XP7: rgb(156, 49, 32);
-    --XP8: rgb(158, 58, 35);
-    --XP9: rgb(160, 66, 37);
-    --XP10: rgb(163, 74, 40);
-    --XP11: rgb(165, 82, 42);
-    --XP12: rgb(167, 91, 45);
-    --XP13: rgb(169, 99, 47);
-    --XP14: rgb(171, 107, 50);
-    --XP15: rgb(173, 115, 52);
-    --XP16: rgb(176, 124, 55);
-    --XP17: rgb(178, 132, 57);
-    --XP18: rgb(180, 140, 60);
+@property --idx {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 1;
 }
 
 .xp {
     display: flex;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     margin-top: 12px;
+    gap: 5px;
+}
+
+.nivel-box {
+    flex-basis: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .circle {
-    --i: 0;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--i);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgb(
+        calc(143 + 37 / 17 * (var(--idx) - 1))
+        calc(140 / 17 * (var(--idx) - 1))
+        calc(17 + 43 / 17 * (var(--idx) - 1))
+    );
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.2s ease;
+    flex-shrink: 1;
 }
 
 .circle.active {
-    --i: 0;
-    background: var(--red);
-}
-
-.circle.active:nth-child(1n + 1) {
-    background: var(--i);
-}
-
-.circle:nth-child(1) {
-    --i: var(--XP1);
-}
-.circle:nth-child(2) {
-    --i: var(--XP2);
-}
-.circle:nth-child(3) {
-    --i: var(--XP3);
-}
-.circle:nth-child(4) {
-    --i: var(--XP4);
-}
-.circle:nth-child(5) {
-    --i: var(--XP5);
-}
-.circle:nth-child(6) {
-    --i: var(--XP6);
-}
-.circle:nth-child(7) {
-    --i: var(--XP7);
-}
-.circle:nth-child(8) {
-    --i: var(--XP8);
-}
-.circle:nth-child(9) {
-    --i: var(--XP9);
-}
-.circle:nth-child(10) {
-    --i: var(--XP10);
-}
-.circle:nth-child(11) {
-    --i: var(--XP11);
-}
-.circle:nth-child(12) {
-    --i: var(--XP12);
-}
-.circle:nth-child(13) {
-    --i: var(--XP13);
-}
-.circle:nth-child(14) {
-    --i: var(--XP14);
-}
-.circle:nth-child(15) {
-    --i: var(--XP15);
-}
-.circle:nth-child(16) {
-    --i: var(--XP16);
-}
-.circle:nth-child(17) {
-    --i: var(--XP17);
-}
-.circle:nth-child(18) {
-    --i: var(--XP18);
+    background: rgb(
+        calc(143 + 37 / 17 * (var(--idx) - 1))
+        calc(140 / 17 * (var(--idx) - 1))
+        calc(17 + 43 / 17 * (var(--idx) - 1))
+    );
 }

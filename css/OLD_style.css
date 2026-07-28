@@ -7,34 +7,25 @@
 @import url('./spellCard.css');
 @import url('./spellList.css');
 
-@import url('./atributesCard.css');
-@import url('./carousel.css');
-/* @import url('./altStatCard.css'); */
-
 
 :root {
-    --main-font: 'Cinzel', serif;
-    --secondary-font: "Cormorant Garamond", serif;
-    --tertiary-font : "Crimson Text", serif;
+    --main_font: 'Cinzel', serif;
+    --secondary_font: "Cormorant Garamond", serif;
     --border-color: #000;
     --muted: #777;
     --danger: rgba(90,0,10,0.9);
     --gold: rgba(180,140,60,1);
-    --yellow: rgb(255, 186, 8);
     --dark: rgba(10,12,15,1);
     --blue: rgb(36, 66, 86);
     --green: rgb(39, 84, 45);
     --red: rgb(143, 0, 17);
-    --amber: rgba(255, 136, 0, 0.76);    
+    --amber: rgba(255, 136, 0, 0.76);
     --white: #fff;
-    --ultra: rgb(0, 255, 0);
-
 }
 
 html{
-    font-family: var(--main-font);
+    font-family: var(--main_font);
 }
-
 
 body{
     background: radial-gradient(circle at center,
@@ -66,7 +57,7 @@ body > article{
 }
 
 .pagina {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     margin: 1.5rem;
     color: #111;
 }
@@ -115,7 +106,7 @@ body > article{
 }
 
 input, select, textarea {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 1rem;
     color: #111;
     background: transparent;
@@ -144,7 +135,7 @@ h1,
 h2,
 h3 {
     margin: 0;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: 700;
 }
 
@@ -165,7 +156,7 @@ h3 {
     font-size: 40px;
     border: none;
     outline: none;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: 800;
 }
 
@@ -186,7 +177,7 @@ h3 {
     font-size: 24px;
     border: none;
     outline: none;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
 }
 
@@ -213,7 +204,7 @@ h3 {
     margin: 1rem 0;
     border: none;
     border-bottom: 1px solid var(--border-color);
-    width: 3rem;
+    width: 50px;
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
@@ -230,17 +221,17 @@ h3 {
 
 .card label {
     display: block;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 }
 
 .card input {
     width: 80%;
     border: none;
-    border-bottom: 0.063rem solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 24px;
     background: transparent;
 }
 
@@ -286,13 +277,13 @@ td {
 }
 
 th {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
     background: rgba(219, 219, 219, 0.162);
 }
 
 td input {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     width: 100%;
     border: none;
     text-align: center;
@@ -385,7 +376,7 @@ td input {
 
 .bond-end{
     background-color: var(--red);
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
     color: var(--white);
     border: none;
@@ -409,7 +400,10 @@ td input {
     flex-grow: 3;
 }
 
-/* general spells */
+.spells {
+    border-left: 2px solid var(--border-color);
+    padding-left: 20px;
+}
 
 .spells-controller{
     display: flex;
@@ -428,16 +422,24 @@ td input {
     flex-grow: 3;
 }
 
-.spell-level-group {
-    margin-bottom: 1.25rem;
+.spell-group {
+    margin-bottom: 20px;
 }
 
-.spell-level-group h3 {
-    border-bottom: 0.063rem solid var(--border-color);
-    padding-bottom: 0.375rem;
-    margin-bottom: 0.625rem;
+.spell-group h3 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 6px;
+    margin-bottom: 10px;
 }
 
+.spell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    border-radius: 10px;
+}
 
 .spell input[type="checkbox"] {
     appearance: none;
@@ -572,7 +574,7 @@ nav button {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -602,7 +604,7 @@ nav .save_buttons {
     padding: 28px;
     max-width: 520px;
     width: 92%;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
 }
 
 .dw-modal h3 {
@@ -618,7 +620,7 @@ nav .save_buttons {
 .dw-modal textarea {
     width: 100%;
     box-sizing: border-box;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 12px;
     padding: 8px;
     border: 1px solid var(--dark);
@@ -638,7 +640,7 @@ nav .save_buttons {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 14px;
 }
 
@@ -689,14 +691,14 @@ footer p a:hover{
 
 /* Change the font of the actual text inside the editor */
 .ql-container.ql-snow .ql-editor {
-  font-family: var(--main-font);
+  font-family: var(--main_font);
   font-size: 16px;
 }
 
 /* Ensure the toolbar dropdown reflects your new default label */
 .ql-snow .ql-picker.ql-font .ql-picker-label::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
-  font-family: var(--main-font);
+  font-family: var(--main_font);
 }
 
 
@@ -854,473 +856,43 @@ input:checked + .slider:before {
 
 
 
-/* Mobile First - Base para dispositivos móveis */
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-    padding: 0;
-  }
-
-  /* Navegação */
-  .floating-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #1a1a1a;
-    border-top: 2px solid #d4af37;
-    z-index: 1000;
-    padding: 10px 0;
-  }
-
-  .save_buttons {
-    display: flex;
-    gap: 8px;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-
-  .save_buttons button {
-    flex: 1;
-    min-width: 80px;
-    padding: 10px 8px;
-    font-size: 12px;
-  }
-
-  /* Páginas */
-  .pagina {
-    width: 100vw;
-    height: auto;
-    padding-bottom: 80px;
-    scroll-snap-align: start;
-  }
-
-  .sheet {
-    padding: 15px;
-  }
-
-  /* Título */
-  .title {
-    margin-bottom: 15px;
-  }
-
-  #charName {
-    font-size: 18px;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .subtitle {
-    display: flex;
-    gap: 10px;
-  }
-
-  .subtitle select {
-    flex: 1;
-    padding: 8px;
-  }
-
-  /* Stats Cards */
-  .stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin: 15px 0;
-  }
-
-  .stats .card {
-    padding: 10px;
-    text-align: center;
-  }
-
-  .stats label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 12px;
-  }
-
-  .stats input {
-    width: 100%;
-    padding: 5px;
-    font-size: 12px;
-  }
-
-  .pv-pair {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-  }
-
-  .pv-pair input {
-    flex: 1;
-    max-width: 60px;
-  }
-
-  /* Atributos Iniciais */
-  .initial-attributes-container {
-    margin: 15px 0;
-    padding: 10px;
-    font-size: 12px;
-  }
-
-  .init-val {
-    cursor: pointer;
-    padding: 5px 8px;
-    background: #d4af37;
-    color: #000;
-    border-radius: 4px;
-    margin: 2px;
-    display: inline-block;
-  }
-
-  /* Tabela de Atributos */
-  #attributesTable {
-    width: 100%;
-    font-size: 12px;
-    margin: 15px 0;
-  }
-
-  #attributesTable th,
-  #attributesTable td {
-    padding: 8px 4px;
-    text-align: center;
-  }
-
-  #attributesTable input {
-    width: 100%;
-    padding: 4px;
-    font-size: 11px;
-  }
-
-  .table-attribute-title {
-    font-weight: bold;
-  }
-
-  .table-row-debilidade label {
-    display: block;
-    font-size: 10px;
-    margin-top: 5px;
-  }
-
-  .debilidade {
-    color: #d4af37;
-  }
-
-  /* XP, Alinhamento, Vínculos */
-  #charXPBonds {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 15px;
-  }
-
-  .xp-alignment-box {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .xp {
-    padding: 10px;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
-  }
-
-  .xp strong {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-
-  .xp .circle {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #d4af37;
-    border-radius: 50%;
-    margin: 4px;
-  }
-
-  .charLevelInput {
-    width: 3rem;
-    padding: 5px;
-    margin: 5px 0;
-  }
-
-  .alignment select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-  }
-
-  .bonds {
-    padding: 10px;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
-  }
-
-  .bond-inputs-box {
-    display: flex;
-    gap: 5px;
-    margin: 10px 0;
-  }
-
-  .bond_input_template,
-  .bond_input_target {
-    flex: 1;
-    padding: 8px;
-    font-size: 12px;
-  }
-
-  #btnAddBond {
-    padding: 8px 12px;
-    background: #d4af37;
-    color: #000;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .bonds_area {
-    margin-top: 10px;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-
-  /* Equipment Page */
-  .equipment-sheet {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  #equipmentpanel,
-  #consumablePanel {
-    border: 2px solid #d4af37;
-    padding: 10px;
-    border-radius: 4px;
-  }
-
-  #equipmentpanel h2,
-  #consumablePanel h2 {
-    margin: 0 0 10px 0;
-    font-size: 16px;
-  }
-
-  #addEquipment,
-  #addConsumable {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
-
-  #equipmentContainer,
-  #consumablesContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  /* Movement Page */
-  #Movements {
-    padding: 15px;
-  }
-
-  .sheet-header {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-
-  .movement-controller,
-  .spells-controller {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  #toggleGroupMovement {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-  }
-
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 24px;
-  }
-
-  input:checked + .slider {
-    background-color: #d4af37;
-  }
-
-  .movement-view-toggle,
-  .spell-view-toggle {
-    display: flex;
-    gap: 10px;
-  }
-
-  .btnMovementTab {
-    flex: 1;
-    padding: 8px;
-    cursor: pointer;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
-    text-align: center;
-    background: transparent;
-    color: #d4af37;
-  }
-
-  .btnMovementTab.active {
-    background: #d4af37;
-    color: #000;
-  }
-
-  #movementSearch {
-    width: 100%;
-    padding: 8px;
-    font-size: 12px;
-  }
-
-  .sheet-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .movement_availiable,
-  .spell_availiable {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  /* Notes Page */
-  #charNotes {
-    min-height: 200px;
-    padding: 10px;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
-    margin-bottom: 15px;
-  }
-
-  .charNotes-container {
-    margin-bottom: 20px;
-  }
-
-  .charNotes-container h2,
-  \3#4th-Page > aside h2 {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-
-  /* Modals */
-  .dw-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-  }
-
-  .dw-modal {
-    background: #2a2a2a;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .dw-modal h3 {
-    margin-top: 0;
-  }
-
-  #codeModalText,
-  #restoreCodeInput {
-    width: 100%;
-    padding: 10px;
-    font-size: 12px;
-    resize: vertical;
-  }
-
-  .dw-modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-  }
-
-  .dw-modal-actions button {
-    flex: 1;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-
-  /* Footer */
-  .rodape {
-    padding: 20px 15px;
-    margin-top: 20px;
-    font-size: 12px;
-  }
-
-  .rodape p {
-    margin: 8px 0;
-  }
-
-  /* Scroll horizontal para carrousel */
-  body {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-  }
+@media print {
+    .pagina {
+        background: var(--white);
+        padding: 0;
+    }
+
+    .sheet {
+        border: none;
+    }
+
+    #saveBar,
+    .dw-overlay {
+        display: none !important;
+    }
 }
+
 
 /* Tablet - Ajustes para telas maiores */
 @media (min-width: 769px) and (max-width: 1024px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .sheet {
-    padding: 1rem;
+    padding: 25px;
   }
 }
 
-/* Desktop */
-@media (min-width: 1025px) {
-  body {
-    display: flex;
-    overflow-y: auto;
-  }
+@media screen and (max-width: 450px) {
+    .sheet-container {
+        flex-direction: column;
+        gap: 12px;
+    }
 
-  body > article {
-    flex: 1;
-  }
+    .equipment-sheet {
+        grid-template-columns: 1fr;
+    }
+    
 }
+

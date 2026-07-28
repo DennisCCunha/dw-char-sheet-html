@@ -25,20 +25,19 @@
     width: 20rem;
     height: fit-content;
     min-height: 36rem;
-    background: var(--card-border);
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid #4e4d4d;
-    display: flex;
-    flex-direction: column;
+    background: var(--gold);
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid #4e4d4d;
+    display:flex;
+    flex-direction:column;
     justify-content: space-between;
     align-items: stretch;
     box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
-    align-self: flex-start;
 }
 
-.movement-card-header {
-    background: var(--card-border);
+.movement-card-header{
+    /* background: var(--card-border); */
     padding: 10px 5px 5px 10px;
     display: flex;
     align-items: flex-start;

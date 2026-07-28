@@ -7,12 +7,12 @@ import Utils from './utils.js';
 // Maps each attribute's element IDs to its Character model property key.
 // Used to drive events, modifier updates, and strikethrough logic from a single source of truth.
 const ATTR_MAP = [
-    { val: 'valFor', mod: 'modFor', deb: 'debFor', key: 'forca' },
-    { val: 'valDes', mod: 'modDes', deb: 'debDes', key: 'destreza' },
-    { val: 'valCon', mod: 'modCon', deb: 'debCon', key: 'constituicao' },
-    { val: 'valInt', mod: 'modInt', deb: 'debInt', key: 'inteligencia' },
-    { val: 'valSab', mod: 'modSab', deb: 'debSab', key: 'sabedoria' },
-    { val: 'valCar', mod: 'modCar', deb: 'debCar', key: 'carisma' },
+    { val: 'valFor', mod: 'modFor', deb: 'debFor', key: 'forca', label: 'Força', abreviatura: 'FOR', debilidadeLabel: 'Fraco'},
+    { val: 'valDes', mod: 'modDes', deb: 'debDes', key: 'destreza', label: 'Destreza', abreviatura: 'DES', debilidadeLabel: 'Trêmulo'},
+    { val: 'valCon', mod: 'modCon', deb: 'debCon', key: 'constituicao', label: 'Constituição', abreviatura: 'CON', debilidadeLabel: 'Doente' },
+    { val: 'valInt', mod: 'modInt', deb: 'debInt', key: 'inteligencia', label: 'Inteligência', abreviatura: 'INT', debilidadeLabel: 'Atordoado' },
+    { val: 'valSab', mod: 'modSab', deb: 'debSab', key: 'sabedoria', label: 'Sabedoria', abreviatura: 'SAB', debilidadeLabel: 'Confuso' },
+    { val: 'valCar', mod: 'modCar', deb: 'debCar', key: 'carisma', label: 'Carisma', abreviatura: 'CAR', debilidadeLabel: 'Marcado' },
 ];
 
 const screenDimensions = { small: "(max-width: 600px)", spellAndMovement: "(max-width: 1234px)", movementOnly: "(max-width: 1108px)" }
@@ -26,13 +26,15 @@ class CharacterSheet {
     // ─── Initialisation ───────────────────────────────────────────────────────
 
     #init() {
-        
-        this.circles = Array.from(document.querySelectorAll('.circle'));
-        this.allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
-        this.charRace = document.getElementById('charRace');
-        this.charClass = document.getElementById('charClass');
-        this.quill = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
-        this.character = new Character();
+
+        this.renderAtributes('attributesContainer');
+
+        this.circles    = Array.from(document.querySelectorAll('.circle'));
+        this.allInputs  = Array.from(document.querySelectorAll('input, select, textarea'));
+        this.charRace   = document.getElementById('charRace');
+        this.charClass  = document.getElementById('charClass');
+        this.quill      = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
+        this.character  = new Character();
 
         this.classDetails = dungeonworld.classes || [];
 
@@ -41,6 +43,13 @@ class CharacterSheet {
         this.bondInput = document.getElementById('charBonds');
 
         this.bondOption = null;
+
+
+        this.selected = new Set();
+        this.tags = document.querySelector("#selected-tags");
+        this.search = document.querySelector("#search");
+        this.results = document.querySelector("#results");
+       
 
         this.#assignMissingIds();
         this.#registerEvents();
@@ -56,6 +65,7 @@ class CharacterSheet {
         });
         this.circles.forEach((circle, i) => {
             if (!circle.id) circle.id = `xp_${i}`;
+            circle.style.setProperty('--idx', i + 1);
         });
     }
 
@@ -68,7 +78,8 @@ class CharacterSheet {
         this.updateModifiers();
         this.updateStrikethrough();
         this.updateAlignmentOptions();
-        this.renderClassMoves();
+        this.renderBasicMoves();
+        // this.renderClassMoves();
         this.renderClassSpells();
         this.applyClassEffects();
         this.updateBondOptions();
@@ -90,6 +101,8 @@ class CharacterSheet {
         this.#registerBondEvents();
         this.#registerMovementTypeToggle();
         this.#registerSearchEvents();
+        this.#registerMovementEvents();
+        this.#registerSpellEvents();
     }
 
     /** Attribute value inputs update the character model, modifiers, and derived fields. */
@@ -296,6 +309,13 @@ class CharacterSheet {
         });
     }
 
+    #registerMovementEvents(){
+        
+    }
+    #registerSpellEvents(){
+
+    }
+
     /**
      * Wires a card/list toggle button pair.
      * Calls onChange('card') or onChange('list') whenever the active format changes.
@@ -490,6 +510,16 @@ class CharacterSheet {
 
     }
 
+    renderBasicMoves(searchQuery = '') {
+        const container = document.getElementById('basicMoves');
+        container.innerHTML = '';
+        const moves = Mechanics.Movement.getBasicMovements();
+        for (const move of moves) {
+            container.innerHTML += Mechanics.Movement.render(move, this.movementListFormat, true);
+        }    
+    }
+
+
     // Search Movements and Spells
     searchItems(items, query) {
         const terms = query
@@ -645,15 +675,49 @@ class CharacterSheet {
         this.renderClassSpells();
     }
 
+    // ─── Movements ───────────────────────────────────────────────────────────
+
+    addMovement(movement) {
+        if (!movement) return;
+        this.character.addMovement(movement);
+        this.renderClassMoves();
+        this.save();
+    }
+
     // ─── Inventory ───────────────────────────────────────────────────────────
 
     addEquipmentToList(listId) {
         const listEl = document.getElementById(listId);
+
+        
+
+
         if (!listEl) return;
+        // const equipment = { id: 0, nome: "", descricao: "", usos: 0, peso: 0, moedas: 0, tags: [], notes: "" };
         listEl.insertAdjacentHTML('beforeend', `
-            <div class='list-item'>
-                <input class='spell-name' type='text'   placeholder='Nome do equipamento' style='flex:2' />
-                <input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />
+            <div class='list-item' id="equi-${Math.floor(Math.random() * 101000)}">
+                <select>
+                    <option id="equipSelectCombo" class="options">
+                        ${Mechanics.Equipment.getEquipmentList().map((item, i) => `<option value='${i}'>${item.nome}</option>`).join('')} 
+                    </option>
+                </select>
+
+
+                <label>Nome do equipamento</label>
+                <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
+                <label>Peso</label>
+                <input class='spell-name' type='number' placeholder='Peso' min='0' max='999'/>
+                <label>Tags</label>
+                <div class="combobox">
+                <input id="search" type="text" placeholder="Select a tag..." autocomplete="on"/>
+                 <label>Moeda</label><input class='spell-name' type='number' placeholder='Moeda' value="" min="0"/>
+                <select id="tagSelectCombo" class="options" multiple>
+                    <option id="tagSelectCombo" class="options">
+                        ${Mechanics.Equipment.getTagsList().map((tag, i) => `<option value='${i}'>${tag.nome}</option>`).join('')} 
+                    </option>   
+                </select>
+               
+                <label>Quantidade</label><input class='spell-name' type='text' placeholder='Quantidade' value=""/>
                 <button onclick="this.closest('.list-item').remove()" class='removeIcon'>&#215;</button>
             </div>`
         );
@@ -733,6 +797,132 @@ class CharacterSheet {
         this.renderClassMoves();
         this.renderClassSpells();
     }
+
+    renderAtributes(containerId = 'attributesContainer') {
+        const container = document.getElementById(containerId);
+       
+        for (const atribKey in ATTR_MAP) {
+            const atrib = ATTR_MAP[atribKey];
+            const card = document.createElement('div');
+            card.id = `atrib-card-${atrib.key}`;
+            card.className = 'atrib-card';
+
+            const header = document.createElement('div');
+            header.className = 'atrib-card-header';
+            const h6 = document.createElement('span');
+            h6.textContent = atrib.label;
+            header.appendChild(h6);
+            card.appendChild(header);
+
+            const valueDiv = document.createElement('div');
+            valueDiv.className = 'atrib-card-value';
+            const valueInput = document.createElement('input');
+            valueInput.type = 'text';
+            valueInput.id = `${atrib.val}`;
+            valueInput.value = '';
+            valueInput.placeholder = '0';
+            valueDiv.appendChild(valueInput);
+            card.appendChild(valueDiv);
+
+            const modDiv = document.createElement('div');
+            modDiv.className = 'atrib-card-mod';
+            const modInput = document.createElement('input');
+            modInput.type = 'text';
+            modInput.id = `${atrib.mod}`;
+            modInput.value = '';
+            modInput.placeholder = '+0';
+            modDiv.appendChild(modInput);
+            card.appendChild(modDiv);
+
+            const debDiv = document.createElement('div');
+            debDiv.className = 'atrib-card-deb';
+            const debInput = document.createElement('input');
+            debInput.type = 'checkbox';
+            debInput.id = `${atrib.deb}`;
+            debInput.className = 'red_filling';
+
+            const debLabel = document.createElement('label');
+            const em = document.createElement('em');
+            em.className = 'debilidade';
+            em.textContent = `${atrib.debilidadeLabel} -1`;
+            debLabel.appendChild(em);
+            debDiv.appendChild(debInput);
+            debDiv.appendChild(debLabel);
+            card.appendChild(debDiv);
+
+            container.appendChild(card);
+        }
+    }
+
+    // Multiselect search for tags
+    render(){
+
+        this.renderTags();
+
+        const filter = this.search.value.toLowerCase();
+
+    const visible = items.filter(item =>
+        !this.selected.has(item.id) &&
+        item.name.toLowerCase().includes(filter)
+    );
+
+    this.results.replaceChildren();
+
+    visible.forEach(item=>{
+
+        const div=document.createElement("div");
+        div.className="result";
+        div.textContent=item.name;
+
+        div.onclick=()=>{
+
+            this.selected.add(item.id);
+
+            this.search.value="";
+
+            this.render();
+
+            this.search.focus();
+
+        };
+
+        this.results.append(div);
+
+    });
+
+    }
+
+    renderTags(){
+
+        this.tags.replaceChildren();
+
+        this.selected.forEach(id=>{
+
+            const item=items.find(x=>x.id===id);
+
+            const tag=document.createElement("div");
+            tag.className="tag";
+
+            tag.textContent=item.name;
+
+            const remove=document.createElement("button");
+            remove.textContent="×";
+
+            remove.onclick=()=>{
+
+                this.selected.delete(id);
+
+                this.render();
+
+            };
+
+            tag.append(remove);
+
+            this.tags.append(tag);
+        });
+
+    }
+
 }
 
 const sheet = new CharacterSheet();

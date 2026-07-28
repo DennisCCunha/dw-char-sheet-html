@@ -133,9 +133,11 @@
 
     addMovement(movement)    { this.movimentos.push(movement); }
     removeMovement(movement) { this.movimentos.splice(this.movimentos.indexOf(movement), 1); }
+    clearMovement() { this.movimentos = []; }
 
     addEquipment(equipment)    { this.equipamentos.push(equipment); }
     removeEquipment(equipment) { this.equipamentos.splice(this.equipamentos.indexOf(equipment), 1); }
+    clearEquipment() { this.equipamentos = []; }
 
     addConsumable(consumable)    { this.consumiveis.push(consumable); }
     removeConsumable(consumable) { this.consumiveis.splice(this.consumiveis.indexOf(consumable), 1); }

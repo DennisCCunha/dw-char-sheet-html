@@ -1,0 +1,76 @@
+.attributes-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+.atrib-card{
+    display: flex;
+    flex: 0 0 calc(10% - 1rem);
+    flex-direction: column;
+    /* border: 1px solid var(--gold, #ccc); */
+    min-width: 6.4rem;
+    /* max-width: 20rem; */
+    width: auto;
+    border-radius: 25px;
+    padding: 1rem;
+    text-align: center;
+    background: rgba(219, 219, 219, 0.192);
+    margin-bottom: 1rem;
+}
+.atrib-card-header {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+}
+.atrib-card-value{
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.atrib-card-value input{
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    border: none;
+    background-color: transparent;
+}
+
+.atrib-card-mod{
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.atrib-card-mod input{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    border: none;
+    background-color: transparent;
+}
+
+.atrib-card-deb{
+    font-size: 11px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.debilidade {
+    font-size: 11px;
+    text-align: center;
+    color: var(--danger, #f00);
+}
+
+@media (max-width: 870px) {
+    .atrib-card {
+        flex: 0 0 calc(25.3333% - 10px);
+    }
+}
+@media (max-width: 870px) {
+    .atrib-card {
+        flex: 0 0 calc(25.3333% - 10px);
+    }
+}
