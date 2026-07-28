@@ -59,7 +59,34 @@
         <div>
           <div class="title">
             <input type="text" id="charName" value="" placeholder="Nome do personagem" />
+                        <div class="xp-alignment-box">
+              <div class="xp">
+                <div class="nivel-box">
+                  <strong>Nível</strong>
+                  <input type="text" id="charLevel" value="1" placeholder="Nível" class="charLevelInput" />
+                </div>
+                <strong>XP: </strong>
+                <div id="XP1" class="circle"></div>
+                <div id="XP2" class="circle"></div>
+                <div id="XP3" class="circle"></div>
+                <div id="XP4" class="circle"></div>
+                <div id="XP5" class="circle"></div>
+                <div id="XP6" class="circle"></div>
+                <div id="XP7" class="circle"></div>
+                <div id="XP8" class="circle"></div>
+                <div id="XP9" class="circle"></div>
+                <div id="XP10" class="circle"></div>
+                <div id="XP11" class="circle"></div>
+                <div id="XP12" class="circle"></div>
+                <div id="XP13" class="circle"></div>
+                <div id="XP14" class="circle"></div>
+                <div id="XP15" class="circle"></div>
+                <div id="XP16" class="circle"></div>
+                <div id="XP17" class="circle"></div>
+                <div id="XP18" class="circle"></div>
+              </div>
 
+            </div>
             <div class="subtitle">
               <select id="charClass">
                 <option value="">Classe</option>
@@ -123,68 +150,12 @@
           <div id="attributesContainer" class="attributes-container">
           </div>
 
-          <!-- <table id="attributesTable">
-            <tbody>
-              <tr>
-                <th>Atributo</th>
-                <td class="table-attribute-title">FOR</td>
-                <td class="table-attribute-title">DES</td>
-                <td class="table-attribute-title">CON</td>
-                <td class="table-attribute-title">INT</td>
-                <td class="table-attribute-title">SAB</td>
-                <td class="table-attribute-title">CAR</td>
-              </tr>
-
-              <tr>
-                <th>Valor</th>
-                <td><input id="valFor" value="" placeholder="0" /></td>
-                <td><input id="valDes" value="" placeholder="0" /></td>
-                <td><input id="valCon" value="" placeholder="0" /></td>
-                <td><input id="valInt" value="" placeholder="0" /></td>
-                <td><input id="valSab" value="" placeholder="0" /></td>
-                <td><input id="valCar" value="" placeholder="0" /></td>
-              </tr>
-
-              <tr>
-                <th>Mod</th>
-                <td><input id="modFor" value="" placeholder="0" /></td>
-                <td><input id="modDes" value="" placeholder="0" /></td>
-                <td><input id="modCon" value="" placeholder="0" /></td>
-                <td><input id="modInt" value="" placeholder="0" /></td>
-                <td><input id="modSab" value="" placeholder="0" /></td>
-                <td><input id="modCar" value="" placeholder="0" /></td>
-              </tr>
-
-
-              <tr class="table-row-debilidade">
-                <th>Deb</th>
-                <td>
-                  <input id="debFor" type="checkbox" class="red_filling" />
-                  <label><em class="debilidade">Fraco -1</em></label>
-                </td>
-                <td>
-                  <input id="debDes" type="checkbox" class="red_filling" />
-                  <label><em class="debilidade">Trêmulo -1</em></label>
-                </td>
-                <td>
-                  <input id="debCon" type="checkbox" class="red_filling" />
-                  <label><em class="debilidade">Doente -1</em></label>
-                </td>
-                <td>
-                  <input id="debInt" type="checkbox" class="red_filling" />
-                  <label><em class="debilidade">Atordoado -1</em></label>
-                </td>
-                <td>
-                  <input id="debSab" type="checkbox" class="red_filling" />
-                  <label><em class="debilidade">Confuso -1</em></label>
-                  </td>
-                <td>
-                  <input id="debCar" type="checkbox" class="red_filling" />
-                  <label><em class="debilidade">Marcado -1</em></label>
-                </td>
-              </tr>
-            </tbody>
-          </table> -->
+          <div class="alignment">
+            <strong>Alinhamento</strong>
+            <select id="charAlignment">
+              <option value="">Selecione</option>
+            </select>
+          </div>
 
           <div id="charXPBonds">
             <div class="xp-alignment-box">
@@ -242,30 +213,16 @@
     <!-- 3º Pagina - Equipamentos e Consumíveis -->
     <article class="pagina">
       <div id="3rd-Page" class="equipment-sheet">
-      <div id="equip-container-header" class="equipment-sheet-header">
-        <div class="equipment-controllers">
-          <div class="equipment-view-toggle">
-            <span id="btnEquipCardView" class="btnMovementTab">Adicionar equipamento</span>
-          </div>
-          <div class="equipment-form-container">
-            <div id="equipmentForm" class="equipment-form">
-                
-            </div>
-          
-          </div>
+      <div id="equipmentpanel">
+        <h2>Equipamentos</h2>
+        <button id="addEquipment" class='addConsumable'>&#x2b</button>
+        <div id="equipmentContainer"></div>
+        <div></div>
       </div>
-      <div class="equipment-consumables-container">
-        <div id="equipmentpanel">
-          <h2>Equipamentos</h2>
-          <button id="addEquipment" class='addConsumable'>&#x2b</button>
-          <div id="equipmentContainer"></div>
-          <div></div>
-        </div>
-        <div id="consumablePanel">
-          <h2>Consumíveis</h2>
-          <button id="addConsumable" class='addConsumable'>&#x2b</button>
-          <div id="consumablesContainer"></div>
-        </div>
+      <div id="consumablePanel">
+        <h2>Consumíveis</h2>
+        <button id="addConsumable" class='addConsumable'>&#x2b</button>
+        <div id="consumablesContainer"></div>
       </div>
       </div>
     </article>

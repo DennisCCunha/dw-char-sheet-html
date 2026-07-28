@@ -19,7 +19,7 @@
     width:20rem;
     min-height: 36rem;
     height:fit-content;
-    background: var(--card-border);
+    background: var(--gold);
     border-radius:14px;
     overflow:hidden;
     border:1px solid #4e4d4d;
@@ -28,11 +28,10 @@
     justify-content: space-between;
     align-items:stretch;
     box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
-
 }
 
 .movement-card-header{
-    background: var(--card-border);
+    /* background: var(--card-border); */
     padding: 10px 5px 5px 10px;
     display:flex;
     align-items:flex-start;

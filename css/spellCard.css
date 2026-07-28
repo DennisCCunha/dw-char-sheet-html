@@ -4,6 +4,8 @@
     --card-description-even:#cccccc;
     --card-roll-badge:#6d6d6d;
     --card-roll-shadow:#525252;
+    --wizard:#A6808C;
+    --cleric:#B7D5D4;
 }
 
 .spell-cardbox{
@@ -38,10 +40,11 @@
 }
 
 .spell-card{
+    --cardColor: var(--card-border);
     width:20rem;
     min-height: 36rem;
     height:fit-content;
-    background: var(--card-border);
+    background: var(--cardColor);
     border-radius:14px;
     overflow:hidden;
     border:1px solid #4e4d4d;
@@ -52,8 +55,16 @@
     box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
 }
 
+.mago-spell-card{
+    --cardColor: var(--wizard);
+}
+
+.clérigo-spell-card{
+    --cardColor: var(--cleric);
+}
+
 .spell-card-header{
-    background: var(--card-border);
+    background: inherit;
     padding: 10px 5px 5px 10px;
     display:flex;
     flex-direction:column;
@@ -124,7 +135,6 @@
     margin: 10px;
     text-align: justify;
 }
-
 
 .spell-card-result{
     display:flex;

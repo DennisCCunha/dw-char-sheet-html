@@ -73,7 +73,7 @@ export class Consumable {
 export class Equipment {
 
     static getEquipmentList() {
-        return dungeonworld.lista_equipamentos;
+        return dungeonworld.lista_itens;
     }
 
     static getTagsList() {
@@ -95,17 +95,18 @@ export class Equipment {
             <input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />
             <input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />
             <input class='spell-name' type='text' placeholder='Descrição' style='flex:3' />
-            <select multiple>${equipment.tags.map((tag, i) => `<option value='${i}'>${tag}</option>`).join('')}</select>
-            <input class='spell-name' type='text' placeholder='Notas' style='flex:3' />
-        <select multiple></select>`;
-        for (let i = 0; i < 5; i++) {
-            eqp += "<option value='" + i + "'>Tag " + (i + 1) + "</option>";
-        }
-
-        eqp += "<button class='addItem'>&#215</button>" +
-        "</div>";
+            <div class="multiselect">
+                <div id="selected-tags" class="tags"></div>
+                <input id="search" type="text" placeholder="Search..."/>
+                <div id="results" class="results"></div>
+            </div>
+                <input class='spell-name' type='text' placeholder='Notas' style='flex:3' />
+            </div>`;
         return eqp;
     }
+
+    
+
 }
 
 export class Movement {
@@ -429,10 +430,11 @@ export class Movement {
             character.movimentos.push(movement);
         }
     }
-
+    
     static selectReplacementMovement(movement, character) {
 
     }
+
     // WIP - Seleciona um feitiço de outra classe,
     static selectSpellFromOtherClass(targetClass = "", character) {
 
@@ -510,10 +512,11 @@ export class Spell {
     }
 
     static renderSpellCard(spell) {
-        return `<div class="spell-card">
+        let classe = spell.classe[0].toLowerCase();
+        return `<div class="spell-card ${classe}-spell-card" id="spell-card-${spell.id}">
                     <div class="spell-card-header">
                         <div class="spell-card-title">
-                            <img class="movement-card-icon" src="../assets/icons/spell.png" alt="spell" />
+                            <img class="spell-card-icon" src="../assets/icons/spell.png" alt="spell" />
                             <h2>${spell.nome}</h2>
                         </div>
                         <div class="spell-card-school">
@@ -544,8 +547,6 @@ export class Spell {
     }
 
     static renderSpellGroupbyLevel(lista_spells, nivel, format="card") {
-        
-
         const groupedSpells = [];
         for (const spell of lista_spells) {
             if (!groupedSpells[spell.nivel]) {
