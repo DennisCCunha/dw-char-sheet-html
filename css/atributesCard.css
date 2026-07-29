@@ -69,3 +69,8 @@
         flex: 0 0 calc(25.3333% - 10px);
     }
 }
+@media (max-width: 870px) {
+    .atrib-card {
+        flex: 0 0 calc(25.3333% - 10px);
+    }
+}

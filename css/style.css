@@ -3,38 +3,29 @@
 @import url('./xp.css');
 @import url('./movementCard.css');
 @import url('./movementList.css');
-
 @import url('./spellCard.css');
 @import url('./spellList.css');
-
 @import url('./atributesCard.css');
 @import url('./carousel.css');
-/* @import url('./altStatCard.css'); */
-
 
 :root {
-    --main-font: 'Cinzel', serif;
-    --secondary-font: "Cormorant Garamond", serif;
-    --tertiary-font : "Crimson Text", serif;
+    --main_font: 'Cinzel', serif;
+    --secondary_font: "Cormorant Garamond", serif;
     --border-color: #000;
     --muted: #777;
     --danger: rgba(90,0,10,0.9);
     --gold: rgba(180,140,60,1);
-    --yellow: rgb(255, 186, 8);
     --dark: rgba(10,12,15,1);
     --blue: rgb(36, 66, 86);
     --green: rgb(39, 84, 45);
     --red: rgb(143, 0, 17);
-    --amber: rgba(255, 136, 0, 0.76);    
+    --amber: rgba(255, 136, 0, 0.76);
     --white: #fff;
-    --ultra: rgb(0, 255, 0);
-
 }
 
 html{
-    font-family: var(--main-font);
+    font-family: var(--main_font);
 }
-
 
 body{
     background: radial-gradient(circle at center,
@@ -66,7 +57,7 @@ body > article{
 }
 
 .pagina {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     margin: 1.5rem;
     color: #111;
 }
@@ -86,6 +77,7 @@ body > article{
 .sheet-container{
     display: flex;
     flex-direction: row;
+    min-height: 40rem;
     gap: 1rem;
     flex-wrap: nowrap;
     justify-content: space-evenly;
@@ -115,7 +107,7 @@ body > article{
 }
 
 input, select, textarea {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 1rem;
     color: #111;
     background: transparent;
@@ -144,7 +136,7 @@ h1,
 h2,
 h3 {
     margin: 0;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: 700;
 }
 
@@ -165,7 +157,7 @@ h3 {
     font-size: 40px;
     border: none;
     outline: none;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: 800;
 }
 
@@ -186,7 +178,7 @@ h3 {
     font-size: 24px;
     border: none;
     outline: none;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
 }
 
@@ -230,17 +222,17 @@ h3 {
 
 .card label {
     display: block;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 }
 
 .card input {
     width: 80%;
     border: none;
-    border-bottom: 0.063rem solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 24px;
     background: transparent;
 }
 
@@ -286,13 +278,13 @@ td {
 }
 
 th {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
     background: rgba(219, 219, 219, 0.162);
 }
 
 td input {
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     width: 100%;
     border: none;
     text-align: center;
@@ -385,7 +377,7 @@ td input {
 
 .bond-end{
     background-color: var(--red);
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-weight: bold;
     color: var(--white);
     border: none;
@@ -409,7 +401,10 @@ td input {
     flex-grow: 3;
 }
 
-/* general spells */
+.spells {
+    border-left: 2px solid var(--border-color);
+    padding-left: 20px;
+}
 
 .spells-controller{
     display: flex;
@@ -428,16 +423,24 @@ td input {
     flex-grow: 3;
 }
 
-.spell-level-group {
-    margin-bottom: 1.25rem;
+.spell-group {
+    margin-bottom: 20px;
 }
 
-.spell-level-group h3 {
-    border-bottom: 0.063rem solid var(--border-color);
-    padding-bottom: 0.375rem;
-    margin-bottom: 0.625rem;
+.spell-group h3 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 6px;
+    margin-bottom: 10px;
 }
 
+.spell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    border-radius: 10px;
+}
 
 .spell input[type="checkbox"] {
     appearance: none;
@@ -572,7 +575,7 @@ nav button {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 14px;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -602,7 +605,7 @@ nav .save_buttons {
     padding: 28px;
     max-width: 520px;
     width: 92%;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
 }
 
 .dw-modal h3 {
@@ -618,7 +621,7 @@ nav .save_buttons {
 .dw-modal textarea {
     width: 100%;
     box-sizing: border-box;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 12px;
     padding: 8px;
     border: 1px solid var(--dark);
@@ -638,7 +641,7 @@ nav .save_buttons {
     color: var(--white);
     border: none;
     cursor: pointer;
-    font-family: var(--main-font);
+    font-family: var(--main_font);
     font-size: 14px;
 }
 
@@ -689,14 +692,14 @@ footer p a:hover{
 
 /* Change the font of the actual text inside the editor */
 .ql-container.ql-snow .ql-editor {
-  font-family: var(--main-font);
+  font-family: var(--main_font);
   font-size: 16px;
 }
 
 /* Ensure the toolbar dropdown reflects your new default label */
 .ql-snow .ql-picker.ql-font .ql-picker-label::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
-  font-family: var(--main-font);
+  font-family: var(--main_font);
 }
 
 
@@ -1234,7 +1237,7 @@ input:checked + .slider:before {
   }
 
   .charNotes-container h2,
-  \3#4th-Page > aside h2 {
+  #4th-Page > aside h2 {
     font-size: 16px;
     margin-bottom: 10px;
   }

@@ -15,8 +15,6 @@ const ATTR_MAP = [
     { val: 'valCar', mod: 'modCar', deb: 'debCar', key: 'carisma', label: 'Carisma', abreviatura: 'CAR', debilidadeLabel: 'Marcado' },
 ];
 
-const screenDimensions = { small: "(max-width: 600px)", spellAndMovement: "(max-width: 1234px)", movementOnly: "(max-width: 1108px)" }
-
 class CharacterSheet {
 
     constructor() {
@@ -36,12 +34,13 @@ class CharacterSheet {
         this.quill      = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
         this.character  = new Character();
 
-        this.classDetails = dungeonworld.classes || [];
-
-        this.showClassMoves = false; // false = movimentos básicos, true = movimentos de classe
+        this.classDetails       = dungeonworld.classes || [];
+        this.movementListFormat = 'card';
+        this.spellListFormat    = 'card';
+        this.showClassMoves     = false; // false = movimentos básicos, true = movimentos de classe
 
         this.bondInput = document.getElementById('charBonds');
-
+        
         this.bondOption = null;
 
 
@@ -54,8 +53,6 @@ class CharacterSheet {
         this.#assignMissingIds();
         this.#registerEvents();
         this.#startup();
-
-
     }
 
     /** Ensures every input and XP circle has a stable ID for save/load. */
@@ -74,7 +71,6 @@ class CharacterSheet {
         this.clearInputs();
         this.load();
         this.#syncClassRaceSelectors();
-        this.initialResponsiveness();
         this.updateModifiers();
         this.updateStrikethrough();
         this.updateAlignmentOptions();
@@ -82,8 +78,7 @@ class CharacterSheet {
         // this.renderClassMoves();
         this.renderClassSpells();
         this.applyClassEffects();
-        this.updateBondOptions();
-        
+        this.updateBondOptions()
         console.log('Ficha iniciada com sucesso.');
     }
 
@@ -133,19 +128,19 @@ class CharacterSheet {
      */
     #registerSimpleFieldEvents() {
         const FIELD_MAP = [
-            { id: 'charName', set: (v) => { this.character.nome = v; } },
-            { id: 'charLevel', set: (v) => { this.character.nivel = parseInt(v, 10) || 1; } },
-            { id: 'curPV', set: (v) => { this.character.pv_atual = parseInt(v, 10) || 0; } },
-            { id: 'charPV', set: (v) => { this.character.pv_max = parseInt(v, 10) || 0; } },
-            { id: 'charLoad', set: (v) => { this.character.carga = parseInt(v, 10) || 0; } },
-            { id: 'charDef', set: (v) => { this.character.armadura = parseInt(v, 10) || 0; } },
-            { id: 'charDmg', set: (v) => { this.character.dado_dano = v; } },
+            { id: 'charName',      set: (v) => { this.character.nome        = v; } },
+            { id: 'charLevel',     set: (v) => { this.character.nivel       = parseInt(v, 10) || 1; } },
+            { id: 'curPV',         set: (v) => { this.character.pv_atual    = parseInt(v, 10) || 0; } },
+            { id: 'charPV',        set: (v) => { this.character.pv_max      = parseInt(v, 10) || 0; } },
+            { id: 'charLoad',      set: (v) => { this.character.carga       = parseInt(v, 10) || 0; } },
+            { id: 'charDef',       set: (v) => { this.character.armadura    = parseInt(v, 10) || 0; } },
+            { id: 'charDmg',       set: (v) => { this.character.dado_dano   = v; } },
             { id: 'charAlignment', set: (v) => { this.character.alinhamento = v; } },
         ];
         FIELD_MAP.forEach(({ id, set }) => {
             const el = document.getElementById(id);
             if (!el) return;
-            el.addEventListener('input', (e) => { set(e.target.value); this.save(); });
+            el.addEventListener('input',  (e) => { set(e.target.value); this.save(); });
             el.addEventListener('change', (e) => { set(e.target.value); this.save(); });
         });
 
@@ -180,7 +175,7 @@ class CharacterSheet {
     /** Every input and select auto-saves on change. */
     #registerAutoSaveEvents() {
         this.allInputs.forEach((input) => {
-            input.addEventListener('input', () => this.save());
+            input.addEventListener('input',  () => this.save());
             input.addEventListener('change', () => this.save());
         });
     }
@@ -197,7 +192,7 @@ class CharacterSheet {
             () => this.#closeModal('codeModal'));
 
         document.getElementById('btnCopiarCodigo').addEventListener('click', () => {
-            const ta = document.getElementById('codeModalText');
+            const ta  = document.getElementById('codeModalText');
             const btn = document.getElementById('btnCopiarCodigo');
             ta.select();
             navigator.clipboard.writeText(ta.value).catch(() => document.execCommand('copy'));
@@ -275,7 +270,6 @@ class CharacterSheet {
             this.renderClassMoves();
         });
         this.#addViewToggle('btnSpellCardView', 'btnSpellListView', (fmt) => {
-
             this.spellListFormat = fmt;
             this.renderClassSpells();
         });
@@ -283,7 +277,8 @@ class CharacterSheet {
 
     #registerSearchEvents() {
         document.getElementById('movementSearch')?.addEventListener('input', (e) => {
-            this.renderClassMoves(e.target.value);
+            // this.renderClassMoves(e.target.value);
+            this.filterMovementsBySearch(e.target.value);
         });
         document.getElementById('spellSearch')?.addEventListener('input', (e) => {
             this.renderClassSpells(e.target.value);
@@ -356,29 +351,9 @@ class CharacterSheet {
         });
     }
 
-    // ─── Responsiveness ────────────────────────────────────────────────────────
-    initialResponsiveness(){
-
-        this.movementListFormat = 'card';
-        this.spellListFormat = 'card';
-
-        
-        // if (window.matchMedia(screenDimensions.movementOnly).matches) {
-        //     this.movementListFormat = 'list';
-        //     this.spellListFormat = 'list';
-        // }
-        // else if (window.matchMedia(screenDimensions.spellAndMovement).matches && ["Mago", "Clérigo"].includes(this.charClass.value)) {
-        //     this.movementListFormat = 'list';
-        //     this.spellListFormat = 'list';
-        // }
-        // else {
-        //     this.movementListFormat = 'card';
-        //     this.spellListFormat = 'card';
-        // }
-    }
     // ─── Modal helpers ────────────────────────────────────────────────────────
 
-    #openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    #openModal(id)  { document.getElementById(id).style.display = 'flex'; }
     #closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     // ─── Persistence ─────────────────────────────────────────────────────────
@@ -405,15 +380,15 @@ class CharacterSheet {
             if (el) el.value = val ?? '';
         };
 
-        setVal('charName', character.nome);
+        setVal('charName',  character.nome);
         setVal('charLevel', character.nivel);
-        setVal('charPV', character.pv_max);
-        setVal('curPV', character.pv_atual);
-        setVal('charLoad', character.carga);
-        setVal('charDef', character.armadura);
-        setVal('charDmg', character.dado_dano);
+        setVal('charPV',    character.pv_max);
+        setVal('curPV',     character.pv_atual);
+        setVal('charLoad',  character.carga);
+        setVal('charDef',   character.armadura);
+        setVal('charDmg',   character.dado_dano);
 
-        this.charRace.value = character.raca;
+        this.charRace.value  = character.raca;
         this.charClass.value = character.classe;
 
         // Alignment options depend on class, so refresh them before setting the value
@@ -432,7 +407,7 @@ class CharacterSheet {
         });
 
         if (this.quill && character.notas) {
-            try { this.quill.setContents(JSON.parse(character.notas)); }
+            try   { this.quill.setContents(JSON.parse(character.notas)); }
             catch { this.quill.setText(character.notas); }
         }
 
@@ -470,18 +445,31 @@ class CharacterSheet {
         box.classList.add(this.movementListFormat === 'card' ? 'movement-cardbox' : 'movement-list');
         for (const movement of movementList) {
             box.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
-
+            box.appendChild(Mechanics.Movement.render(movement, this.movementListFormat, true));
         }
-
         container.appendChild(box);
     }
 
-    renderClassSpells(searchQuery = '') {
-        if (!this.charClass.value) return;
+    filterMovementsBySearch(movementList, searchQuery) {
+        if (!searchQuery){
+            document.querySelectorAll('.movement-card').forEach(card => {
+                const match = card.textContent.includes(searchQuery);
+                card.hidden = !match;
+            });
+        }
+        document.querySelectorAll('.movement-card').forEach(card => {
+            const match = card.textContent.includes(searchQuery);
+            card.hidden = !match;
+        });
+    }
 
+
+    renderClassSpells() {
+        if (!this.charClass.value) return;
+        
         const cls = this.#findClassByName(this.charClass.value);
 
-        if (cls.spellcaster) {
+        if(cls.spellcaster){
             document.getElementById('classSpells').style.display = '';
             document.getElementById('spellContainer').style.display = '';
 
@@ -489,19 +477,18 @@ class CharacterSheet {
             container.innerHTML = '';
 
             const box = document.createElement('div');
-            box.innerHTML = '';
             box.classList.add(this.spellListFormat === 'card' ? 'spell-cardbox' : 'spell-list');
 
             let lista_spells = Mechanics.Spell.getSpellListByClassAndLevel(this.charClass.value);
 
             if (searchQuery) {
-                lista_spells = this.searchItems(lista_spells, searchQuery);
+            lista_spells = this.searchItems(lista_spells, searchQuery);
             }
 
-            box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells, this.spellListFormat);
+            box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells);
             container.appendChild(box);
         }
-        else {
+        else{
             document.getElementById('classSpells').style.display = 'none';
             document.getElementById('spellContainer').style.display = 'none';
         }
@@ -514,21 +501,21 @@ class CharacterSheet {
         container.innerHTML = '';
         const moves = Mechanics.Movement.getBasicMovements();
         for (const move of moves) {
-            container.innerHTML += Mechanics.Movement.render(move, this.movementListFormat, true);
+            container.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
         }    
     }
 
 
     // Search Movements and Spells
     searchItems(items, query) {
-        const terms = query
-            .toLowerCase()
-            .trim()
-            .split(/\s+/);
+    const terms = query
+        .toLowerCase()
+        .trim()
+        .split(/\s+/);
 
-        return items.filter(item =>
-            terms.every(term => Utils.searchFilter(item, term))
-        );
+    return items.filter(item =>
+        terms.every(term => Utils.searchFilter(item, term))
+    );
     }
 
     // ─── Attributes & modifiers ───────────────────────────────────────────────
@@ -589,7 +576,7 @@ class CharacterSheet {
 
     /** Disables class options incompatible with the currently selected race. */
     #updateClassOptions() {
-        const allowed = this.#findAllowedClasses(this.charRace.value);
+        const allowed    = this.#findAllowedClasses(this.charRace.value);
         const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
 
         Array.from(this.charClass.options).forEach((option) => {
@@ -608,7 +595,7 @@ class CharacterSheet {
 
     /** Disables race options incompatible with the currently selected class. */
     #updateRaceOptions() {
-        const allowed = this.#findAllowedRaces(this.charClass.value);
+        const allowed    = this.#findAllowedRaces(this.charClass.value);
         const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
 
         Array.from(this.charRace.options).forEach((option) => {
@@ -630,7 +617,7 @@ class CharacterSheet {
         const cls = this.#findClassByName(this.charClass.value);
         for (const alignment of cls?.alinhamento || []) {
             const option = document.createElement('option');
-            option.value = alignment.id;
+            option.value       = alignment.id;
             option.textContent = [alignment.nome, alignment.descricao].filter(Boolean).join(' - ');
             charAlignment.appendChild(option);
         }
@@ -638,14 +625,14 @@ class CharacterSheet {
 
     /** Updates damage, HP, and carry capacity fields based on the selected class. */
     applyClassEffects() {
-        const cls = this.#findClassByName(this.charClass.value);
-        const charDmg = document.getElementById('charDmg');
-        const charPV = document.getElementById('charPV');
+        const cls      = this.#findClassByName(this.charClass.value);
+        const charDmg  = document.getElementById('charDmg');
+        const charPV   = document.getElementById('charPV');
         const charLoad = document.getElementById('charLoad');
 
         if (!cls) {
-            if (charDmg) charDmg.value = '';
-            if (charPV) charPV.value = '';
+            if (charDmg)  charDmg.value  = '';
+            if (charPV)   charPV.value   = '';
             if (charLoad) charLoad.value = '';
             this.renderClassSpells();
             return;
@@ -655,11 +642,11 @@ class CharacterSheet {
         if (charDmg) { charDmg.value = dmg; this.character.dado_dano = dmg; }
 
         const conVal = parseInt(document.getElementById('valCon')?.value, 10);
-        const newPV = (cls.hp_base || 0) + (Number.isFinite(conVal) ? conVal : 0);
-        if (charPV) { charPV.value = newPV; this.character.pv_max = newPV; }
+        const newPV  = (cls.hp_base || 0) + (Number.isFinite(conVal) ? conVal : 0);
+        if (charPV)  { charPV.value  = newPV;  this.character.pv_max = newPV; }
 
         // Prefer the already-computed modifier display; fall back to raw calculation.
-        let modFor = 0;
+        let modFor   = 0;
         const modForEl = document.getElementById('modFor');
         if (modForEl?.value) {
             const parsed = parseInt(modForEl.value.replace(/[^0-9-]/g, ''), 10);
@@ -776,9 +763,9 @@ class CharacterSheet {
 
     clearInputs() {
         this.allInputs.forEach((input) => {
-            if (input.type === 'checkbox') input.checked = false;
+            if      (input.type === 'checkbox')   input.checked = false;
             else if (input.type === 'select-one') { input.selectedIndex = 0; input.value = ''; }
-            else input.value = '';
+            else                                  input.value = '';
         });
         this.circles.forEach((circle) => circle.classList.remove('active'));
     }

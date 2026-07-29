@@ -280,33 +280,107 @@ export class Movement {
         else if (movement.tipo.includes("Avançado 6-10")) {
             icon = "avançado2";
         }
+        // Create the card element
+        let card = document.createElement('div');
+        card.classList.add('movement-card');
+        card.id = `movement-card-${movement.id}`;
+        card.dataset.search = movement.nome + " " + movement.descricao + " " + movement.tipo;
 
-        return `<div class="movement-card movement-${movement.tipo}">
-                    <div class="movement-card-header">
-                        <div class="movement-card-title">
-                            <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
-                            <h2>${movement.nome}</h2>
-                        </div>
-                        <div class="movement-card-roll">
-                            ${movement.rolagem ? `<div class="movement-card-roll-detail"> 
-                                <img class="movement-card-roll-detail-icon" src="../assets/icons/dados.png" alt="roll" />
-                                <span>${movement.rolagem}</span>
-                                </div>` : ''}
-                        </div>
-                    </div>
+        // Create the card header
+        let cardHeader = document.createElement('div');
+        cardHeader.classList.add('movement-card-header');
+        card.appendChild(cardHeader);
 
-                    <section class="movement-card-description">
-                        <p>${movement.descricao}</p>
-                    </section>
+        // header elements
+        let cardTitle = document.createElement('div');
+        cardTitle.classList.add('movement-card-title');
 
-                    <section class="movement-card-result">
-                    </section>
+        let cardIcon = document.createElement('img');
+        cardIcon.classList.add('movement-card-icon');
+        cardIcon.src = `../assets/icons/${icon}.png`;
+        cardIcon.alt = icon;
+        cardTitle.appendChild(cardIcon);
+    
+        let cardName = document.createElement('h2');
+        cardName.textContent = movement.nome;
+        cardTitle.appendChild(cardName);
 
-                    <div class="movement-card-footer ">
-                        <strong>MOVIMENTO</strong>
-                        <strong>${movement.tipo.toUpperCase()}</strong>
-                    </div>
-                </div>`;
+        cardHeader.appendChild(cardTitle);
+
+        let cardRoll = document.createElement('div');
+        cardRoll.classList.add('movement-card-roll');
+        if (movement.rolagem) {
+            let cardRollDetail = document.createElement('div');
+            cardRollDetail.classList.add('movement-card-roll-detail');
+            let cardRollIcon = document.createElement('img');
+            cardRollIcon.classList.add('movement-card-roll-detail-icon');
+            cardRollIcon.src = `../assets/icons/dados.png`;
+            cardRollIcon.alt = "roll";
+            cardRollDetail.appendChild(cardRollIcon);
+            let cardRollText = document.createElement('span');
+            cardRollText.textContent = movement.rolagem;
+            cardRollDetail.appendChild(cardRollText);
+
+            cardRoll.appendChild(cardRollDetail);
+        }
+        cardHeader.appendChild(cardRoll);
+        // -- END HEADER
+
+        // Create the card description
+        let cardDescription = document.createElement('section');
+        cardDescription.classList.add('movement-card-description');
+        let cardDescriptionText = document.createElement('p');
+        cardDescriptionText.innerHTML = movement.descricao;
+        cardDescription.appendChild(cardDescriptionText);
+        
+        card.appendChild(cardDescription);
+
+        // Create the card result section
+        let cardResult = document.createElement('section');
+        cardResult.classList.add('movement-card-result');
+        
+        card.appendChild(cardResult);
+
+        // Create the card footer
+        let cardFooter = document.createElement('div');
+        cardFooter.classList.add('movement-card-footer');
+        let cardFooterType = document.createElement('strong');
+        cardFooterType.textContent = "MOVIMENTO ";
+        cardFooter.appendChild(cardFooterType);
+        let cardFooterClass = document.createElement('strong');
+        cardFooterClass.textContent = movement.tipo.toUpperCase();
+        cardFooter.appendChild(cardFooterClass);
+
+        card.appendChild(cardFooter);
+
+        return card;
+
+        // return `<div class="movement-card" id="movement-card-${movement.id}">
+        //             <div class="movement-card-header">
+        //                 <div class="movement-card-title">
+        //                     <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
+        //                     <h2>${movement.nome}</h2>
+        //                 </div>
+        //                 <div class="movement-card-roll">
+        //                     ${movement.rolagem ? `<div class="movement-card-roll-detail"> 
+        //                         <img class="movement-card-roll-detail-icon" src="../assets/icons/dados.png" alt="roll" />
+        //                         <span>${movement.rolagem}</span>
+        //                         </div>` : ''}
+        //                 </div>
+        //             </div>
+
+        //             <section class="movement-card-description">
+        //                 <p>${movement.descricao}</p>
+        //             </section>
+
+        //             <section class="movement-card-result">
+        //             </section>
+
+        //             <div class="movement-card-footer">
+        //                 <strong>MOVIMENTO</strong>
+        //                 <strong>${movement.tipo.toUpperCase()}</strong>
+        //             </div>
+        //         </div>`;
     }
 
     static renderPanel(movement, selectable = false) {
@@ -358,6 +432,7 @@ export class Movement {
     }
 
     static renderFormattedCard(movement) {
+        console.log(movement);
 
         let criteirios = movement.parsedMovement.criteriosRolagem.map(criterio => `<span>${criterio.criterio}</span>`).join('');
   
@@ -458,6 +533,18 @@ export class ClassAndRace{
         });
         return races;
     }
+
+    static renderclassOptions() {
+        const classSelect = document.getElementById(containerId);
+        ClassAndRace.getClasses().forEach(clas => {
+            const option = document.createElement('option');
+            option.id = `class-option-${clas.nome}`;
+            option.value = clas.nome;
+            option.textContent = clas.nome;
+            classSelect.appendChild(option);
+        });
+    }
+
 }
 
 export class Spell {
@@ -502,7 +589,6 @@ export class Spell {
     static renderSpellList(spells, format) {
         spellListContainer.innerHTML = '';
         spells.forEach(spell => {
-            
             const spellElement = document.createElement('div');
             spellElement.classList.add(`spell ${format}`);
             spellElement.innerHTML = Spell.render(spell, format);
@@ -546,7 +632,7 @@ export class Spell {
         </div>`;
     }
 
-    static renderSpellGroupbyLevel(lista_spells,format="card", nivel) {
+    static renderSpellGroupbyLevel(lista_spells, nivel, format="card") {
         const groupedSpells = [];
         for (const spell of lista_spells) {
             if (!groupedSpells[spell.nivel]) {
@@ -555,14 +641,14 @@ export class Spell {
             groupedSpells[spell.nivel].push(spell);
         }
 
-        const spellGroupContainer = document.createElement('div');   
-        
+        const spellGroupContainer = document.createElement('div');
+
         for (const [nivel, spells] of Object.entries(groupedSpells)) {
-            
+
             //Crei o Spell-Group para conter as magias de Cada Nivel
             const containerA = document.createElement('div');
-            containerA.classList.add('spell-level-group');
-            containerA.id = `spell-group-${nivel}`;            
+            containerA.classList.add('spell-card-group');
+            containerA.id = `spell-group-${nivel}`;
             
             //Cabeçalhos das Magias
             const header = document.createElement('h3');
@@ -571,30 +657,17 @@ export class Spell {
             containerA.appendChild(header);
             
             //Container para dos Cards de Magias
-            const spellContainer = document.createElement('div');
-            if (format == "card"){
-                
-                spellContainer.classList.add('spell-card-container');
-                spellContainer.id = `spell-card-container-${nivel}`;
-            }
-            else{
-                spellContainer.classList.add('spell-list-container');
-                spellContainer.id = `spell-list-container-${nivel}`;
-            }
-
-            
-            
+            const spellCardContainer = document.createElement('div');
+            spellCardContainer.classList.add('spell-card-container');
+            spellCardContainer.id = `spell-card-container-${nivel}`;
             
             spells.forEach(spell => {
-                               
-                spellContainer.innerHTML += Spell.render(spell, format);
-                
+                spellCardContainer.innerHTML += Spell.render(spell, format);
             });
 
-            containerA.appendChild(spellContainer);
+            containerA.appendChild(spellCardContainer);
 
             spellGroupContainer.appendChild(containerA);
-            
         }
         return spellGroupContainer.innerHTML;
     }
