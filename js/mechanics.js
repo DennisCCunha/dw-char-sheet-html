@@ -546,7 +546,7 @@ export class Spell {
         </div>`;
     }
 
-    static renderSpellGroupbyLevel(lista_spells, nivel, format="card") {
+    static renderSpellGroupbyLevel(lista_spells,format="card", nivel) {
         const groupedSpells = [];
         for (const spell of lista_spells) {
             if (!groupedSpells[spell.nivel]) {

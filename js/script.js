@@ -358,22 +358,23 @@ class CharacterSheet {
 
     // ─── Responsiveness ────────────────────────────────────────────────────────
     initialResponsiveness(){
+
+        this.movementListFormat = 'card';
+        this.spellListFormat = 'card';
+
         
-        if (window.matchMedia(screenDimensions.movementOnly).matches) {
-            
-            this.movementListFormat = 'list';
-            this.spellListFormat = 'list';
-        }
-        else if (window.matchMedia(screenDimensions.spellAndMovement).matches && ["Mago", "Clérigo"].includes(this.charClass.value)) {
-            this.movementListFormat = 'list';
-            this.spellListFormat = 'list';
-            
-        }
-        else {
-            console.log('3');
-            this.movementListFormat = 'card';
-            this.spellListFormat = 'card';
-        }
+        // if (window.matchMedia(screenDimensions.movementOnly).matches) {
+        //     this.movementListFormat = 'list';
+        //     this.spellListFormat = 'list';
+        // }
+        // else if (window.matchMedia(screenDimensions.spellAndMovement).matches && ["Mago", "Clérigo"].includes(this.charClass.value)) {
+        //     this.movementListFormat = 'list';
+        //     this.spellListFormat = 'list';
+        // }
+        // else {
+        //     this.movementListFormat = 'card';
+        //     this.spellListFormat = 'card';
+        // }
     }
     // ─── Modal helpers ────────────────────────────────────────────────────────
 
@@ -486,8 +487,6 @@ class CharacterSheet {
 
             const container = document.getElementById('classSpells');
             container.innerHTML = '';
-
-
 
             const box = document.createElement('div');
             box.innerHTML = '';
