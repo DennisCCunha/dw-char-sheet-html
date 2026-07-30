@@ -1,0 +1,29 @@
+.equipment-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.custom-equip{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.form-group label{
+    font-size: 0.675rem;
+    font-weight: bold;
+    text-align: right;
+}
+

@@ -417,7 +417,6 @@ class CharacterSheet {
     // ─── Rendering ───────────────────────────────────────────────────────────
 
     renderClassMoves(searchQuery = '') {
-
         const container = document.getElementById('classMoves');
         container.innerHTML = '';
 
@@ -674,10 +673,6 @@ class CharacterSheet {
 
     addEquipmentToList(listId) {
         const listEl = document.getElementById(listId);
-
-        
-
-
         if (!listEl) return;
         // const equipment = { id: 0, nome: "", descricao: "", usos: 0, peso: 0, moedas: 0, tags: [], notes: "" };
         listEl.insertAdjacentHTML('beforeend', `
@@ -847,14 +842,14 @@ class CharacterSheet {
 
         const filter = this.search.value.toLowerCase();
 
-    const visible = items.filter(item =>
+        const visible = items.filter(item =>
         !this.selected.has(item.id) &&
         item.name.toLowerCase().includes(filter)
-    );
+        );
 
-    this.results.replaceChildren();
+        this.results.replaceChildren();
 
-    visible.forEach(item=>{
+        visible.forEach(item=>{
 
         const div=document.createElement("div");
         div.className="result";
@@ -862,19 +857,19 @@ class CharacterSheet {
 
         div.onclick=()=>{
 
-            this.selected.add(item.id);
+        this.selected.add(item.id);
 
-            this.search.value="";
+        this.search.value="";
 
-            this.render();
+        this.render();
 
-            this.search.focus();
+        this.search.focus();
 
         };
 
         this.results.append(div);
 
-    });
+        });
 
     }
 

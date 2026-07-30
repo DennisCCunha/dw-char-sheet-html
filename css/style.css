@@ -7,6 +7,7 @@
 @import url('./spellList.css');
 @import url('./atributesCard.css');
 @import url('./carousel.css');
+@import url('./equipment.css');
 
 :root {
     --main_font: 'Cinzel', serif;
@@ -101,9 +102,21 @@ body > article{
     background: var(--white);
     border: 2px solid var(--border-color);
     padding: 24px;
-    display: grid;
-    grid-template-columns: 2fr 3fr;
+    display: flex;
     gap: 24px;
+}
+
+.equipment-sheet-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.equipment-controllers{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 12px;
 }
 
 input, select, textarea {
@@ -124,6 +137,7 @@ input::placeholder, select::placeholder, textarea::placeholder {
 select option:hover {
     color: var(--gold);
 }
+
 select::picker(select) {
   appearance: base-select;
   background-color: var(--muted);

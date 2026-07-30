@@ -180,19 +180,59 @@
     <article class="pagina">
       <div id="3rd-Page" class="equipment-sheet">
       <div id="equip-container-header" class="equipment-sheet-header">
-        <div class="equipment-controllers">
-          <div class="equipment-view-toggle">
-            <span id="btnEquipCardView" class="btnMovementTab">Adicionar equipamento</span>
-          </div>
+        <div class="equipment-controllers">          
           <div class="equipment-form-container">
             <div id="equipmentForm" class="equipment-form">
-                
+                <div class='equipment-form' id="equi-">
+                  <div class="equipment-form-header">
+                    <label>Adicionar equipamento da lista</label>
+                    <select>
+                        <option id="equipSelectCombo" class="options">
+                        </option>
+                    </select>
+                  </div>
+                  <div id="custom-equip" class="custom">
+                    <span>Equipamento Customizado</span>
+                    <div id="custom-equip" class="custom-equip">
+                      <div id="custom-equip-name" class="form-group">
+                        <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
+                      </div>
+                      <div id="custom-equip-tags" class="form-group">
+                        <label>Tags</label>
+                        <input id="search" type="text" placeholder="Select a tag..." autocomplete="on"/>
+                        <select id="tagSelectCombo" class="options" multiple>
+                          <option id="tagSelectCombo" class="options">                
+                          </option>   
+                        </select>
+                      </div>
+                      <div  id="custom-equip-price" class="form-group">
+                        <input class='spell-name' type='number' placeholder='0' min='0' max='9999'>moedas</input>
+                      </div>
+                      <div id="custom-equip-weight" class="form-group">
+                        <span>Peso</span>
+                        <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
+                      </div>
+                      <div id="custom-equip-quantity" class="form-group">
+                        <label>Quantidade</label>
+                        <input class='spell-name' type='number' placeholder='Quantidade' min='1' max='999'/>
+                      </div>
+                      <div id="custom-equip-uses" class="form-group">
+                        <label>Usos</label>
+                        <input class='spell-name' type='number' placeholder='Quantidade' min='0' max='999'/>
+                      </div>
+                      <div id="custom-equip-desc" class="form-group">
+                        <span>Descrição</span>
+                        <textarea class='spell-name' placeholder='Descrição do equipamento'></textarea>
+                      </div>
+                      <button id="btnAddCustomEquip" class='addConsumable'>&#x2b; Adicionar</button>
+                    </div>
+                  </div>
+              </div>
             </div>
-          
-          </div>
+          </div> <!-- Fim do form de equipamentos -->
       </div>
       <div class="equipment-consumables-container">
-        <div id="equipmentpanel">
+        <!-- <div id="equipmentpanel">
           <h2>Equipamentos</h2>
           <button id="addEquipment" class='addConsumable'>&#x2b</button>
           <div id="equipmentContainer"></div>
@@ -202,7 +242,7 @@
           <h2>Consumíveis</h2>
           <button id="addConsumable" class='addConsumable'>&#x2b</button>
           <div id="consumablesContainer"></div>
-        </div>
+        </div> -->
       </div>
       </div>
     </article>
