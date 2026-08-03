@@ -24,9 +24,7 @@ class CharacterSheet {
     // ─── Initialisation ───────────────────────────────────────────────────────
 
     #init() {
-
         this.renderAtributes('attributesContainer');
-
         this.circles    = Array.from(document.querySelectorAll('.circle'));
         this.allInputs  = Array.from(document.querySelectorAll('input, select, textarea'));
         this.charRace   = document.getElementById('charRace');
@@ -40,15 +38,9 @@ class CharacterSheet {
         this.showClassMoves     = false; // false = movimentos básicos, true = movimentos de classe
 
         this.bondInput = document.getElementById('charBonds');
-        
         this.bondOption = null;
 
-
-        this.selected = new Set();
-        this.tags = document.querySelector("#selected-tags");
-        this.search = document.querySelector("#search");
-        this.results = document.querySelector("#results");
-       
+        this.tagList = Mechanics.Equipment.getTagsList();
 
         this.#assignMissingIds();
         this.#registerEvents();
@@ -78,7 +70,9 @@ class CharacterSheet {
         // this.renderClassMoves();
         this.renderClassSpells();
         this.applyClassEffects();
-        this.updateBondOptions()
+        this.updateBondOptions();
+        this.#initTagCombo(document.getElementById('custom-equip-tags'));
+
         console.log('Ficha iniciada com sucesso.');
     }
 
@@ -311,6 +305,78 @@ class CharacterSheet {
 
     }
 
+    /** Populates and wires the tag combobox inside a newly created equipment item. */
+    #initTagCombo(item) {
+        const toggleBtn   = item.querySelector('.combobox-toggle');
+        const dropdown    = item.querySelector('.combobox-dropdown');
+        const searchInput = item.querySelector('.tag-search');
+        const resultsDiv  = item.querySelector('.results');
+        const tagsDiv     = item.querySelector('.selected-tags');
+        const allTags     = this.tagList;
+        const selected    = new Set();
+
+        const reposition = () => {
+            const rect = toggleBtn.getBoundingClientRect();
+            dropdown.style.top   = `${rect.bottom + 4}px`;
+            dropdown.style.left  = `${rect.left}px`;
+            dropdown.style.width = `${Math.max(rect.width, 240)}px`;
+        };
+        const openDropdown = () => {
+            reposition();
+            dropdown.classList.add('open');
+            searchInput.focus();
+            renderResults();
+        };
+        const closeDropdown = () => { dropdown.classList.remove('open'); searchInput.value = ''; };
+
+        // reposition on any scroll in the tree so the dropdown follows the button
+        window.addEventListener('scroll', () => { if (dropdown.classList.contains('open')) reposition(); }, true);
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.contains('open') ? closeDropdown() : openDropdown();
+        });
+
+        // close when clicking outside this combobox
+        document.addEventListener('click', (e) => {
+            if (!item.querySelector('.combobox').contains(e.target)) closeDropdown();
+        });
+
+        const renderResults = () => {
+            const filter = searchInput.value.toLowerCase();
+            resultsDiv.replaceChildren();
+            allTags
+                .filter(t => !selected.has(t.nome) && t.nome.toLowerCase().includes(filter))
+                .forEach(tag => {
+                    const el = Mechanics.Equipment.renderTag(tag);
+                    el.addEventListener('click', () => {
+                        selected.add(tag.nome);
+                        searchInput.value = '';
+                        renderResults();
+                        renderSelected();
+                    });
+                    resultsDiv.append(el);
+                });
+        };
+
+        const renderSelected = () => {
+            tagsDiv.replaceChildren();
+            selected.forEach(nome => {
+                const pill = document.createElement('span');
+                pill.className = 'tag-pill';
+                pill.textContent = nome;
+                const btn = document.createElement('button');
+                btn.textContent = '\u00d7';
+                btn.setAttribute('aria-label', `Remover ${nome}`);
+                btn.addEventListener('click', () => { selected.delete(nome); renderSelected(); renderResults(); });
+                pill.append(btn);
+                tagsDiv.append(pill);
+            });
+        };
+
+        searchInput.addEventListener('input', renderResults);
+    }
+
     /**
      * Wires a card/list toggle button pair.
      * Calls onChange('card') or onChange('list') whenever the active format changes.
@@ -350,6 +416,7 @@ class CharacterSheet {
             this.renderClassMoves();
         });
     }
+
 
     // ─── Modal helpers ────────────────────────────────────────────────────────
 
@@ -461,8 +528,7 @@ class CharacterSheet {
             card.hidden = !match;
         });
     }
-
-
+a
     renderClassSpells() {
         if (!this.charClass.value) return;
         
@@ -504,7 +570,6 @@ class CharacterSheet {
         }    
     }
 
-
     // Search Movements and Spells
     searchItems(items, query) {
     const terms = query
@@ -518,7 +583,6 @@ class CharacterSheet {
     }
 
     // ─── Attributes & modifiers ───────────────────────────────────────────────
-
     updateModifiers() {
         ATTR_MAP.forEach(({ val, mod, deb }) => {
             const valEl = document.getElementById(val);
@@ -674,7 +738,6 @@ class CharacterSheet {
     addEquipmentToList(listId) {
         const listEl = document.getElementById(listId);
         if (!listEl) return;
-        // const equipment = { id: 0, nome: "", descricao: "", usos: 0, peso: 0, moedas: 0, tags: [], notes: "" };
         listEl.insertAdjacentHTML('beforeend', `
             <div class='list-item' id="equi-${Math.floor(Math.random() * 101000)}">
                 <select>
@@ -682,26 +745,25 @@ class CharacterSheet {
                         ${Mechanics.Equipment.getEquipmentList().map((item, i) => `<option value='${i}'>${item.nome}</option>`).join('')} 
                     </option>
                 </select>
-
-
                 <label>Nome do equipamento</label>
                 <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
                 <label>Peso</label>
                 <input class='spell-name' type='number' placeholder='Peso' min='0' max='999'/>
                 <label>Tags</label>
                 <div class="combobox">
-                <input id="search" type="text" placeholder="Select a tag..." autocomplete="on"/>
-                 <label>Moeda</label><input class='spell-name' type='number' placeholder='Moeda' value="" min="0"/>
-                <select id="tagSelectCombo" class="options" multiple>
-                    <option id="tagSelectCombo" class="options">
-                        ${Mechanics.Equipment.getTagsList().map((tag, i) => `<option value='${i}'>${tag.nome}</option>`).join('')} 
-                    </option>   
-                </select>
-               
+                    <div class="selected-tags"></div>
+                    <button class="combobox-toggle" type="button">&#x2b; Tag</button>
+                    <div class="combobox-dropdown">
+                        <input class="tag-search" type="text" placeholder="Buscar tag..." autocomplete="off"/>
+                        <div class="results"></div>
+                    </div>
+                </div>
+                <label>Moeda</label><input class='spell-name' type='number' placeholder='Moeda' value="" min="0"/>
                 <label>Quantidade</label><input class='spell-name' type='text' placeholder='Quantidade' value=""/>
                 <button onclick="this.closest('.list-item').remove()" class='removeIcon'>&#215;</button>
             </div>`
         );
+        this.#initTagCombo(listEl.lastElementChild);
     }
 
     addConsumableToList(listId) {
@@ -833,75 +895,6 @@ class CharacterSheet {
 
             container.appendChild(card);
         }
-    }
-
-    // Multiselect search for tags
-    render(){
-
-        this.renderTags();
-
-        const filter = this.search.value.toLowerCase();
-
-        const visible = items.filter(item =>
-        !this.selected.has(item.id) &&
-        item.name.toLowerCase().includes(filter)
-        );
-
-        this.results.replaceChildren();
-
-        visible.forEach(item=>{
-
-        const div=document.createElement("div");
-        div.className="result";
-        div.textContent=item.name;
-
-        div.onclick=()=>{
-
-        this.selected.add(item.id);
-
-        this.search.value="";
-
-        this.render();
-
-        this.search.focus();
-
-        };
-
-        this.results.append(div);
-
-        });
-
-    }
-
-    renderTags(){
-
-        this.tags.replaceChildren();
-
-        this.selected.forEach(id=>{
-
-            const item=items.find(x=>x.id===id);
-
-            const tag=document.createElement("div");
-            tag.className="tag";
-
-            tag.textContent=item.name;
-
-            const remove=document.createElement("button");
-            remove.textContent="×";
-
-            remove.onclick=()=>{
-
-                this.selected.delete(id);
-
-                this.render();
-
-            };
-
-            tag.append(remove);
-
-            this.tags.append(tag);
-        });
-
     }
 
 }

@@ -198,14 +198,16 @@
                         <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
                       </div>
                       <div id="custom-equip-tags" class="form-group">
-                        <label>Tags</label>
-                        <input id="search" type="text" placeholder="Select a tag..." autocomplete="on"/>
-                        <select id="tagSelectCombo" class="options" multiple>
-                          <option id="tagSelectCombo" class="options">                
-                          </option>   
-                        </select>
+                        <div class="combobox">
+                          <div class="selected-tags"></div>
+                          <button class="combobox-toggle" type="button">&#x2b; Tag</button>
+                          <div class="combobox-dropdown">
+                            <input class="tag-search" type="text" placeholder="Buscar tag..." autocomplete="off"/>
+                            <div class="results"></div>
+                          </div>
+                        </div>
                       </div>
-                      <div  id="custom-equip-price" class="form-group">
+                      <div id="custom-equip-price" class="form-group">
                         <input class='spell-name' type='number' placeholder='0' min='0' max='9999'>moedas</input>
                       </div>
                       <div id="custom-equip-weight" class="form-group">
@@ -214,17 +216,17 @@
                       </div>
                       <div id="custom-equip-quantity" class="form-group">
                         <label>Quantidade</label>
-                        <input class='spell-name' type='number' placeholder='Quantidade' min='1' max='999'/>
+                        <input class='spell-name' type='number' placeholder='1' min='1' max='999'/>
                       </div>
                       <div id="custom-equip-uses" class="form-group">
                         <label>Usos</label>
-                        <input class='spell-name' type='number' placeholder='Quantidade' min='0' max='999'/>
+                        <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
                       </div>
                       <div id="custom-equip-desc" class="form-group">
                         <span>Descrição</span>
                         <textarea class='spell-name' placeholder='Descrição do equipamento'></textarea>
                       </div>
-                      <button id="btnAddCustomEquip" class='addConsumable'>&#x2b; Adicionar</button>
+                      <button id="btnAddCustomEquip" class='addConsumable'>&#x2b</button>
                     </div>
                   </div>
               </div>

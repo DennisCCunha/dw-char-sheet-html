@@ -105,7 +105,24 @@ export class Equipment {
         return eqp;
     }
 
-    
+    static renderTag(tag) {
+        if (!tag) return '';
+        let tagElement = document.createElement('div');
+        tagElement.classList.add('tag');
+
+
+        let titulo = document.createElement('span');
+        titulo.classList.add('tag-title');
+        titulo.textContent = tag.nome;
+        tagElement.appendChild(titulo);
+
+        let descricao = document.createElement('span');
+        descricao.classList.add('tag-description');
+        descricao.textContent = tag.descricao;
+        tagElement.appendChild(descricao);
+            
+        return tagElement;
+    }
 
 }
 
