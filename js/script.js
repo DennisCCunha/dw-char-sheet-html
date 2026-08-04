@@ -1,4 +1,4 @@
-﻿import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
+import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 import SaveAndLoad from './saveAndLoad.js';
 import Mechanics from './mechanics.js';
 import Character from './character.js';
