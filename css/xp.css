@@ -4,20 +4,53 @@
     initial-value: 1;
 }
 
-.xp {
+.xp-alignment-box{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+}
+
+.xp-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
     align-items: center;
     margin-top: 12px;
-    gap: 5px;
+    gap: 1rem;
+}
+
+.xp-container strong {
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .nivel-box {
-    flex-basis: 100%;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 1rem;
+}
+
+.charLevelInput {
+    width: 3rem;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.xp-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  gap: 0.5rem;
+}
+
+.xp-circles-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
 }
 
 .circle {

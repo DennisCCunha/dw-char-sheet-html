@@ -4,6 +4,9 @@
     --card-description-even:#cccccc;
     --card-roll-badge:#6d6d6d;
     --card-roll-shadow:#525252;
+
+    --movement-card-width:20rem;
+    --movement-card-min-height:36rem;
 }
 
 .movement-cardbox{
@@ -16,8 +19,8 @@
 }
 
 .movement-card{
-    width:20rem;
-    min-height: 36rem;
+    width: var(--movement-card-width);
+    min-height: var(--movement-card-min-height);
     background: var(--gold);
     border-radius:14px;
     overflow:hidden;

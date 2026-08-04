@@ -39,3 +39,6 @@ utilities/__pycache__/
 utilities/*.pyc
 
 .github/*
+
+package.json
+package-lock.json

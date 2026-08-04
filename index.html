@@ -84,6 +84,7 @@
 
             </div>
           </div>
+
           <div class="stats">
             <div class="card">
               <label>PV</label>
@@ -124,34 +125,36 @@
           </div>
 
           <div id="charXPBonds">
-            <div class="xp-alignment-box">
-              <div class="xp">
+            <div id="xp-alignment" class="xp-alignment-box">
+              <div class="xp-container">
                 <div class="nivel-box">
                   <strong>Nível</strong>
                   <input type="text" id="charLevel" value="1" placeholder="Nível" class="charLevelInput" />
                 </div>
-                <strong>XP: </strong>
-                <div id="XP1" class="circle"></div>
-                <div id="XP2" class="circle"></div>
-                <div id="XP3" class="circle"></div>
-                <div id="XP4" class="circle"></div>
-                <div id="XP5" class="circle"></div>
-                <div id="XP6" class="circle"></div>
-                <div id="XP7" class="circle"></div>
-                <div id="XP8" class="circle"></div>
-                <div id="XP9" class="circle"></div>
-                <div id="XP10" class="circle"></div>
-                <div id="XP11" class="circle"></div>
-                <div id="XP12" class="circle"></div>
-                <div id="XP13" class="circle"></div>
-                <div id="XP14" class="circle"></div>
-                <div id="XP15" class="circle"></div>
-                <div id="XP16" class="circle"></div>
-                <div id="XP17" class="circle"></div>
-                <div id="XP18" class="circle"></div>
+                <div class="xp-circles-container">
+                  <strong>XP: </strong>
+                  <div id="XP1" class="circle"></div>
+                  <div id="XP2" class="circle"></div>
+                  <div id="XP3" class="circle"></div>
+                  <div id="XP4" class="circle"></div>
+                  <div id="XP5" class="circle"></div>
+                  <div id="XP6" class="circle"></div>
+                  <div id="XP7" class="circle"></div>
+                  <div id="XP8" class="circle"></div>
+                  <div id="XP9" class="circle"></div>
+                  <div id="XP10" class="circle"></div>
+                  <div id="XP11" class="circle"></div>
+                  <div id="XP12" class="circle"></div>
+                  <div id="XP13" class="circle"></div>
+                  <div id="XP14" class="circle"></div>
+                  <div id="XP15" class="circle"></div>
+                  <div id="XP16" class="circle"></div>
+                  <div id="XP17" class="circle"></div>
+                  <div id="XP18" class="circle"></div>
+                </div>
               </div>
               <div class="alignment">
-                <strong>Alinhamento</strong>
+                <strong>Alinhamento: </strong>
                 <select id="charAlignment">
                   <option value="">Selecione</option>
                 </select>
@@ -172,6 +175,7 @@
               </div>
             </div>
           </div>
+          
         </div> <!-- Fim da primeira ficha-->
       </div>
     </article>
@@ -186,47 +190,55 @@
                 <div class='equipment-form' id="equi-">
                   <div class="equipment-form-header">
                     <label>Adicionar equipamento da lista</label>
-                    <select>
-                        <option id="equipSelectCombo" class="options">
+                    <select id="equipSelectCombo">
+                        <option id="equipSelectOption" class="options" selected value="">
+                          Selecione um equipamento
                         </option>
                     </select>
+                    <button>Equipamento Customizado</button>
                   </div>
-                  <div id="custom-equip" class="custom">
-                    <span>Equipamento Customizado</span>
-                    <div id="custom-equip" class="custom-equip">
-                      <div id="custom-equip-name" class="form-group">
-                        <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
-                      </div>
-                      <div id="custom-equip-tags" class="form-group">
-                        <div class="combobox">
-                          <div class="selected-tags"></div>
-                          <button class="combobox-toggle" type="button">&#x2b; Tag</button>
-                          <div class="combobox-dropdown">
-                            <input class="tag-search" type="text" placeholder="Buscar tag..." autocomplete="off"/>
-                            <div class="results"></div>
+
+                  <div class="custom-equip-container">
+                    <div id="custom-equip-box" class="custom-form">
+                      <div id="custom-equip" class="custom-equip">
+                        <div id="custom-equip-name" class="form-group">
+                          <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
+                        </div>
+                        <div id="custom-equip-tags" class="form-group">
+                          <div class="combobox">
+                            <div class="selected-tags"></div>
+                            <button class="combobox-toggle" type="button">&#x2b; Tag</button>
+                            <div class="combobox-dropdown">
+                              <input class="tag-search" type="text" placeholder="Buscar tag..." autocomplete="off"/>
+                              <div class="results"></div>
+                            </div>
                           </div>
                         </div>
+                        <div id="custom-equip-price" class="form-group">
+                          <input class='spell-name' type='number' placeholder='0' min='0' max='9999'/> 
+                          <label>moedas</label>
+                        </div>
+                        <div id="custom-equip-weight" class="form-group">
+                          <label>Peso</label>
+                          <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
+                        </div>
+                        <div id="custom-equip-quantity" class="form-group">
+                          <label>Quantidade</label>
+                          <input class='spell-name' type='number' placeholder='1' min='1' max='999'/>
+                        </div>
+                        <div id="custom-equip-uses" class="form-group">
+                          <label>Usos</label>
+                          <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
+                        </div>
+                        <div id="custom-equip-desc" class="form-group">
+                          <label>Descrição</label>
+                          <textarea class='spell-name' placeholder='Descrição do equipamento'></textarea>
+                        </div>
+                        
                       </div>
-                      <div id="custom-equip-price" class="form-group">
-                        <input class='spell-name' type='number' placeholder='0' min='0' max='9999'>moedas</input>
-                      </div>
-                      <div id="custom-equip-weight" class="form-group">
-                        <span>Peso</span>
-                        <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
-                      </div>
-                      <div id="custom-equip-quantity" class="form-group">
-                        <label>Quantidade</label>
-                        <input class='spell-name' type='number' placeholder='1' min='1' max='999'/>
-                      </div>
-                      <div id="custom-equip-uses" class="form-group">
-                        <label>Usos</label>
-                        <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
-                      </div>
-                      <div id="custom-equip-desc" class="form-group">
-                        <span>Descrição</span>
-                        <textarea class='spell-name' placeholder='Descrição do equipamento'></textarea>
-                      </div>
-                      <button id="btnAddCustomEquip" class='addConsumable'>&#x2b</button>
+                    </div>
+                    <div class="custom-action">
+                        <button id="btnAddCustomEquip" class='addConsumable'>&#x2b</button>
                     </div>
                   </div>
               </div>
@@ -281,9 +293,11 @@
         <div class="sheet-container">
           <aside id="movementContainer" class="movement-available">
 
-            <div id="classMoves" class="movement-list">
-              <!-- Movimentos da classe serão exibidos aqui -->
-            </div>
+            <!-- <div id="classMoveContainer" class="carousel-container">
+              <div id="classMoves" class="carousel">
+                
+              </div>
+            </div> -->
 
             <div id="basicMoveContainer" class="carousel-container">
               <div id="basicMoves" class="carousel">
@@ -361,13 +375,5 @@
     </footer>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js" defer></script>
     <script type="module" src="./js/script.js" defer></script>
-    <script>
-        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-          const favicon = document.querySelector("link[rel='icon']");
-          if (favicon) {
-            favicon.setAttribute("href", "./assets/dev-favicon.png");
-          }
-        }
-    </script>
   </body>
 </html>

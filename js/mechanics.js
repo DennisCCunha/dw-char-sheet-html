@@ -1,4 +1,5 @@
 import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
+import Utils from "./utils.js";
 
 export class Bond {
     static create(id = 0, nome ="", template="", alvo= "", finalizado = false) {
@@ -122,6 +123,18 @@ export class Equipment {
         tagElement.appendChild(descricao);
             
         return tagElement;
+    }
+
+    static renderEquipmentOptions(equipSelectCombo) {
+        
+        Equipment.getEquipmentList().forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.nome;
+            equipSelectCombo.appendChild(option);
+        });
+
+        return equipSelectCombo;
     }
 
 }
@@ -531,6 +544,20 @@ export class Movement {
 
     }
 
+
+    static conditionalMovementList(classe, race){
+        let movementList = this.getMovementListByClass(classe);
+
+        // Bárbaro keeps all racial moves; every other class shows only the move matching the selected race.
+        if (Utils.canonical(classe) !== 'barbaro' && classe) {
+            movementList = movementList.filter(
+                (m) => m.tipo !== 'Racial' || m.nome === race
+            );
+        }
+
+        return movementList;
+    }
+
 }
 
 export class ClassAndRace{
@@ -541,6 +568,7 @@ export class ClassAndRace{
     static getClassList(){
         return dungeonworld.classes.map(clas => (clas.nome));
     }
+
     static getRacesList(){
         let races = [];
         dungeonworld.classes.forEach(clas => {
