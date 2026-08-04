@@ -40,6 +40,7 @@ body{
     justify-content:center;
     flex-basis:100%;
     overflow-y: auto;
+    padding-bottom: 4rem;
 }
 
 body > article{
@@ -111,6 +112,7 @@ body > article{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-grow: 1;
 }
 
 .equipment-controllers{
@@ -118,6 +120,15 @@ body > article{
     flex-direction: row;
     justify-content: space-between;
     gap: 12px;
+}
+
+.equipment-form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+    overflow-y: auto;
+    flex-grow: 1;
 }
 
 input, select, textarea {
@@ -278,7 +289,7 @@ h3 {
 }
 
 
-table {
+/* table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -316,34 +327,9 @@ td input {
 .table-row-debilidade td{
     background: rgba(180, 84, 60, 0.1);
     padding: 2px 5px;
-}
-
-.debilidade {
-    color: var(--red);
-    font-size: 0.8rem;
-    font-weight: bold;
-}
+} */
 
 
-.xp-alignment-box{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.alignment{
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 12px;
-}
-
-#charAlignment{
-    margin: 1rem 0;
-    border: none;
-    border-bottom: 1px solid var(--border-color);
-    width: 80%;
-}
 /* Bonds */
 .bondsArea{
     display: flex;
@@ -544,9 +530,7 @@ td input {
     padding: 0 4px;
 }
 
-body {
-    padding-bottom: 4rem;
-}
+
 
 .charNotes-container{
     display: flex;
@@ -748,7 +732,6 @@ footer p a:hover{
     flex: 1;
     flex-direction: column;
     gap: 12px;
-    max-height: 600px;
     overflow-y: auto;
     padding-bottom: 0.8rem;
 }
@@ -1116,37 +1099,20 @@ input:checked + .slider:before {
     margin-top: 15px;
   }
 
-  .xp-alignment-box {
+
+  .alignment{
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+    gap: 0.5rem;
   }
 
-  .xp {
-    padding: 10px;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
-  }
-
-  .xp strong {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-
-  .xp .circle {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #d4af37;
-    border-radius: 50%;
-    margin: 4px;
-  }
-
-  .charLevelInput {
-    width: 3rem;
-    padding: 5px;
-    margin: 5px 0;
+  #charAlignment{
+    margin: 1rem 0;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    width: auto;
   }
 
   .alignment select {
@@ -1154,6 +1120,10 @@ input:checked + .slider:before {
     padding: 8px;
     margin-top: 5px;
   }
+
+
+
+
 
   .bonds {
     padding: 10px;

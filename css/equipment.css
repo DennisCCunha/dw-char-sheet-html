@@ -6,13 +6,46 @@
     justify-content: flex-start;
     flex-grow: 1;
     overflow-y: auto;
+    font-size: 0.75rem;
+}
+
+
+.custom-equip-container{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 0.75rem;
+}
+
+.custom-form{
+    display: flex;
+    flex-direction: row;
+    fex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.custom-action{
+    display: flex;
+    flex-basis: 10%;
 }
 
 .custom-equip{
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     gap: 0.5rem;
 }
+
+.custom-equip label{
+    font-size: 0.675rem;
+    font-weight: bold;
+    text-align: right;
+}
+
+
 
 .form-group{
     display: flex;

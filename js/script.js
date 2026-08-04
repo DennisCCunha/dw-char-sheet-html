@@ -7,8 +7,8 @@ import Utils from './utils.js';
 // Maps each attribute's element IDs to its Character model property key.
 // Used to drive events, modifier updates, and strikethrough logic from a single source of truth.
 const ATTR_MAP = [
-    { val: 'valFor', mod: 'modFor', deb: 'debFor', key: 'forca', label: 'Força', abreviatura: 'FOR', debilidadeLabel: 'Fraco'},
-    { val: 'valDes', mod: 'modDes', deb: 'debDes', key: 'destreza', label: 'Destreza', abreviatura: 'DES', debilidadeLabel: 'Trêmulo'},
+    { val: 'valFor', mod: 'modFor', deb: 'debFor', key: 'forca', label: 'Força', abreviatura: 'FOR', debilidadeLabel: 'Fraco' },
+    { val: 'valDes', mod: 'modDes', deb: 'debDes', key: 'destreza', label: 'Destreza', abreviatura: 'DES', debilidadeLabel: 'Trêmulo' },
     { val: 'valCon', mod: 'modCon', deb: 'debCon', key: 'constituicao', label: 'Constituição', abreviatura: 'CON', debilidadeLabel: 'Doente' },
     { val: 'valInt', mod: 'modInt', deb: 'debInt', key: 'inteligencia', label: 'Inteligência', abreviatura: 'INT', debilidadeLabel: 'Atordoado' },
     { val: 'valSab', mod: 'modSab', deb: 'debSab', key: 'sabedoria', label: 'Sabedoria', abreviatura: 'SAB', debilidadeLabel: 'Confuso' },
@@ -18,24 +18,26 @@ const ATTR_MAP = [
 class CharacterSheet {
 
     constructor() {
-        document.addEventListener('DOMContentLoaded', () => this.#init());
+        document.addEventListener('DOMContentLoaded', () => {
+            this.#init();
+        });
     }
 
     // ─── Initialisation ───────────────────────────────────────────────────────
 
     #init() {
         this.renderAtributes('attributesContainer');
-        this.circles    = Array.from(document.querySelectorAll('.circle'));
-        this.allInputs  = Array.from(document.querySelectorAll('input, select, textarea'));
-        this.charRace   = document.getElementById('charRace');
-        this.charClass  = document.getElementById('charClass');
-        this.quill      = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
-        this.character  = new Character();
+        this.circles = Array.from(document.querySelectorAll('.circle'));
+        this.allInputs = Array.from(document.querySelectorAll('input, select, textarea'));
+        this.charRace = document.getElementById('charRace');
+        this.charClass = document.getElementById('charClass');
+        this.quill = new Quill(document.getElementById('charNotes'), { theme: 'snow' });
+        this.character = new Character();
 
-        this.classDetails       = dungeonworld.classes || [];
+        this.classDetails = dungeonworld.classes || [];
         this.movementListFormat = 'card';
-        this.spellListFormat    = 'card';
-        this.showClassMoves     = false; // false = movimentos básicos, true = movimentos de classe
+        this.spellListFormat = 'card';
+        this.showClassMoves = false; // false = movimentos básicos, true = movimentos de classe
 
         this.bondInput = document.getElementById('charBonds');
         this.bondOption = null;
@@ -66,8 +68,7 @@ class CharacterSheet {
         this.updateModifiers();
         this.updateStrikethrough();
         this.updateAlignmentOptions();
-        this.renderBasicMoves();
-        // this.renderClassMoves();
+        this.renderMovements();
         this.renderClassSpells();
         this.applyClassEffects();
         this.updateBondOptions();
@@ -92,6 +93,7 @@ class CharacterSheet {
         this.#registerSearchEvents();
         this.#registerMovementEvents();
         this.#registerSpellEvents();
+        this.#registerCarouselEvents();
     }
 
     /** Attribute value inputs update the character model, modifiers, and derived fields. */
@@ -122,19 +124,19 @@ class CharacterSheet {
      */
     #registerSimpleFieldEvents() {
         const FIELD_MAP = [
-            { id: 'charName',      set: (v) => { this.character.nome        = v; } },
-            { id: 'charLevel',     set: (v) => { this.character.nivel       = parseInt(v, 10) || 1; } },
-            { id: 'curPV',         set: (v) => { this.character.pv_atual    = parseInt(v, 10) || 0; } },
-            { id: 'charPV',        set: (v) => { this.character.pv_max      = parseInt(v, 10) || 0; } },
-            { id: 'charLoad',      set: (v) => { this.character.carga       = parseInt(v, 10) || 0; } },
-            { id: 'charDef',       set: (v) => { this.character.armadura    = parseInt(v, 10) || 0; } },
-            { id: 'charDmg',       set: (v) => { this.character.dado_dano   = v; } },
+            { id: 'charName', set: (v) => { this.character.nome = v; } },
+            { id: 'charLevel', set: (v) => { this.character.nivel = parseInt(v, 10) || 1; } },
+            { id: 'curPV', set: (v) => { this.character.pv_atual = parseInt(v, 10) || 0; } },
+            { id: 'charPV', set: (v) => { this.character.pv_max = parseInt(v, 10) || 0; } },
+            { id: 'charLoad', set: (v) => { this.character.carga = parseInt(v, 10) || 0; } },
+            { id: 'charDef', set: (v) => { this.character.armadura = parseInt(v, 10) || 0; } },
+            { id: 'charDmg', set: (v) => { this.character.dado_dano = v; } },
             { id: 'charAlignment', set: (v) => { this.character.alinhamento = v; } },
         ];
         FIELD_MAP.forEach(({ id, set }) => {
             const el = document.getElementById(id);
             if (!el) return;
-            el.addEventListener('input',  (e) => { set(e.target.value); this.save(); });
+            el.addEventListener('input', (e) => { set(e.target.value); this.save(); });
             el.addEventListener('change', (e) => { set(e.target.value); this.save(); });
         });
 
@@ -169,7 +171,7 @@ class CharacterSheet {
     /** Every input and select auto-saves on change. */
     #registerAutoSaveEvents() {
         this.allInputs.forEach((input) => {
-            input.addEventListener('input',  () => this.save());
+            input.addEventListener('input', () => this.save());
             input.addEventListener('change', () => this.save());
         });
     }
@@ -186,7 +188,7 @@ class CharacterSheet {
             () => this.#closeModal('codeModal'));
 
         document.getElementById('btnCopiarCodigo').addEventListener('click', () => {
-            const ta  = document.getElementById('codeModalText');
+            const ta = document.getElementById('codeModalText');
             const btn = document.getElementById('btnCopiarCodigo');
             ta.select();
             navigator.clipboard.writeText(ta.value).catch(() => document.execCommand('copy'));
@@ -209,7 +211,7 @@ class CharacterSheet {
                 this.#syncClassRaceSelectors();
                 this.updateModifiers();
                 this.updateStrikethrough();
-                this.renderClassMoves();
+                this.renderMovements();
                 this.#closeModal('restoreModal');
             } catch (e) {
                 console.error('Erro ao restaurar código:', e);
@@ -239,7 +241,7 @@ class CharacterSheet {
             this.character.raca = this.charRace.value !== 'Raça' ? this.charRace.value : '';
             this.#syncClassRaceSelectors();
             this.applyClassEffects();
-            this.renderClassMoves();
+            this.renderMovements();
             this.updateBondOptions();
             this.updateAlignmentOptions();
             this.save();
@@ -250,7 +252,7 @@ class CharacterSheet {
             if (this.charClass.selectedOptions[0]?.disabled) this.charClass.value = '';
             this.#syncClassRaceSelectors();
             this.applyClassEffects();
-            this.renderClassMoves();
+            this.renderMovements();
             this.updateBondOptions();
             this.updateAlignmentOptions();
             this.save();
@@ -261,7 +263,7 @@ class CharacterSheet {
     #registerViewToggleEvents() {
         this.#addViewToggle('btnMoveCardView', 'btnMoveListView', (fmt) => {
             this.movementListFormat = fmt;
-            this.renderClassMoves();
+            this.renderMovements();
         });
         this.#addViewToggle('btnSpellCardView', 'btnSpellListView', (fmt) => {
             this.spellListFormat = fmt;
@@ -271,7 +273,7 @@ class CharacterSheet {
 
     #registerSearchEvents() {
         document.getElementById('movementSearch')?.addEventListener('input', (e) => {
-            // this.renderClassMoves(e.target.value);
+            this.renderMovements(e.target.value);
             this.filterMovementsBySearch(e.target.value);
         });
         document.getElementById('spellSearch')?.addEventListener('input', (e) => {
@@ -298,27 +300,37 @@ class CharacterSheet {
         });
     }
 
-    #registerMovementEvents(){
-        
+    #registerMovementEvents() {
+        const equipSelectCombo = document.getElementById('equipSelectCombo');
+        Mechanics.Equipment.renderEquipmentOptions(equipSelectCombo);
     }
-    #registerSpellEvents(){
 
+    #registerSpellEvents() {
+
+    }
+
+    #registerCarouselEvents() {
+        document.querySelectorAll('.carousel').forEach((carousel, index) => {
+            const anchorName = `--carousel-${index + 1}`;
+            carousel.style.setProperty('--carousel-anchor', anchorName);
+            carousel.style.setProperty('anchor-name', anchorName);
+        });
     }
 
     /** Populates and wires the tag combobox inside a newly created equipment item. */
     #initTagCombo(item) {
-        const toggleBtn   = item.querySelector('.combobox-toggle');
-        const dropdown    = item.querySelector('.combobox-dropdown');
+        const toggleBtn = item.querySelector('.combobox-toggle');
+        const dropdown = item.querySelector('.combobox-dropdown');
         const searchInput = item.querySelector('.tag-search');
-        const resultsDiv  = item.querySelector('.results');
-        const tagsDiv     = item.querySelector('.selected-tags');
-        const allTags     = this.tagList;
-        const selected    = new Set();
+        const resultsDiv = item.querySelector('.results');
+        const tagsDiv = item.querySelector('.selected-tags');
+        const allTags = this.tagList;
+        const selected = new Set();
 
         const reposition = () => {
             const rect = toggleBtn.getBoundingClientRect();
-            dropdown.style.top   = `${rect.bottom + 4}px`;
-            dropdown.style.left  = `${rect.left}px`;
+            dropdown.style.top = `${rect.bottom + 4}px`;
+            dropdown.style.left = `${rect.left}px`;
             dropdown.style.width = `${Math.max(rect.width, 240)}px`;
         };
         const openDropdown = () => {
@@ -413,14 +425,14 @@ class CharacterSheet {
             Array.from(document.getElementsByClassName('toggleLabel')).forEach((el) => {
                 el.textContent = e.target.checked ? 'Movimentos de Classe' : 'Movimentos Básicos';
             });
-            this.renderClassMoves();
+            this.renderMovements();
         });
     }
 
 
     // ─── Modal helpers ────────────────────────────────────────────────────────
 
-    #openModal(id)  { document.getElementById(id).style.display = 'flex'; }
+    #openModal(id) { document.getElementById(id).style.display = 'flex'; }
     #closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     // ─── Persistence ─────────────────────────────────────────────────────────
@@ -447,15 +459,15 @@ class CharacterSheet {
             if (el) el.value = val ?? '';
         };
 
-        setVal('charName',  character.nome);
+        setVal('charName', character.nome);
         setVal('charLevel', character.nivel);
-        setVal('charPV',    character.pv_max);
-        setVal('curPV',     character.pv_atual);
-        setVal('charLoad',  character.carga);
-        setVal('charDef',   character.armadura);
-        setVal('charDmg',   character.dado_dano);
+        setVal('charPV', character.pv_max);
+        setVal('curPV', character.pv_atual);
+        setVal('charLoad', character.carga);
+        setVal('charDef', character.armadura);
+        setVal('charDmg', character.dado_dano);
 
-        this.charRace.value  = character.raca;
+        this.charRace.value = character.raca;
         this.charClass.value = character.classe;
 
         // Alignment options depend on class, so refresh them before setting the value
@@ -474,7 +486,7 @@ class CharacterSheet {
         });
 
         if (this.quill && character.notas) {
-            try   { this.quill.setContents(JSON.parse(character.notas)); }
+            try { this.quill.setContents(JSON.parse(character.notas)); }
             catch { this.quill.setText(character.notas); }
         }
 
@@ -483,41 +495,69 @@ class CharacterSheet {
 
     // ─── Rendering ───────────────────────────────────────────────────────────
 
-    renderClassMoves(searchQuery = '') {
-        const container = document.getElementById('classMoves');
-        container.innerHTML = '';
+    renderMovements(searchQuery = '') {
+        let movementList = this.showClassMoves ? Mechanics.Movement.conditionalMovementList(this.charClass.value, this.charRace.value) : Mechanics.Movement.getBasicMovements(this.charClass.value);
+        let movementContainer = document.getElementById('movementContainer');
 
-        let movementList = this.showClassMoves
-            ? Mechanics.Movement.getMovementListByClass(this.charClass.value)
-            : Mechanics.Movement.getBasicMovements();
-
-        if (!movementList.length) {
-            container.innerHTML = '<div class="movement-list"><em>Não há movimentos disponíveis para esta classe.</em></div>';
-            return;
-        }
-
-        // Bárbaro keeps all racial moves; every other class shows only the move matching the selected race.
-        if (Utils.canonical(this.charClass.value) !== 'barbaro' && this.charRace.value) {
-            movementList = movementList.filter(
-                (m) => m.tipo !== 'Racial' || m.nome === this.charRace.value
-            );
-        }
+        movementContainer.innerHTML = '';
 
         if (searchQuery) {
             movementList = this.searchItems(movementList, searchQuery);
         }
-
-        const box = document.createElement('div');
-        box.classList.add(this.movementListFormat === 'card' ? 'movement-cardbox' : 'movement-list');
-        for (const movement of movementList) {
-            box.innerHTML += Mechanics.Movement.render(movement, this.movementListFormat, true);
-            box.appendChild(Mechanics.Movement.render(movement, this.movementListFormat, true));
+        
+        if(this.movementListFormat === 'list'){
+            
+            this.renderMovementList(movementList, movementContainer, this.movementListFormat);
         }
-        container.appendChild(box);
+        else {
+            this.renderMovementCard(movementList, movementContainer, this.movementListFormat);
+        }
+    }
+
+
+    renderMovementList(movementList, container, searchQuery = '') {
+
+        const listContainer = document.createElement('div');
+        listContainer.classList.add('movement-list');
+
+        for (const move of movementList) {
+            listContainer.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
+        }
+
+        
+        container.appendChild(listContainer);
+    }
+
+    renderMovementCard(movementList, container, searchQuery = '') {
+        
+        const carouselContainer = document.createElement('div');
+        carouselContainer.classList.add('carousel-container');
+
+        const carousel = document.createElement('div');
+        carousel.id = `carousel-${Math.random().toString(36).substr(2, 9)}`;
+        carousel.classList.add('carousel');
+
+        if(carousel){
+            if (!movementList.length) {
+                carousel.innerHTML = '<div class="movement-list"><em>Não há movimentos disponíveis para esta classe.</em></div>';
+            return;
+            }
+
+            const scroll_group = document.createElement('div');
+            scroll_group.classList.add('scroll-group');
+
+            for (const move of movementList) {
+                scroll_group.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
+            }
+            carousel.appendChild(scroll_group);
+        }
+
+        carouselContainer.appendChild(carousel);
+        container.appendChild(carouselContainer);
     }
 
     filterMovementsBySearch(movementList, searchQuery) {
-        if (!searchQuery){
+        if (!searchQuery) {
             document.querySelectorAll('.movement-card').forEach(card => {
                 const match = card.textContent.includes(searchQuery);
                 card.hidden = !match;
@@ -528,13 +568,13 @@ class CharacterSheet {
             card.hidden = !match;
         });
     }
-a
+
     renderClassSpells() {
         if (!this.charClass.value) return;
-        
+
         const cls = this.#findClassByName(this.charClass.value);
 
-        if(cls.spellcaster){
+        if (cls.spellcaster) {
             document.getElementById('classSpells').style.display = '';
             document.getElementById('spellContainer').style.display = '';
 
@@ -547,13 +587,13 @@ a
             let lista_spells = Mechanics.Spell.getSpellListByClassAndLevel(this.charClass.value);
 
             if (searchQuery) {
-            lista_spells = this.searchItems(lista_spells, searchQuery);
+                lista_spells = this.searchItems(lista_spells, searchQuery);
             }
 
             box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells);
             container.appendChild(box);
         }
-        else{
+        else {
             document.getElementById('classSpells').style.display = 'none';
             document.getElementById('spellContainer').style.display = 'none';
         }
@@ -561,25 +601,16 @@ a
 
     }
 
-    renderBasicMoves(searchQuery = '') {
-        const container = document.getElementById('basicMoves');
-        container.innerHTML = '';
-        const moves = Mechanics.Movement.getBasicMovements();
-        for (const move of moves) {
-            container.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
-        }    
-    }
-
     // Search Movements and Spells
     searchItems(items, query) {
-    const terms = query
-        .toLowerCase()
-        .trim()
-        .split(/\s+/);
+        const terms = query
+            .toLowerCase()
+            .trim()
+            .split(/\s+/);
 
-    return items.filter(item =>
-        terms.every(term => Utils.searchFilter(item, term))
-    );
+        return items.filter(item =>
+            terms.every(term => Utils.searchFilter(item, term))
+        );
     }
 
     // ─── Attributes & modifiers ───────────────────────────────────────────────
@@ -639,7 +670,7 @@ a
 
     /** Disables class options incompatible with the currently selected race. */
     #updateClassOptions() {
-        const allowed    = this.#findAllowedClasses(this.charRace.value);
+        const allowed = this.#findAllowedClasses(this.charRace.value);
         const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
 
         Array.from(this.charClass.options).forEach((option) => {
@@ -658,7 +689,7 @@ a
 
     /** Disables race options incompatible with the currently selected class. */
     #updateRaceOptions() {
-        const allowed    = this.#findAllowedRaces(this.charClass.value);
+        const allowed = this.#findAllowedRaces(this.charClass.value);
         const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
 
         Array.from(this.charRace.options).forEach((option) => {
@@ -680,7 +711,7 @@ a
         const cls = this.#findClassByName(this.charClass.value);
         for (const alignment of cls?.alinhamento || []) {
             const option = document.createElement('option');
-            option.value       = alignment.id;
+            option.value = alignment.id;
             option.textContent = [alignment.nome, alignment.descricao].filter(Boolean).join(' - ');
             charAlignment.appendChild(option);
         }
@@ -688,14 +719,14 @@ a
 
     /** Updates damage, HP, and carry capacity fields based on the selected class. */
     applyClassEffects() {
-        const cls      = this.#findClassByName(this.charClass.value);
-        const charDmg  = document.getElementById('charDmg');
-        const charPV   = document.getElementById('charPV');
+        const cls = this.#findClassByName(this.charClass.value);
+        const charDmg = document.getElementById('charDmg');
+        const charPV = document.getElementById('charPV');
         const charLoad = document.getElementById('charLoad');
 
         if (!cls) {
-            if (charDmg)  charDmg.value  = '';
-            if (charPV)   charPV.value   = '';
+            if (charDmg) charDmg.value = '';
+            if (charPV) charPV.value = '';
             if (charLoad) charLoad.value = '';
             this.renderClassSpells();
             return;
@@ -705,11 +736,11 @@ a
         if (charDmg) { charDmg.value = dmg; this.character.dado_dano = dmg; }
 
         const conVal = parseInt(document.getElementById('valCon')?.value, 10);
-        const newPV  = (cls.hp_base || 0) + (Number.isFinite(conVal) ? conVal : 0);
-        if (charPV)  { charPV.value  = newPV;  this.character.pv_max = newPV; }
+        const newPV = (cls.hp_base || 0) + (Number.isFinite(conVal) ? conVal : 0);
+        if (charPV) { charPV.value = newPV; this.character.pv_max = newPV; }
 
         // Prefer the already-computed modifier display; fall back to raw calculation.
-        let modFor   = 0;
+        let modFor = 0;
         const modForEl = document.getElementById('modFor');
         if (modForEl?.value) {
             const parsed = parseInt(modForEl.value.replace(/[^0-9-]/g, ''), 10);
@@ -729,7 +760,7 @@ a
     addMovement(movement) {
         if (!movement) return;
         this.character.addMovement(movement);
-        this.renderClassMoves();
+        this.renderMovements();
         this.save();
     }
 
@@ -820,9 +851,9 @@ a
 
     clearInputs() {
         this.allInputs.forEach((input) => {
-            if      (input.type === 'checkbox')   input.checked = false;
+            if (input.type === 'checkbox') input.checked = false;
             else if (input.type === 'select-one') { input.selectedIndex = 0; input.value = ''; }
-            else                                  input.value = '';
+            else input.value = '';
         });
         this.circles.forEach((circle) => circle.classList.remove('active'));
     }
@@ -837,13 +868,13 @@ a
         this.updateBondOptions();
         this.updateStrikethrough();
         this.applyClassEffects();
-        this.renderClassMoves();
+        this.renderMovements();
         this.renderClassSpells();
     }
 
     renderAtributes(containerId = 'attributesContainer') {
         const container = document.getElementById(containerId);
-       
+
         for (const atribKey in ATTR_MAP) {
             const atrib = ATTR_MAP[atribKey];
             const card = document.createElement('div');
@@ -898,5 +929,17 @@ a
     }
 
 }
+
+
+function devIcon() {
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        const favicon = document.querySelector("link[rel='icon']");
+        if (favicon) {
+            favicon.setAttribute("href", "./assets/dev-favicon.png");
+        }
+    }
+}
+
+devIcon();
 
 const sheet = new CharacterSheet();

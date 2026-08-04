@@ -1,23 +1,41 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  height: 37rem;
 }
+
+
+.scroll-group {
+  display: flex;
+  gap: 20px; /* Adjust spacing here */
+  padding-right: 20px; /* Ensures the gap is maintained between loops */
+}
+
 .carousel {
+  --carousel-anchor: --carousel-default;
+  anchor-name: var(--carousel-anchor);
+
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: flex-start;
   gap: 1rem;
 
-  margin: 0 1.5rem;
+  height: 101%;
 
+  margin: 0 1.5rem;
   overflow: auto hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  anchor-name: --carousel;
 
+  /* animation: scroll-left 10s linear infinite; */
+
+  /* animation: scroll-right 10s linear infinite; */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+ 
   .movement-card {
     flex: 0 0 20rem;
     scroll-snap-align: center;
@@ -26,15 +44,21 @@
 
   &::scroll-button(*) {
     position: fixed;
-    position-anchor: --carousel;
+    position-anchor: var(--carousel-anchor);
     position-visibility: always;
-    font-size: 3rem;
+    font-size: 5rem;
+    color: var(--gold);
     height: 3rem;
     width: 3rem;
+    padding-bottom: 0.5rem;
     border: 1px solid transparent;
     border-radius: 100%;
     background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
+  }
+
+  &::scroll-button(*):hover {
+    transform: scale(1.4);
   }
 
   &::scroll-button(right) {
@@ -52,6 +76,10 @@
     animation-timeline: view(x);
   }
 
+
+
+}
+
   @keyframes offscreen-inert {
     entry 0%, exit 100% {
       interactivity: inert;
@@ -61,4 +89,20 @@
     }
   }
 
-}
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%); /* Moves exactly half the total track width */
+    }
+  }
+
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(50%); /* Moves exactly half the total track width */
+    }
+  }

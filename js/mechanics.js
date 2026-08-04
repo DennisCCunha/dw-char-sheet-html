@@ -1,4 +1,5 @@
 import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
+import Utils from "./utils.js";
 
 export class Bond {
     static create(id = 0, nome ="", template="", alvo= "", finalizado = false) {
@@ -122,6 +123,18 @@ export class Equipment {
         tagElement.appendChild(descricao);
             
         return tagElement;
+    }
+
+    static renderEquipmentOptions(equipSelectCombo) {
+        
+        Equipment.getEquipmentList().forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.nome;
+            equipSelectCombo.appendChild(option);
+        });
+
+        return equipSelectCombo;
     }
 
 }
@@ -401,34 +414,74 @@ export class Movement {
     }
 
     static renderPanel(movement, selectable = false) {
-        let inicial = '';
+
+        // Create the checkbox input for selectable movements
+        let inicial =  document.createElement('input');
+        inicial.id = `selectable-movement-${movement.id}`;
+        inicial.type = "checkbox";
+        inicial.classList.add("movement-select");
+
+
         if (movement.tipo === "Inicial" || movement.tipo === "Basico" || movement.tipo === "Especial") {
-            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" checked disabled />`;
-        }
-        if(movement.tipo.includes("Avançado") && selectable){
-            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" />`;
-        }
-        if(movement.exclusivo && selectable){
-            inicial =  `<input id="selectable-movement-${movement.id}" type="checkbox" class="movement-select" />`;
+            inicial.checked = true;
+            inicial.disabled = true;
         }
 
-        return `<div class="movement-panel">
-                    <div class="movement-panel-header">
-                        <div class="movement-panel-title">
-                            ${inicial}
-                            <h3>${movement.nome}</h3>
-                        </div>
-                        <div class="movement-panel-info">
-                            ${movement.tipo ? `<span class="movement-panel-type">Tipo: ${movement.tipo}</span>` : ''}
-                        </div>
-                    </div>
-                    <div class="movement-panel-details">
-                        ${movement.rolagem ? `<span class="movement-panel-roll">Rolagem: <strong>${movement.rolagem}</strong></span>` : ''}
-                    </div>
-                    <div class="movement-panel-description">
-                        <p class="">${movement.descricao}</p>
-                    </div>
-                </div>`;
+        if (movement.exclusivo && selectable) {
+            inicial.checked = false;
+            inicial.disabled = true;
+        }
+
+
+        const movementPanel = document.createElement('div');
+        movementPanel.classList.add('movement-panel');
+
+        const movementPanelHeader = document.createElement('div');
+        movementPanelHeader.classList.add('movement-panel-header');
+        movementPanel.appendChild(movementPanelHeader);
+
+        const movementPanelTitle = document.createElement('div');
+        movementPanelTitle.classList.add('movement-panel-title');
+
+        movementPanelHeader.appendChild(movementPanelTitle);
+        movementPanelTitle.appendChild(inicial);
+
+        const movementName = document.createElement('h3');
+        movementName.textContent = movement.nome;
+        movementPanelTitle.appendChild(movementName);
+
+        const movementPanelInfo = document.createElement('div');
+        movementPanelInfo.classList.add('movement-panel-info');
+        movementPanelHeader.appendChild(movementPanelInfo);
+
+        if (movement.tipo) {
+            const movementType = document.createElement('span');
+            movementType.classList.add('movement-panel-type');
+            movementType.textContent = `Tipo: ${movement.tipo}`;
+            movementPanelInfo.appendChild(movementType);
+        }
+
+        const movementPanelDetails = document.createElement('div');
+        movementPanelDetails.classList.add('movement-panel-details');
+        movementPanel.appendChild(movementPanelDetails);
+
+        if (movement.rolagem) {
+            const movementRoll = document.createElement('span');
+            movementRoll.classList.add('movement-panel-roll');
+            movementRoll.innerHTML = `Rolagem: <strong>${movement.rolagem}</strong>`;
+            movementPanelDetails.appendChild(movementRoll);
+        }
+
+        const movementPanelDescription = document.createElement('div');
+        movementPanelDescription.classList.add('movement-panel-description');
+        movementPanel.appendChild(movementPanelDescription);
+
+        const movementDescription = document.createElement('p');
+        movementDescription.textContent = movement.descricao;
+        movementPanelDescription.appendChild(movementDescription);
+
+        return movementPanel;
+
     }
 
     static render(movement, format, selectable = false) {
@@ -531,6 +584,20 @@ export class Movement {
 
     }
 
+
+    static conditionalMovementList(classe, race){
+        let movementList = this.getMovementListByClass(classe);
+
+        // Bárbaro keeps all racial moves; every other class shows only the move matching the selected race.
+        if (Utils.canonical(classe) !== 'barbaro' && classe) {
+            movementList = movementList.filter(
+                (m) => m.tipo !== 'Racial' || m.nome === race
+            );
+        }
+
+        return movementList;
+    }
+
 }
 
 export class ClassAndRace{
@@ -541,6 +608,7 @@ export class ClassAndRace{
     static getClassList(){
         return dungeonworld.classes.map(clas => (clas.nome));
     }
+
     static getRacesList(){
         let races = [];
         dungeonworld.classes.forEach(clas => {
