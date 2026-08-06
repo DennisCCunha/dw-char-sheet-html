@@ -1,4 +1,4 @@
-import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
+﻿import dungeonworld from "../data/dungeonworld.json" with { type: "json" };
 import SaveAndLoad from './saveAndLoad.js';
 import Mechanics from './mechanics.js';
 import Character from './character.js';
@@ -41,6 +41,8 @@ class CharacterSheet {
 
         this.bondInput = document.getElementById('charBonds');
         this.bondOption = null;
+
+
 
         this.tagList = Mechanics.Equipment.getTagsList();
 
@@ -301,8 +303,11 @@ class CharacterSheet {
     }
 
     #registerMovementEvents() {
-        const equipSelectCombo = document.getElementById('equipSelectCombo');
-        Mechanics.Equipment.renderEquipmentOptions(equipSelectCombo);
+        document.querySelectorAll('.movement-card-icon').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                console.log('Movement card icon clicked:', e.target);
+            });
+        });
     }
 
     #registerSpellEvents() {
@@ -416,7 +421,14 @@ class CharacterSheet {
         document.getElementById('addConsumable')?.addEventListener('click',
             () => this.addConsumableToList('consumablesContainer'));
         document.getElementById('btnAddMovement')?.addEventListener('click',
-            () => this.character.addMovement());
+            () => this.character.addEquipment());
+        
+        document.getElementById('equipSelectCombo')?.addEventListener('change', (e) => {
+            console.log(`Selected value: ${e.target.value}`);
+            this.character.addEquipment(e.target.value);
+            console.log(this.character.equipamentos);
+        });
+
     }
 
     #registerMovementTypeToggle() {
@@ -485,6 +497,9 @@ class CharacterSheet {
             this.circles[i]?.classList.toggle('active', active);
         });
 
+        const equipSelectCombo = document.getElementById('equipSelectCombo');
+        Mechanics.Equipment.renderEquipmentOptions(equipSelectCombo);
+
         if (this.quill && character.notas) {
             try { this.quill.setContents(JSON.parse(character.notas)); }
             catch { this.quill.setText(character.notas); }
@@ -498,16 +513,22 @@ class CharacterSheet {
     renderMovements(searchQuery = '') {
         let movementList = this.showClassMoves ? Mechanics.Movement.conditionalMovementList(this.charClass.value, this.charRace.value) : Mechanics.Movement.getBasicMovements(this.charClass.value);
         let movementContainer = document.getElementById('movementContainer');
-
         movementContainer.innerHTML = '';
 
         if (searchQuery) {
             movementList = this.searchItems(movementList, searchQuery);
         }
+
+        const movementContainer = document.createElement('div');
+        
         
         if(this.movementListFormat === 'list'){
-            
-            this.renderMovementList(movementList, movementContainer, this.movementListFormat);
+            const listContainer = document.createElement('div');
+            listContainer.classList.add('movement-list');
+            for (const move of movementList) {
+                listContainer.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
+            }
+            container.appendChild(listContainer);
         }
         else {
             this.renderMovementCard(movementList, movementContainer, this.movementListFormat);
@@ -519,12 +540,11 @@ class CharacterSheet {
 
         const listContainer = document.createElement('div');
         listContainer.classList.add('movement-list');
-
+        
         for (const move of movementList) {
             listContainer.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
         }
 
-        
         container.appendChild(listContainer);
     }
 
@@ -549,6 +569,7 @@ class CharacterSheet {
             for (const move of movementList) {
                 scroll_group.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
             }
+
             carousel.appendChild(scroll_group);
         }
 
@@ -569,7 +590,7 @@ class CharacterSheet {
         });
     }
 
-    renderClassSpells() {
+    renderClassSpells(searchQuery) {
         if (!this.charClass.value) return;
 
         const cls = this.#findClassByName(this.charClass.value);
@@ -590,7 +611,8 @@ class CharacterSheet {
                 lista_spells = this.searchItems(lista_spells, searchQuery);
             }
 
-            box.innerHTML = Mechanics.Spell.renderSpellGroupbyLevel(lista_spells);
+            box.appendChild(Mechanics.Spell.renderSpellGroupbyLevel(lista_spells));
+
             container.appendChild(box);
         }
         else {
@@ -715,6 +737,7 @@ class CharacterSheet {
             option.textContent = [alignment.nome, alignment.descricao].filter(Boolean).join(' - ');
             charAlignment.appendChild(option);
         }
+
     }
 
     /** Updates damage, HP, and carry capacity fields based on the selected class. */
@@ -765,6 +788,13 @@ class CharacterSheet {
     }
 
     // ─── Inventory ───────────────────────────────────────────────────────────
+
+    addItemToCharacter(id) {
+        const item = Mechanics.Equipment.getEquipmentById(id);
+        if (!item) return;
+        this.character.addItem(item);
+        this.save();
+    }
 
     addEquipmentToList(listId) {
         const listEl = document.getElementById(listId);
@@ -932,10 +962,12 @@ class CharacterSheet {
 
 
 function devIcon() {
+
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
         const favicon = document.querySelector("link[rel='icon']");
         if (favicon) {
             favicon.setAttribute("href", "./assets/dev-favicon.png");
+            console.log("Dev icon set for localhost.");
         }
     }
 }

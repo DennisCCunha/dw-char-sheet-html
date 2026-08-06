@@ -8,6 +8,7 @@
 @import url('./atributesCard.css');
 @import url('./carousel.css');
 @import url('./equipment.css');
+@import url('./sliderToggle.css');
 
 :root {
     --main_font: 'Cinzel', serif;
@@ -20,7 +21,8 @@
     --blue: rgb(36, 66, 86);
     --green: rgb(39, 84, 45);
     --red: rgb(143, 0, 17);
-    --amber: rgba(255, 136, 0, 0.76);
+    --amber: rgb(194, 110, 14);
+    --purple: rgb(83, 0, 83);
     --white: #fff;
 }
 
@@ -81,7 +83,7 @@ body > article{
     flex-direction: row;
     min-height: 40rem;
     gap: 1rem;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
@@ -105,14 +107,15 @@ body > article{
     border: 2px solid var(--border-color);
     padding: 24px;
     display: flex;
+    flex-direction: column;
     gap: 24px;
 }
 
 .equipment-sheet-header{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    flex-grow: 1;
+    flex: 1 1 auto;
 }
 
 .equipment-controllers{
@@ -126,9 +129,36 @@ body > article{
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
+}
+
+.equipment-form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     flex-grow: 1;
     overflow-y: auto;
+}
+
+.equipment-form-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.custom-equip-container{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     flex-grow: 1;
+    overflow-y: auto;
+}
+
+
+.equipment-consumables-container {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
 }
 
 input, select, textarea {
@@ -166,11 +196,7 @@ h3 {
     font-weight: 700;
 }
 
-.subtitle select option.disabled-by-race,
-.subtitle select option[disabled] {
-    color: red;
-    background: transparent;
-}
+
 
 .title {
     border-bottom: 2px solid var(--border-color);
@@ -180,10 +206,11 @@ h3 {
 
 .title input {
     width: 100%;
-    font-size: 40px;
+    font-size: 3rem;
     border: none;
     outline: none;
     font-family: var(--main_font);
+    
     font-weight: 800;
 }
 
@@ -201,12 +228,23 @@ h3 {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    font-size: 24px;
+    font-size: 1rem;
     border: none;
     outline: none;
     font-family: var(--main_font);
     font-weight: bold;
 }
+
+.subtitle select option.disabled-by-race,
+.subtitle select option[disabled] {
+    color: var(--danger);
+    background: transparent;
+}
+
+.subtitle select option:checked {
+    color: var(--gold);
+}
+
 
 .portrait {
     border: 2px dashed #aaa;
@@ -287,48 +325,6 @@ h3 {
     background: transparent;
     padding-bottom: 5%;
 }
-
-
-/* table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    border: none;
-}
-
-th,
-td {
-    border-bottom: 1px dotted var(--border-color);
-    padding: 8px;
-    text-align: center;
-}
-
-th {
-    font-family: var(--main_font);
-    font-weight: bold;
-    background: rgba(219, 219, 219, 0.162);
-}
-
-td input {
-    font-family: var(--main_font);
-    width: 100%;
-    border: none;
-    text-align: center;
-    background: transparent;
-    font-size: 20px;
-}
-
-.table-attribute-title {
-    font-weight: bold;
-    color: var(--dark);
-    font-size: 16px;
-}
-
-.table-row-debilidade td{
-    background: rgba(180, 84, 60, 0.1);
-    padding: 2px 5px;
-} */
-
 
 /* Bonds */
 .bondsArea{
@@ -736,68 +732,6 @@ footer p a:hover{
     padding-bottom: 0.8rem;
 }
 
-/* Slider Toggle */
-.toggleLabel {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--dark);
-    margin-right: 8px;
-    vertical-align: sub;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin-bottom: 1px;
-}
-
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 4px;
-  background-color: var(--danger);
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  border-radius: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-  content: var(--label, "");
-}
-
-input:checked + .slider {
-  background-color: var(--gold);
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px var(--gold);
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
 
 .multiselect{
     width:350px;
@@ -943,6 +877,8 @@ input:checked + .slider:before {
   body {
     font-size: 14px;
     padding: 0;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   /* Navegação */
@@ -988,7 +924,7 @@ input:checked + .slider:before {
   }
 
   #charName {
-    font-size: 18px;
+    font-size: 1.5rem;
     width: 100%;
     margin-bottom: 10px;
   }
@@ -1050,85 +986,37 @@ input:checked + .slider:before {
 
   .init-val {
     cursor: pointer;
-    padding: 5px 8px;
-    background: #d4af37;
-    color: #000;
-    border-radius: 4px;
     margin: 2px;
     display: inline-block;
   }
 
-  /* Tabela de Atributos */
-  #attributesTable {
-    width: 100%;
-    font-size: 12px;
-    margin: 15px 0;
-  }
-
-  #attributesTable th,
-  #attributesTable td {
-    padding: 8px 4px;
-    text-align: center;
-  }
-
-  #attributesTable input {
-    width: 100%;
-    padding: 4px;
-    font-size: 11px;
-  }
-
-  .table-attribute-title {
-    font-weight: bold;
-  }
-
-  .table-row-debilidade label {
-    display: block;
-    font-size: 10px;
-    margin-top: 5px;
-  }
-
-  .debilidade {
-    color: #d4af37;
-  }
-
   /* XP, Alinhamento, Vínculos */
-  #charXPBonds {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 15px;
+  .charXPBonds {
+    /* display: flex;
+    flex-direction: column; */
   }
 
 
-  .alignment{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 12px;
-    gap: 0.5rem;
-  }
+    .alignment-container {
+        margin-top: 12px;
+        gap: 0.5rem;
+    }
 
-  #charAlignment{
-    margin: 1rem 0;
-    border: none;
-    border-bottom: 1px solid var(--border-color);
-    width: auto;
-  }
-
-  .alignment select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-  }
-
+    .charAlignment{
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin: 1rem 0;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        width: auto;
+    }
 
 
 
 
   .bonds {
     padding: 10px;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
   }
 
   .bond-inputs-box {
@@ -1169,9 +1057,7 @@ input:checked + .slider:before {
 
   #equipmentpanel,
   #consumablePanel {
-    border: 2px solid #d4af37;
     padding: 10px;
-    border-radius: 4px;
   }
 
   #equipmentpanel h2,
@@ -1221,35 +1107,6 @@ input:checked + .slider:before {
     align-items: center;
   }
 
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-  }
-
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 24px;
-  }
-
-  input:checked + .slider {
-    background-color: #d4af37;
-  }
-
   .movement-view-toggle,
   .spell-view-toggle {
     display: flex;
@@ -1260,8 +1117,6 @@ input:checked + .slider:before {
     flex: 1;
     padding: 8px;
     cursor: pointer;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
     text-align: center;
     background: transparent;
     color: #d4af37;
@@ -1295,8 +1150,6 @@ input:checked + .slider:before {
   #charNotes {
     min-height: 200px;
     padding: 10px;
-    border: 2px solid #d4af37;
-    border-radius: 4px;
     margin-bottom: 15px;
   }
 
@@ -1370,11 +1223,7 @@ input:checked + .slider:before {
     margin: 8px 0;
   }
 
-  /* Scroll horizontal para carrousel */
-  body {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-  }
+
 }
 
 /* Tablet - Ajustes para telas maiores */

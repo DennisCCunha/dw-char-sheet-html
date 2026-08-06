@@ -56,7 +56,7 @@
     <!-- 1º Pagina - Raça Classe Atributos XP e Bonds -->
     <article class="pagina">
       <div id="1st-Page" class="sheet">
-        <div>
+        <div class="flex ">
           <div class="title">
             <input type="text" id="charName" value="" placeholder="Nome do personagem" />
 
@@ -124,7 +124,7 @@
           <div id="attributesContainer" class="attributes-container">
           </div>
 
-          <div id="charXPBonds">
+          <div id="charXPBonds" class="charXPBonds">
             <div id="xp-alignment" class="xp-alignment-box">
               <div class="xp-container">
                 <div class="nivel-box">
@@ -153,9 +153,9 @@
                   <div id="XP18" class="circle"></div>
                 </div>
               </div>
-              <div class="alignment">
+              <div class="alignment-container">
                 <strong>Alinhamento: </strong>
-                <select id="charAlignment">
+                <select id="charAlignment" class="charAlignment">
                   <option value="">Selecione</option>
                 </select>
               </div>
@@ -183,81 +183,67 @@
     <!-- 3º Pagina - Equipamentos e Consumíveis -->
     <article class="pagina">
       <div id="3rd-Page" class="equipment-sheet">
-      <div id="equip-container-header" class="equipment-sheet-header">
-        <div class="equipment-controllers">          
-          <div class="equipment-form-container">
-            <div id="equipmentForm" class="equipment-form">
-                <div class='equipment-form' id="equi-">
-                  <div class="equipment-form-header">
-                    <label>Adicionar equipamento da lista</label>
-                    <select id="equipSelectCombo">
-                        <option id="equipSelectOption" class="options" selected value="">
-                          Selecione um equipamento
-                        </option>
-                    </select>
-                    <button>Equipamento Customizado</button>
-                  </div>
+          <div id="equip-container-header" class="equipment-sheet-header">
+              <div class="equipment-form-header">
+              <label>Adicionar equipamento da lista</label>
+              <select id="equipSelectCombo">
+                  <option id="equipSelectOption" class="options" selected value="">
+                    Selecione um equipamento
+                  </option>
+              </select>
+              <button>Equipamento Customizado</button>
+              </div>
 
-                  <div class="custom-equip-container">
-                    <div id="custom-equip-box" class="custom-form">
-                      <div id="custom-equip" class="custom-equip">
-                        <div id="custom-equip-name" class="form-group">
-                          <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
-                        </div>
-                        <div id="custom-equip-tags" class="form-group">
-                          <div class="combobox">
-                            <div class="selected-tags"></div>
-                            <button class="combobox-toggle" type="button">&#x2b; Tag</button>
-                            <div class="combobox-dropdown">
-                              <input class="tag-search" type="text" placeholder="Buscar tag..." autocomplete="off"/>
-                              <div class="results"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div id="custom-equip-price" class="form-group">
-                          <input class='spell-name' type='number' placeholder='0' min='0' max='9999'/> 
-                          <label>moedas</label>
-                        </div>
-                        <div id="custom-equip-weight" class="form-group">
-                          <label>Peso</label>
-                          <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
-                        </div>
-                        <div id="custom-equip-quantity" class="form-group">
-                          <label>Quantidade</label>
-                          <input class='spell-name' type='number' placeholder='1' min='1' max='999'/>
-                        </div>
-                        <div id="custom-equip-uses" class="form-group">
-                          <label>Usos</label>
-                          <input class='spell-name' type='number' placeholder='0' min='0' max='999'/>
-                        </div>
-                        <div id="custom-equip-desc" class="form-group">
-                          <label>Descrição</label>
-                          <textarea class='spell-name' placeholder='Descrição do equipamento'></textarea>
-                        </div>
-                        
+              <div class="custom-equip-container">
+              <div id="custom-equip-box" class="custom-form">
+                <div id="custom-equip" class="custom-equip">
+                  <div id="custom-equip-name" class="form-group">
+                    <input class='spell-name' type='text' placeholder='Nome do equipamento'/>
+                  </div>
+                  <div id="custom-equip-tags" class="form-group">
+                    <div class="combobox">
+                      <div class="selected-tags"></div>
+                      <button class="combobox-toggle" type="button">&#x2b; Tag</button>
+                      <div class="combobox-dropdown">
+                        <input class="tag-search" type="text" placeholder="Buscar tag..." autocomplete="off"/>
+                        <div class="results"></div>
                       </div>
                     </div>
-                    <div class="custom-action">
-                        <button id="btnAddCustomEquip" class='addConsumable'>&#x2b</button>
-                    </div>
                   </div>
+                  <div id="custom-equip-price" class="form-group">
+                    <input class='custom-equip-field' type='number' placeholder='0' min='0' max='9999'/> 
+                    <label>moedas</label>
+                  </div>
+                  <div id="custom-equip-weight" class="form-group">
+                    <label>Peso</label>
+                    <input class='custom-equip-field' type='number' placeholder='0' min='0' max='999'/>
+                  </div>
+                  <div id="custom-equip-quantity" class="form-group">
+                    <label>Quantidade</label>
+                    <input class='custom-equip-field' type='number' placeholder='1' min='1' max='999'/>
+                  </div>
+                  <div id="custom-equip-uses" class="form-group">
+                    <label>Usos</label>
+                    <input class='custom-equip-field' type='number' placeholder='0' min='0' max='999'/>
+                  </div>
+                  <div id="custom-equip-desc" class="form-group">
+                    <label>Descrição</label>
+                    <textarea class='custom-equip-field' placeholder='Descrição do equipamento'></textarea>
+                  </div>
+                  <div class="custom-action">
+                    <button id="btnAddCustomEquip" class='addConsumable'>&#x2b</button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div> <!-- Fim do form de equipamentos -->
-      </div>
-      <div class="equipment-consumables-container">
-        <!-- <div id="equipmentpanel">
-          <h2>Equipamentos</h2>
-          <button id="addEquipment" class='addConsumable'>&#x2b</button>
-          <div id="equipmentContainer"></div>
-          <div></div>
-        </div>
-        <div id="consumablePanel">
-          <h2>Consumíveis</h2>
-          <button id="addConsumable" class='addConsumable'>&#x2b</button>
-          <div id="consumablesContainer"></div>
-        </div> -->
-      </div>
+
+              </div>
+          </div>
+          <div id="equipment-consumables-container" class="equipment-consumables-container">
+              <span> Lista de Consumíveis</span>
+          </div>
+          <div id="equipment-container" class="equipment-container">
+              <span>Lista de Equipamentos</span>
+          </div>
       </div>
     </article>
 
@@ -268,12 +254,13 @@
           <!-- Controllers de Movimentos -->
           <div id="movementController" class="movement-controller">
             <div id="toggleGroupMovement">
-              <span id="toggleLabel" class="toggleLabel">Movimentos Básicos</span>
               <label class="switch">
                 <input id="toggleMovementType" type="checkbox">
                 <span id="toggleMovementTypeSlider" class="slider"></span>
-              </label>
+              </label>             
+              <label id="toggleLabel" class="toggleLabel" for="toggleMovementType"></label>
             </div>
+
             <div class="movement-view-toggle">
               <span id="btnMoveCardView" class="btnMovementTab">card</span>
               <span id="btnMoveListView" class="btnMovementTab">lista</span>
@@ -295,6 +282,9 @@
 
           </aside>
           <aside id="spellContainer" class="spell-available">
+            <div>
+              <input type="text" id="spellSearch" placeholder="Pesquisar magias..."/>
+            </div>
             <div id="classSpells" class="">
               <!-- Magias da classe serão exibidas aqui -->
             </div>

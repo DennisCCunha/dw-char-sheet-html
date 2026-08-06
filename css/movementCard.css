@@ -7,7 +7,14 @@
 
     --movement-card-width:20rem;
     --movement-card-min-height:36rem;
+
+    --basic: var(--danger);
+    --class: var(--gold);
 }
+
+
+
+
 
 .movement-cardbox{
     display: flex;
@@ -19,9 +26,14 @@
 }
 
 .movement-card{
+    --cardColor: var(--card-border);
     width: var(--movement-card-width);
     min-height: var(--movement-card-min-height);
-    background: var(--gold);
+    background:linear-gradient( to bottom, 
+    color-mix(in srgb, var(--cardColor), #fff 10%), /* Tinted with 40% White */
+    color-mix(in srgb, var(--cardColor), #000 20%)  /* Shaded with 40% Black */
+    );
+
     border-radius:14px;
     overflow:hidden;
     border:1px solid #4e4d4d;
@@ -32,12 +44,20 @@
     box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
 }
 
+.class-movement-card{
+    --cardColor: var(--class);
+}
+
+.basic-movement-card{
+    --cardColor: var(--basic);
+}
+
 .movement-card-header{
-    padding: 10px 5px 5px 10px;
+    padding: 10px 5px 0px 10px;
     display:flex;
     align-items:flex-start;
     justify-content: space-between;
-    height: 67px;
+    height: 4rem;
     flex-grow: 0;
 }
 
@@ -49,15 +69,16 @@
 
 .movement-card-icon{
     display:flex;
-    width:42px;
-    height:42px;
+    width:2.5rem;
+    height:2.5rem;
     border-radius:50%;
+    align-self:flex-start;
 }
 
-.movement-card-title h2{
+.movement-card-title h3{
     flex:1;
     flex-wrap:wrap;
-    font-size: 1rem;
+    /* font-size: 1rem; */
     margin:0;
     margin-left: 10px;
     color:white;
@@ -83,21 +104,25 @@
 }
 
 .movement-card-roll-detail-icon{
-    width:2.6rem;
-    height:2.6rem;
+    width:2.5rem;
+    height:2.5rem;
     border-radius:5%;
 }
 
 .movement-card-roll-detail span{
     font-size:0.8rem;
+    width:105%;
     text-align:center;
     color:var(--card-description);
+    padding:2px;
+    border: 1px solid var(--gold);
+    background:var(--card-roll-shadow);
+    clip-path: polygon(100% 0%, 100% 51%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
 
 .movement-card-description{
     /* padding:15px; */
-    margin:8px;
-    
+    margin:8px 8px 4px 10px;
     text-align:justify;
     background:var(--card-description);
     flex-basis: 320px;
@@ -107,14 +132,19 @@
 
 .movement-card-description p{
     font-size:0.736rem;
+    font-family: "outfit", sans-serif;
     padding-top: 1px;
     padding-left: 8px;
     padding-right: 8px;
     padding-bottom: 1px;
     margin-left: 10px;
     text-align: justify;
+    line-height: 1.1rem;
 }
 
+.movement-card-description :has(.badge){
+
+}
 
 .movement-card-result{
     display:flex;
@@ -156,7 +186,8 @@
 }
 
 .movement-card-footer{
-    background:var(--card-border);
+    background:var(--card-roll-shadow);
+    background: linear-gradient(to top, var(--card-roll-shadow) 80%, transparent);
     color:white;
     padding:5px 15px 10px 15px;
     text-transform:uppercase;

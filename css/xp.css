@@ -7,13 +7,16 @@
 .xp-alignment-box{
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
 }
 
 .xp-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: center;
     margin-top: 12px;
     gap: 1rem;

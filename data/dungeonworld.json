@@ -4,8 +4,9 @@
             "id": 0,
             "nome": "",
             "descricao": "",
-            "usos": 0,
-            "peso": 0,
+            "usos": 0,  
+            "peso": 0, 
+            "preco": 0,
             "tags": [],
             "notes": ""
         },
@@ -31,8 +32,9 @@
             "descricao": ""
         },
         "class": {
+            "id": 0,
             "nome": "",
-            "racas": [],
+            "racas": [], 
             "hp_base": 0,
             "dado_dano": "",
             "carga_base": 0,
@@ -44,42 +46,47 @@
             "spell_list": []
         },
         "character": {
-            "nome": "",
-            "classe": "",
-            "raca": "",
-            "alinhamento": "",
-            "pv": 0,
-            "pv_max": 0,
+            "nome        ": "",
+            "raca        ": "",
+            "classe      ": "",
+            "nivel       ": 1,
+            "pv_max      ": 0,
+            "pv_atual    ": 0,
+            "carga       ": 0,
+            "armadura    ": 0,
+            "dado_dano   ": "",
+            "alinhamento ": "",
+            "notas       ": "",
             "xp": 0,
-            "nivel": 1,
-            "carga": 0,
-            "mochila": [],
-            "atributos": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "movimentos": [],
-            "vinculos": [],
-            "spells": []
+
+            "atributos": {
+                "forca": 0, "destreza": 0, "constituicao": 0,
+                "inteligencia": 0, "sabedoria": 0, "carisma": 0
+            },
+            "debilidade": {
+                "forca": false, "destreza": false, "constituicao": false,
+                "inteligencia": false, "sabedoria": false, "carisma": false
+            },
+
+            "movimentos    ": [],
+            "equipamentos  ": [],
+            "consumiveis   ": [],
+            "spells        ": [],
+            "bonds         ": [],
+            "finishedBonds ": []
         },
         "bond": {
-            "nome": "",
+            "id": 0,
+            "sujeito": "",
+            "classe": "",
             "customizado": false,
             "template": "",
-            "alvo": "",
             "finalizado": false
         }
     },
+
     "classes": [
-        {
-            "keyBytes": [
-                0
-            ],
-            "nome": "Bárbaro",
+        {"id": 0,   "nome": "Bárbaro",
             "racas": [
                 "Humano",
                 "Elfo",
@@ -243,12 +250,7 @@
                 }
             ]
         },
-        {
-            "keyBytes": [
-                1,
-                2
-            ],
-            "nome": "Bardo",
+        {"id": 1,   "nome": "Bardo",
             "racas": [
                 "Humano",
                 "Elfo"
@@ -442,12 +444,7 @@
                 }
             ]
         },
-        {
-            "keyBytes": [
-                4,
-                5
-            ],
-            "nome": "Clérigo",
+        {"id": 2,   "nome": "Clérigo",
             "racas": [
                 "Humano",
                 "Anão"
@@ -653,13 +650,7 @@
                 { "nome": "Praga", "nivel": 9, "school": "", "continuo": true, "descricao": "Nomeie uma cidade, aldeia, acampamento ou outro local onde vivam pessoas. Enquanto este feitiço permanecer ativo, aquele lugar será tomado por uma praga apropriada aos domínios de sua divindade (gafanhotos, morte do primogênito, etc.). Enquanto este feitiço estiver ativo, você recebe -1 para conjurar feitiços." }
             ]
         },
-        {
-            "keyBytes": [
-                6,
-                7,
-                8
-            ],
-            "nome": "Druida",
+        {"id": 3,   "nome": "Druida",
             "racas": [
                 "Humano",
                 "Elfo",
@@ -816,13 +807,7 @@
                 }
             ]
         },
-        {
-            "keyBytes": [
-                9,
-                10,
-                11
-            ],
-            "nome": "Guerreiro",
+        {"id": 4,   "nome": "Guerreiro",
             "racas": [
                 "Humano",
                 "Elfo",
@@ -931,7 +916,7 @@
                 { "classe": "Guerreiro", "id": 100, "nome": "Guerreiro Superior", "descricao": "Quando matar e pilhar, caso role <span class='badge'>12+</span>, cause seu dano, evite o contra-ataque, e impressione, desanime ou amedronte seu adversário." }
             ]
         },
-        { "keyBytes": [12, 13, 14], "nome": "Imolador",
+        {"id": 5,   "nome": "Imolador",
             "racas": ["Humano", "Salamandra"],
             "hp_base": 10,
             "dado_dano": "d8",
@@ -993,11 +978,7 @@
                 }
             ]
         },
-        {
-            "keyBytes": [
-                15
-            ],
-            "nome": "Paladino",
+        {"id": 6,   "nome": "Paladino",
             "racas": [
                 "Humano"
             ],
@@ -1161,13 +1142,7 @@
                 }
             ]
         },
-        {
-            "keyBytes": [
-                16,
-                17,
-                18
-            ],
-            "nome": "Ranger",
+        {"id": 7,   "nome": "Ranger",
             "racas": [
                 "Humano",
                 "Elfo"
@@ -1323,12 +1298,7 @@
                 }
             ]
         },
-        {
-            "keyBytes": [
-                19,
-                20
-            ],
-            "nome": "Ladrão",
+        {"id": 8,   "nome": "Ladrão",
             "racas": [
                 "Humano",
                 "Halfling"
@@ -1429,12 +1399,7 @@
                 { "classe": "Ladão", "id": 172, "nome": "Assalto", "descricao": "Quando parar para planejar o roubo de alguma coisa, diga o que quer roubar e pergunte ao MJ as questões abaixo. Quando agir de acordo com as respostas, você e seus aliados recebem +1 adiante. \n•\t Quem perceberá a ausência do item roubado? \n•\t Qual é a sua defesa mais poderosa? \n•\t Quem virá atrás dele? \n•\t Quem mais o quer?" }
             ]
         },
-        {
-            "keyBytes": [
-                21,
-                22
-            ],
-            "nome": "Mago",
+        {"id": 9,   "nome": "Mago",
             "racas": [
                 "Humano",
                 "Elfo"
@@ -1873,19 +1838,17 @@
         {"classe":"basico","tipo":"Especial","id":15,"nome":"Farrear","rolagem":"+Moedas","descricao":"Quando retornar triunfante e fizer uma grande festa, gaste 100 moedas e role+1 para cada 100 moedas extras gastas. Com <span class='badge'>10+</span>, escolha 3. Com <span class='badge'>7-9</span>, escolha 2. Com um <span class='badge'>6-</span>, escolha 1, mas as coisas vão sair totalmente de controle (o MJ dirá como).<br>• &nbsp; Torne-se amigo de um PNJ útil;<br>• &nbsp; Você ouve rumores a respeito de uma boa oportunidade;<br>• &nbsp; Você adquire informações úteis;<br>• &nbsp; Você não é preso, enfeitiçado ou enganado."},
         {"classe":"basico","tipo":"Especial","id":16,"nome":"Abastecer","rolagem":"+CAR","descricao":"Quando for comprar alguma coisa com ouro, caso seja algo facilmente disponível no local onde você se encontra, compre a preço de mercado. Se for algo especial, além do que está normalmente disponível, ou não mundano, role+CAR. Com <span class='badge'>10+</span>, você encontra o que está procurando a um preço justo. Com <span class='badge'>7-9</span>, você precisa pagar mais que o necessário, ou se contentar com algo que não é exatamente o que está procurando, mas quase. O MJ lhe dirá quais são suas opções."},
         {"classe":"basico","tipo":"Especial","id":17,"nome":"Recuperar-se","descricao":"Quando não fizer nada além de descansar confortavelmente em segurança, após um dia de descanso, recupere todos os seus PV. Após 3 dias de descanso, remova uma debilidade à sua escolha. Se estiver sob os cuidados de um curandeiro (mágico ou não), então cure uma debilidade a cada dois dias de descanso."},
-        
         {"classe":"basico","tipo":"Especial","id":18,"nome":"Recrutar","rolagem":"+","descricao":"Quando espalhar por aí que está procurando um ajudante para contratar, role:<br> +1 se disser que o pagamento é generoso;<br> +1 se disser exatamente o que pretende fazer;<br>+1 se disser que ficarão com uma parte do que for encontrado;<br>+1 se sua reputação for boa por essas bandas.<br><span class='badge'>10+</span>Você consegue vários interessados habilidosos, escolhe quem vai contratar, e não recebe qualquer penalidade se não quiser levá-los consigo.<span class='badge'>7-9</span>Você terá que se contentar com alguém perto do que queria, ou mandá-los embora.<span class='badge'>6-</span> Alguém influente, porém bastante incapaz, dirá que quer acompanhá-lo (um jovem corajoso, alguém com um parafuso solto, ou um inimigo secreto, por exemplo). Leve-o e aguente as consequências ou mande-o embora. Caso mande algum interessado embora, receba -1 adiante para recrutar."},
-
         {"classe":"basico","tipo":"Especial","id":19,"nome":"Mandados pendentes","rolagem":"+CAR","descricao":"Quando retornar a um local civilizado no qual tenha causado problemas anteriormente, role+CAR. Com <span class='badge'>10+</span>, todos já ouviram falar de seus atos e você é facilmente reconhecido. Com <span class='badge'>7-9</span>, o mesmo acontece, porém o MJ escolhe uma complicação:<br>• &nbsp; O xerife local tem um mandado para sua prisão;<br>• &nbsp; Alguém colocou um preço em sua cabeça;<br>•    Alguém importante para você está em uma situação difícil como resultado de suas ações."},
         {"classe":"basico","tipo":"Especial","id":20,"nome":"Preparar","descricao":"Quando gastar seu tempo estudando, meditando ou praticando intensamente, você recebe preparo. Caso se prepare por uma semana ou duas, receba 1 de preparo. Caso se prepare por 1 mês ou mais, receba 3. Quando toda essa preparação valer a pena, gaste 1 de preparo para receber +1 em um rolamento qualquer. Você somente pode gastar 1 de preparo por rolagem."},
 
-        {"classe":"Bárbaro","tipo":"Racial","id":21,"nome":"Forasteiro","descricao":"Você pode ser um elfo, anão, halfling ou humano, mas seu povo não é dessas redondezas. No início de cada sessão, o MJ lhe perguntará algo a respeito de sua terra natal, por que você foi embora ou o que deixou para trás. Se responder, marque XP."},
-        {"classe":"Bárbaro","tipo":"Inicial","id":22, "exclusivo":true, "nome":"Armadura de placas e portando aço","descricao":"Você ignora o rótulo desengonçado das armaduras que vestir."},
-        {"classe":"Bárbaro","tipo":"Inicial","id":23, "exclusivo":true, "nome":"Desimpedido e ileso","descricao":"Enquanto estiver abaixo de sua Carga, e não estiver usando armadura nem escudo, receba +1 de armadura."},
-        {"classe":"Bárbaro","tipo":"Inicial","id":24,"nome":"Apetite hercúleo","descricao":"Outras pessoas podem se contentar apenas com o gosto do vinho, o domínio sobre um servo ou ambos, mas você quer mais. Escolha dois apetites. Enquanto estiver perseguindo um de seus apetites, se realizar algum movimento, no lugar de rolar 2d6 você rola 1d6+1d8. Se o d6 apresentar o maior resultado do par, o MJ também irá introduzir uma complicação ou perigo que surge a partir de sua busca implacável.<br>• &nbsp; Pura destruição<br>• &nbsp; Poder sobre outras pessoas<br>• &nbsp; Prazeres mortais<br>• &nbsp; Conquista<br>• &nbsp; Riquezas e propriedades<br>• &nbsp; Fama e glória"},
-        {"classe":"Bárbaro","tipo":"Inicial","id":25,"nome":"Controle da situação","descricao":"Você recebe +1 constante para seu último suspiro. Quando realizar o último suspiro, com <span class='badge'>7-9</span> você pode fazer uma oferta para a Morte em troca de sua vida. Se a Morte aceitar, você viverá de novo. Caso contrário, você morre."},
-        {"classe":"Bárbaro","tipo":"Inicial","id":26,"nome":"Musculoso","descricao":"Quando portar uma arma, ela recebe os rótulos poderoso e grotesco."},
-        {"classe":"Bárbaro","tipo":"Inicial","id":27,"nome":"O que você está esperando?","descricao":"Quando gritar um desafio para seus inimigos, role+CON. Com <span class='badge'>10+</span> eles passam a lhe tratar como a ameaça mais óbvia a ser enfrentada, ignorando os seus companheiros, e você recebe +2 de dano constante contra eles. Com <span class='badge'>7-9</span> apenas alguns (os mais fracos ou tolos dentre eles) caem em suas provocações."},
+        {"classe":"Bárbaro","tipo":"Racial",    "id":21,"nome":"Forasteiro","descricao":"Você pode ser um elfo, anão, halfling ou humano, mas seu povo não é dessas redondezas. No início de cada sessão, o MJ lhe perguntará algo a respeito de sua terra natal, por que você foi embora ou o que deixou para trás. Se responder, marque XP."},
+        {"classe":"Bárbaro","tipo":"Inicial",   "id":22, "exclusivo":true, "nome":"Armadura de placas e portando aço","descricao":"Você ignora o rótulo desengonçado das armaduras que vestir."},
+        {"classe":"Bárbaro","tipo":"Inicial",   "id":23, "exclusivo":true, "nome":"Desimpedido e ileso","descricao":"Enquanto estiver abaixo de sua Carga, e não estiver usando armadura nem escudo, receba +1 de armadura."},
+        {"classe":"Bárbaro","tipo":"Inicial",   "id":24,"nome":"Apetite hercúleo","descricao":"Outras pessoas podem se contentar apenas com o gosto do vinho, o domínio sobre um servo ou ambos, mas você quer mais. Escolha dois apetites. Enquanto estiver perseguindo um de seus apetites, se realizar algum movimento, no lugar de rolar 2d6 você rola 1d6+1d8. Se o d6 apresentar o maior resultado do par, o MJ também irá introduzir uma complicação ou perigo que surge a partir de sua busca implacável.<br>• &nbsp; Pura destruição<br>• &nbsp; Poder sobre outras pessoas<br>• &nbsp; Prazeres mortais<br>• &nbsp; Conquista<br>• &nbsp; Riquezas e propriedades<br>• &nbsp; Fama e glória"},
+        {"classe":"Bárbaro","tipo":"Inicial",   "id":25,"nome":"Controle da situação","descricao":"Você recebe +1 constante para seu último suspiro. Quando realizar o último suspiro, com <span class='badge'>7-9</span> você pode fazer uma oferta para a Morte em troca de sua vida. Se a Morte aceitar, você viverá de novo. Caso contrário, você morre."},
+        {"classe":"Bárbaro","tipo":"Inicial",   "id":26,"nome":"Musculoso","descricao":"Quando portar uma arma, ela recebe os rótulos poderoso e grotesco."},
+        {"classe":"Bárbaro","tipo":"Inicial",   "id":27,"nome":"O que você está esperando?","descricao":"Quando gritar um desafio para seus inimigos, role+CON. Com <span class='badge'>10+</span> eles passam a lhe tratar como a ameaça mais óbvia a ser enfrentada, ignorando os seus companheiros, e você recebe +2 de dano constante contra eles. Com <span class='badge'>7-9</span> apenas alguns (os mais fracos ou tolos dentre eles) caem em suas provocações."},
         {"classe":"Bárbaro","tipo":"Avançado 2-5","id":28,"nome":"Continuo faminto","descricao":"Escolha um apetite adicional."},
         {"classe":"Bárbaro","tipo":"Avançado 2-5","id":29,"nome":"Apetite por destruição","descricao":"Pegue um movimento da lista do guerreiro, bardo ou ladrão. Você não pode pegar os movimentos de multiclasse dessas classes."},
         {"classe":"Bárbaro","tipo":"Avançado 2-5","id":30,"nome":"Meu amor por você é como um caminhão","descricao":"Quando realizar um feito de força, nomeie alguém presente que tenha ficado impressionado por ele, e receba +1 adiante para negociar com essa pessoa."},
@@ -2146,7 +2109,6 @@
         {"classe":"Mago","tipo":"Avançado 6-10","id":276,"nome":"Ampliação Mágica","descricao":"Quando causar dano em uma criatura, você pode aplicar a energia de um feitiço diretamente contra ela. Encerre um de seus feitiços contínuos e adicione seu nível ao dano causado."},
         {"classe":"Mago","tipo":"Avançado 6-10","id":277,"nome":"Autossuficiente","descricao":"Quando tiver tempo, materiais arcanos, e um lugar seguro, você pode criar seu próprio local de poder. Descreva para o MJ que tipo de poder é esse e como irá vinculá-lo ao local. O MJ lhe informará um tipo de criatura que terá interesse em seus trabalhos."}
     ],
-
     "lista_spells": [
         {"id":10000, "classe":["Clérigo","Mago"], "nome": "Luz", "nivel": 0, "school": "Truque", "continuo": false, "descricao": "Um item tocado por você brilha com luz arcana, com a mesma intensidade de uma tocha. Essa luz não emite calor ou som e nem precisa de combustível para queimar, mas funciona como uma tocha comum para todos os outros efeitos. Você possui total controle sobre a cor da luz. O feitiço dura enquanto o item estiver em sua presença." },
         {"id":10001, "classe":["Clérigo"], "nome": "Santificar", "nivel": 0, "school": "Oração", "continuo": false, "descricao": "Qualquer comida ou água que estiver em suas mãos enquanto conjura este feitiço será consagrada por sua divindade. Além de se tornar sagrada ou profana, a substância afetada é purificada de qualquer resíduo mundano." },
@@ -2204,8 +2166,8 @@
         {"id":10054, "classe":["Mago"], "nome": "Caminhar nas sombras", "nivel": 7, "school": "Ilusão", "continuo": false, "descricao": "As sombras afetadas por este feitiço são transformadas em portais que podem ser utilizados por você e por seus aliados. Cite um local, descrevendo-o com uma quantidade de palavras igual ou menor que seu nível. Atravessar o portal irá levar a pessoa àquele local. O portal só pode ser utilizado uma vez por cada aliado." },
         {"id":10055, "classe":["Mago"], "nome": "Contingência", "nivel": 7, "school": "Evocação", "continuo": false, "descricao": "Escolha um feitiço de nível 5 ou menor que você conheça. Descreva uma condição de disparo utilizando uma quantidade de palavras igual ou menor que seu nível. O feitiço escolhido ficará suspenso até que você resolva fazê-lo funcionar, ou quando a condição imposta for cumprida, o que ocorrer primeiro. Não é necessário rolar – os efeitos simplesmente acontecem. Só é possível manter um feitiço em contingência por vez – se conjurar Contingência novamente, ela substitui a conjuração anterior." },
         {"id":10056, "classe":["Mago"], "nome": "Nuvem mortal", "nivel": 7, "school": "Invocação", "continuo": true, "descricao": "Uma nuvem se arrasta até este mundo, vinda de além dos Portões Negros da Morte, preenchendo a área onde o mago se encontra. Sempre que uma criatura na área for ferida, ela sofre, separadamente, 1d6 de dano extra que ignora armadura. Este feitiço persiste enquanto você puder enxergar a área afetada, ou até que o desfaça." },
-        {"id":10057, "classe":["Mago"], "nome": "Antipatia", "nivel": 9, "school": "", "continuo": true, "descricao": "Escolha um alvo e descreva um tipo de criatura ou alinhamento. Criaturas do tipo ou alinhamento especificados não podem entrar na linha de visão do alvo. Caso elas se vejam nessa situação, fugirão imediatamente. O efeito permanece até que você saia da presença do alvo, ou desfaça o feitiço. Enquanto este feitiço permanecer ativo, você recebe -1 para conjurar feitiços." },
-        {"id":10058, "classe":["Mago"], "nome": "Alerta", "nivel": 9, "school": "", "continuo": false, "descricao": "Descreva um evento. O MJ lhe dirá quando ele ocorrer, independentemente de onde você se encontrar ou qual a sua distância até ele. Se quiser, poderá observar o local do evento como se estivesse lá. Você só pode manter um Alerta ativo de cada vez." },
+        {"id":10057, "classe":["Mago"], "nome": "Antipatia", "nivel": 9, "school": "Encantamento", "continuo": true, "descricao": "Escolha um alvo e descreva um tipo de criatura ou alinhamento. Criaturas do tipo ou alinhamento especificados não podem entrar na linha de visão do alvo. Caso elas se vejam nessa situação, fugirão imediatamente. O efeito permanece até que você saia da presença do alvo, ou desfaça o feitiço. Enquanto este feitiço permanecer ativo, você recebe -1 para conjurar feitiços." },
+        {"id":10058, "classe":["Mago"], "nome": "Alerta", "nivel": 9, "school": "Adivinhação", "continuo": false, "descricao": "Descreva um evento. O MJ lhe dirá quando ele ocorrer, independentemente de onde você se encontrar ou qual a sua distância até ele. Se quiser, poderá observar o local do evento como se estivesse lá. Você só pode manter um Alerta ativo de cada vez." },
         {"id":10059, "classe":["Mago"], "nome": "Joia da alma", "nivel": 9, "school": "", "continuo": false, "descricao": "Você aprisiona a alma de uma criatura moribunda em uma gema. A criatura aprisionada permanece ciente de seu aprisionamento, mas ainda assim pode ser manipulada através de magias, negociação e outros efeitos. Todos os movimentos realizados contra a criatura aprisionada recebem +1. A alma pode ser libertada a qualquer momento, mas nunca mais poderá ser recapturada." },
         {"id":10060, "classe":["Mago"], "nome": "Abrigo", "nivel": 9, "school": "Evocação", "continuo": true, "descricao": "Você cria uma estrutura feita inteiramente de magia pura. Ela pode ser tão grande quanto um castelo, ou tão pequena quanto uma cabana, e é totalmente invulnerável a ataques que não sejam mágicos. A estrutura permanece até que você a abandone, ou encerre o feitiço." },
         {"id":10061, "classe":["Mago"], "nome": "Invocação perfeita", "nivel": 9, "school": "Invocação", "continuo": false, "descricao": "Você teleporta uma criatura para sua presença. Diga o nome de uma criatura específica ou uma curta descrição de um tipo de criatura. A criatura nomeada, ou uma criatura do tipo descrito, surge diante de você." }
@@ -2321,4 +2283,5 @@
         {"id":85036,"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> não respeita a natureza, logo, também não tem meu respeito."},
         {"id":85037,"sujeito":"","classe":"Ranger","template":"<input type=text class='spell'> não entende a vida selvagem, mas eu lhe ensinarei."}
     ]
+
 }

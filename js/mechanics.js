@@ -137,6 +137,11 @@ export class Equipment {
         return equipSelectCombo;
     }
 
+
+    static getEquipmentById(id) {
+        return Equipment.getEquipmentList().find(item => item.id === id);
+    }
+
 }
 
 export class Movement {
@@ -298,21 +303,30 @@ export class Movement {
         return dungeonworld.lista_movimentos.filter(movement => movement.classe === "basico").sort((a, b) => a.nome.localeCompare(b.nome));;
     }
 
-    // WIP - Retorna o html do design do Card, segundo imagem na Issue #5
     static renderCard(movement) {
         let icon = "basico";
+        let cardColor = "basic-movement-card";
+
         if (movement.tipo.includes("Especial")) {
             icon = "especial";
+            cardColor = "basic-movement-card";
+        }
+        else if (movement.tipo.includes("Racial") || movement.tipo.includes("Inicial")) {
+            icon = "avançado";
+            cardColor = "class-movement-card";
         }
         else if (movement.tipo.includes("Avançado 2-5")) {
             icon = "avançado";
+            cardColor = "class-movement-card";
         }
         else if (movement.tipo.includes("Avançado 6-10")) {
             icon = "avançado2";
+            cardColor = "class-movement-card";
         }
         // Create the card element
         let card = document.createElement('div');
-        card.classList.add('movement-card');
+        card.classList.add('movement-card', cardColor);
+
         card.id = `movement-card-${movement.id}`;
         card.dataset.search = movement.nome + " " + movement.descricao + " " + movement.tipo;
 
@@ -331,7 +345,7 @@ export class Movement {
         cardIcon.alt = icon;
         cardTitle.appendChild(cardIcon);
     
-        let cardName = document.createElement('h2');
+        let cardName = document.createElement('h3');
         cardName.textContent = movement.nome;
         cardTitle.appendChild(cardName);
 
@@ -384,33 +398,6 @@ export class Movement {
         card.appendChild(cardFooter);
 
         return card;
-
-        // return `<div class="movement-card" id="movement-card-${movement.id}">
-        //             <div class="movement-card-header">
-        //                 <div class="movement-card-title">
-        //                     <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
-        //                     <h2>${movement.nome}</h2>
-        //                 </div>
-        //                 <div class="movement-card-roll">
-        //                     ${movement.rolagem ? `<div class="movement-card-roll-detail"> 
-        //                         <img class="movement-card-roll-detail-icon" src="../assets/icons/dados.png" alt="roll" />
-        //                         <span>${movement.rolagem}</span>
-        //                         </div>` : ''}
-        //                 </div>
-        //             </div>
-
-        //             <section class="movement-card-description">
-        //                 <p>${movement.descricao}</p>
-        //             </section>
-
-        //             <section class="movement-card-result">
-        //             </section>
-
-        //             <div class="movement-card-footer">
-        //                 <strong>MOVIMENTO</strong>
-        //                 <strong>${movement.tipo.toUpperCase()}</strong>
-        //             </div>
-        //         </div>`;
     }
 
     static renderPanel(movement, selectable = false) {
@@ -431,7 +418,6 @@ export class Movement {
             inicial.checked = false;
             inicial.disabled = true;
         }
-
 
         const movementPanel = document.createElement('div');
         movementPanel.classList.add('movement-panel');
@@ -477,7 +463,7 @@ export class Movement {
         movementPanel.appendChild(movementPanelDescription);
 
         const movementDescription = document.createElement('p');
-        movementDescription.textContent = movement.descricao;
+        movementDescription.innerHTML = movement.descricao;
         movementPanelDescription.appendChild(movementDescription);
 
         return movementPanel;
@@ -584,7 +570,6 @@ export class Movement {
 
     }
 
-
     static conditionalMovementList(classe, race){
         let movementList = this.getMovementListByClass(classe);
 
@@ -682,31 +667,63 @@ export class Spell {
 
     }
 
-    static renderSpellCard(spell) {
+    static renderSpellCard(spell, cardColorOverride = null) {
         let classe = spell.classe[0].toLowerCase();
-        return `<div class="spell-card ${classe}-spell-card" id="spell-card-${spell.id}">
-                    <div class="spell-card-header">
-                        <div class="spell-card-title">
-                            <img class="spell-card-icon" src="../assets/icons/spell.png" alt="spell" />
-                            <h2>${spell.nome}</h2>
-                        </div>
-                        <div class="spell-card-school">
-                            <span>${spell.nivel > 0 ? 'Nível ' + spell.nivel +',': ''} ${spell.school} ${spell.continuo ? ', Contínuo' : ''}</span>
-                        </div>
-                    </div>
 
-                    <section class="spell-card-description">
-                        <p>${spell.descricao}</p>
-                    </section>
+        if (cardColorOverride) {
+            document.documentElement.style.setProperty('--cardColor', cardColorOverride);
+        }
 
-                    <section class="spell-card-result">
-                    </section>
+        let spellCard = document.createElement('div');
+        spellCard.classList.add('spell-card', `${classe}-spell-card`);
 
-                    <div class="spell-card-footer">
-                        <strong>FEITIÇO</strong>
-                        <strong>${spell.classe}</strong>
-                    </div>
-                </div>`;
+        if (cardColorOverride) {
+            spellCard.style.setProperty('--cardColor', cardColorOverride);
+        }
+
+        spellCard.id = `spell-card-${spell.id}`;
+        spellCard.dataset.search = spell.nome + " " + spell.descricao + " " + spell.school;
+
+        let spellHeader = document.createElement('div');
+        spellHeader.classList.add('spell-card-header');
+
+        let spellTitle = document.createElement('div');
+        spellTitle.classList.add('spell-card-title');
+        
+        let spellIcon = document.createElement('img');
+        spellIcon.classList.add('spell-card-icon');
+        spellIcon.src = `../assets/icons/spell.png`;
+        spellIcon.alt = classe;
+        spellTitle.appendChild(spellIcon);
+
+        spellTitle.appendChild(document.createElement('h3')).textContent = spell.nome;
+
+        spellHeader.appendChild(spellTitle);
+
+        let spellSchool = document.createElement('div');
+        spellSchool.classList.add('spell-card-school');
+        spellSchool.appendChild(document.createElement('span')).textContent = `${spell.nivel > 0 ? 'Nível ' + spell.nivel +',': ''} ${spell.school ? spell.school : ''} ${spell.continuo ? 'Contínuo' : ''}`;
+        spellHeader.appendChild(spellSchool);
+
+        spellCard.appendChild(spellHeader);
+
+        let spellDescription = document.createElement('section');
+        spellDescription.classList.add('spell-card-description');
+        spellDescription.appendChild(document.createElement('p')).innerHTML = spell.descricao;
+        spellCard.appendChild(spellDescription);
+
+        let spellResult = document.createElement('section');
+        spellResult.classList.add('spell-card-result');
+        // Alguma coisa deveria entrar aqui, mas não está claro o que. Talvez seja necessário adicionar conteúdo dinâmico baseado em rolagens ou efeitos do feitiço.
+        spellCard.appendChild(spellResult);
+
+        let spellFooter = document.createElement('div');
+        spellFooter.classList.add('spell-card-footer');
+        spellFooter.appendChild(document.createElement('strong')).textContent = "FEITIÇO ";
+        spellFooter.appendChild(document.createElement('strong')).textContent = spell.classe;
+        spellCard.appendChild(spellFooter);
+
+        return spellCard;
     }
 
     static renderSpell(spell, format) {
@@ -747,14 +764,14 @@ export class Spell {
             spellCardContainer.id = `spell-card-container-${nivel}`;
             
             spells.forEach(spell => {
-                spellCardContainer.innerHTML += Spell.render(spell, format);
+                spellCardContainer.appendChild(Spell.render(spell, format));
             });
 
             containerA.appendChild(spellCardContainer);
 
             spellGroupContainer.appendChild(containerA);
         }
-        return spellGroupContainer.innerHTML;
+        return spellGroupContainer;
     }
 
 }

@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   height: 37rem;
+  overflow: hidden;
 }
 
 
@@ -36,11 +37,13 @@
     display: none;
   }
  
-  .movement-card {
+  .movement-card .spell-card {
     flex: 0 0 20rem;
     scroll-snap-align: center;
     scroll-snap-stop: always;
   }
+
+
 
   &::scroll-button(*) {
     position: fixed;
