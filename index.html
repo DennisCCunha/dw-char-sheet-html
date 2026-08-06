@@ -1,123 +1,130 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <title>Ficha de Personagem - Dungeon World</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/assets/favicon.png" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/movementCard.css" />
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    <link rel="manifest" href="./manifest.json" />
 
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <script>
-      if ('serviceWorker' in navigator)
-        navigator.serviceWorker.register('./service-worker.js');
-    </script>
-  </head>
-  <body>
-    <nav class="floating-nav" >
-        <div style="display:none;">
-          <button class="nav-item active" data-section="character">
-              <span>Character</span>
-          </button>
+<head>
+  <title>Ficha de Personagem - Dungeon World</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="./css/style.css" />
 
-          <button class="nav-item" data-section="attributes">
-              <span>Attributes</span>
-          </button>
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+  <link rel="manifest" href="./manifest.json" />
 
-          <button class="nav-item" data-section="moves">
-              <span>Moves</span>
-          </button>
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script>
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.register('./service-worker.js');
+  </script>
+</head>
 
-          <button class="nav-item" data-section="equipment">
-              <span>Equipment</span>
-          </button>
+<body>
+  <nav class="floating-nav">
+    <div style="display:none;">
+      <button class="nav-item active" data-section="character">
+        <span>Character</span>
+      </button>
 
-          <button class="nav-item" data-section="spells">
-              <span>Spells</span>
-          </button>
+      <button class="nav-item" data-section="attributes">
+        <span>Attributes</span>
+      </button>
 
-          <button class="nav-item" data-section="notes">
-              <span>Notes</span>
-          </button>
+      <button class="nav-item" data-section="moves">
+        <span>Moves</span>
+      </button>
+
+      <button class="nav-item" data-section="equipment">
+        <span>Equipment</span>
+      </button>
+
+      <button class="nav-item" data-section="spells">
+        <span>Spells</span>
+      </button>
+
+      <button class="nav-item" data-section="notes">
+        <span>Notes</span>
+      </button>
+    </div>
+
+    <div class="save_buttons">
+      <button id="btnGerarCodigo">Salvar ficha</button>
+      <button id="btnRestaurar">Restaurar ficha</button>
+      <button id="btnLimpar">Limpar ficha</button>
+    </div>
+  </nav>
+
+  <!-- 1º Pagina - Raça Classe Atributos XP e Bonds -->
+  <article class="pagina">
+    <div id="1st-Page" class="sheet">
+      <div>
+        <div class="title">
+          <input type="text" id="charName" value="" placeholder="Nome do personagem" />
+
+          <div class="subtitle">
+            <select id="charClass">
+              <option value="">Classe</option>
+              <option value="Bárbaro">Bárbaro</option>
+              <option value="Bardo">Bardo</option>
+              <option value="Clérigo">Clérigo</option>
+              <option value="Druida">Druida</option>
+              <option value="Guerreiro">Guerreiro</option>
+              <option value="Imolador">Imolador</option>
+              <option value="Ladrão">Ladrão</option>
+              <option value="Mago">Mago</option>
+              <option value="Paladino">Paladino</option>
+              <option value="Ranger">Ranger</option>
+            </select>
+            <select id="charRace">
+              <option value="">Raça</option>
+              <option value="Anão">Anão</option>
+              <option value="Elfo">Elfo</option>
+              <option value="Humano">Humano</option>
+              <option value="Halfling">Halfling</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="stats">
+          <div class="card">
+            <label>PV</label>
+            <div class="pv-pair">
+              <input type="text" id="curPV" value="" placeholder="X+CON" />
+              <span>/</span>
+              <input type="text" id="charPV" value="" placeholder="X+Constituição" />
+            </div>
+          </div>
+
+          <div class="card">
+            <label>Defesa</label>
+            <input type="text" id="charDef" value="" placeholder="0" />
+          </div>
+
+          <div class="card">
+            <label>Dano</label>
+            <input type="text" id="charDmg" value="" placeholder="1dX" />
+          </div>
+
+          <div class="card">
+            <label>Carga</label>
+            <input type="text" id="charLoad" value="" placeholder="X+FOR" />
+          </div>
         </div>
 
-        <div class="save_buttons">
-          <button id="btnGerarCodigo">Salvar ficha</button>
-          <button id="btnRestaurar">Restaurar ficha</button>
-          <button id="btnLimpar">Limpar ficha</button>
+        <div id="initialattributes" class="initial-attributes-container">
+          <label class="initial-attributes"><strong>Atributos iniciais: </strong>
+            [<span class="init-val" data-val="16">16(+2)</span>,
+            <span class="init-val" data-val="15">15(+1)</span>,
+            <span class="init-val" data-val="13">13(+1)</span>,
+            <span class="init-val" data-val="12">12(+0)</span>,
+            <span class="init-val" data-val="9">9(+0)</span>,
+            <span class="init-val" data-val="8">8(-1)</span>]</label>
         </div>
-    </nav>
 
-    <article class="pagina">
-      <div id="1st-Page" class="sheet">
-        <div>
-          <div class="title">
-            <input type="text" id="charName" value="" placeholder="Nome do personagem" />
+        <div id="attributesContainer" class="attributes-container">
+        </div>
 
-            <div class="subtitle">
-              <select id="charClass">
-                <option value="">Classe</option>
-                <option value="Bárbaro">Bárbaro</option>
-                <option value="Bardo">Bardo</option>
-                <option value="Clérigo">Clérigo</option>
-                <option value="Druida">Druida</option>
-                <option value="Guerreiro">Guerreiro</option>
-                <option value="Imolador">Imolador</option>
-                <option value="Ladrão">Ladrão</option>
-                <option value="Mago">Mago</option>
-                <option value="Paladino">Paladino</option>
-                <option value="Ranger">Ranger</option>
-              </select>
-              <select id="charRace">
-                <option value="">Raça</option>
-                <option value="Anão">Anão</option>
-                <option value="Elfo">Elfo</option>
-                <option value="Humano">Humano</option>
-                <option value="Halfling">Halfling</option>
-              </select>
-
-            </div>
-          </div>
-          <div class="stats">
-            <div class="card">
-              <label>PV</label>
-              <div class="pv-pair">
-                <input type="text" id="curPV" value="" placeholder="X+CON" />
-                <span>/</span>
-                <input type="text" id="charPV" value="" placeholder="X+Constituição" />
-              </div>
-            </div>
-
-            <div class="card">
-              <label>Defesa</label>
-              <input type="text" id="charDef" value="" placeholder="0" />
-            </div>
-
-            <div class="card">
-              <label>Dano</label>
-              <input type="text" id="charDmg" value="" placeholder="1dX" />
-            </div>
-
-            <div class="card">
-              <label>Carga</label>
-              <input type="text" id="charLoad" value="" placeholder="X+FOR" />
-            </div>
-          </div>
-
-          <div id="initialattributes" class="initial-attributes-container">
-            <label class="initial-attributes"><strong>Atributos iniciais: </strong>
-              [<span class="init-val" data-val="16">16(+2)</span>,
-              <span class="init-val" data-val="15">15(+1)</span>,
-              <span class="init-val" data-val="13">13(+1)</span>,
-              <span class="init-val" data-val="12">12(+0)</span>,
-              <span class="init-val" data-val="9">9(+0)</span>,
-              <span class="init-val" data-val="8">8(-1)</span>]</label>
-          </div>
-
-          <table id="attributesTable">
+        <!-- <table id="attributesTable">
             <tbody>
               <tr>
                 <th>Atributo</th>
@@ -178,187 +185,217 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
 
-          <div id="charXPBonds">
-            <div class="xp-alignment-box">
-              <div class="xp">
+        <div id="charXPBonds">
+          <div class="xp-alignment-box">
+            <div class="xp">
+              <div class="nivel-box">
                 <strong>Nível</strong>
                 <input type="text" id="charLevel" value="1" placeholder="Nível" class="charLevelInput" />
-                <strong>XP</strong>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
               </div>
-              <div class="alignment">
-                <strong>Alinhamento</strong>
-                <select id="charAlignment">
-                  <option value="">Selecione</option>
-                </select>
-              </div>
+              <strong>XP: </strong>
+              <div id="XP1" class="circle"></div>
+              <div id="XP2" class="circle"></div>
+              <div id="XP3" class="circle"></div>
+              <div id="XP4" class="circle"></div>
+              <div id="XP5" class="circle"></div>
+              <div id="XP6" class="circle"></div>
+              <div id="XP7" class="circle"></div>
+              <div id="XP8" class="circle"></div>
+              <div id="XP9" class="circle"></div>
+              <div id="XP10" class="circle"></div>
+              <div id="XP11" class="circle"></div>
+              <div id="XP12" class="circle"></div>
+              <div id="XP13" class="circle"></div>
+              <div id="XP14" class="circle"></div>
+              <div id="XP15" class="circle"></div>
+              <div id="XP16" class="circle"></div>
+              <div id="XP17" class="circle"></div>
+              <div id="XP18" class="circle"></div>
             </div>
-            <div class="bonds">
-              <strong>Vínculos</strong>
-              <select id="bondTemplate">
+            <div class="alignment">
+              <strong>Alinhamento</strong>
+              <select id="charAlignment">
                 <option value="">Selecione</option>
               </select>
-              <div class="bond-inputs-box">
-                <input class="bond_input" type="text" id="charBonds" value="" placeholder="Vínculos do personagem" />
-                <input class="bond_input" type="text" id="bondTarget" value="" placeholder="Alvo do vínculo" />
-                <button id="btnAddBond" class='addConsumable'>&#x2b</button>
-              </div>
-              <div class="bonds_area" id="bondsArea">
-                <!-- Vínculos do personagem serão exibidos aqui -->
-              </div>
             </div>
           </div>
-        </div> <!-- Fim da primeira ficha-->
-      </div>
-    </article>
- 
-    <article class="pagina">
-      <div id="Movements" class="sheet">  
-        <div class="sheet-header">
-          <!-- Controllers de Movimentos -->
-          <div id="movementController" class="movement-controller">
-            <div id="toggleGroupMovement">
-              <span id="toggleLabel" class="toggleLabel">Movimentos Básicos</span>
-              <label class="switch">
-                <input id="toggleMovementType" type="checkbox">
-                <span id="toggleMovementTypeSlider" class="slider"></span>
-              </label>
+          <div class="bonds">
+            <strong>Vínculos</strong>
+            <select id="bondTemplate">
+              <option value="">Selecione</option>
+            </select>
+            <div class="bond-inputs-box">
+              <input class="bond_input_template" type="text" id="charBonds" value=""
+                placeholder="Vínculos do personagem" />
+              <input class="bond_input_target" type="text" id="bondTarget" value="" placeholder="Alvo do vínculo" />
+              <button id="btnAddBond" class='addConsumable'>&#x2b</button>
             </div>
-            <div class="movement-view-toggle">
-              <span id="btnMoveCardView" class="btnMovementTab">card</span>
-              <span id="btnMoveListView" class="btnMovementTab">lista</span>
-            </div>
-            <div id="movementFilter">
-              <input type="text" id="movementSearch" placeholder="Pesquisar movimentos..."/>
-            </div>
-          </div>
-          <!-- Controllers de Magias -->
-          <div id="spellController" class="spells-controller">
-            <div class="spell-view-toggle">
-              <span id="btnSpellCardView" class="btnMovementTab">card</span>
-              <span id="btnSpellListView" class="btnMovementTab">lista</span>
+            <div class="bonds_area" id="bondsArea">
+              <!-- Vínculos do personagem serão exibidos aqui -->
             </div>
           </div>
         </div>
-        <div class="sheet-container">
-          <aside id="movementContainer" class="movement_availiable">
+      </div> <!-- Fim da primeira ficha-->
+    </div>
+  </article>
 
-            <div id="classMoves" class="movement-list">
-              <!-- Movimentos da classe serão exibidos aqui -->
+  <!-- 3º Pagina - Equipamentos e Consumíveis -->
+  <article class="pagina">
+    <div id="3rd-Page" class="equipment-sheet">
+      <div id="equip-container-header" class="equipment-sheet-header">
+        <div class="equipment-controllers">
+          <div class="equipment-view-toggle">
+            <span id="btnEquipCardView" class="btnMovementTab">Adicionar equipamento</span>
+          </div>
+          <div class="equipment-form-container">
+            <div id="equipmentForm" class="equipment-form">
+
             </div>
-          </aside>
-          <aside id="spellContainer" class="spell_availiable">
-            <div id="classSpells" class="">
-              <!-- Magias da classe serão exibidas aqui -->
-            </div>
-          </aside>
+
+          </div>
+        </div>
+        <div class="equipment-consumables-container">
+          <div id="equipmentpanel">
+            <h2>Equipamentos</h2>
+            <button id="addEquipment" class='addConsumable'>&#x2b</button>
+            <div id="equipmentContainer"></div>
+            <div></div>
+          </div>
+          <div id="consumablePanel">
+            <h2>Consumíveis</h2>
+            <button id="addConsumable" class='addConsumable'>&#x2b</button>
+            <div id="consumablesContainer"></div>
+          </div>
         </div>
       </div>
-    </article>
+  </article>
 
-    <article class="pagina">
-      <div id="3rd-Page" class="equipment-sheet">
-      <div id="equipmentpanel">
-        <h2>Equipamentos</h2>
-        <button id="addEquipment" class='addConsumable'>&#x2b</button>
-        <div id="equipmentContainer"></div>
-        <div></div>
+  <!-- 2º Pagina - Movimentos -->
+  <article class="pagina">
+    <div id="Movements" class="sheet">
+      <div class="sheet-header">
+        <!-- Controllers de Movimentos -->
+        <div id="movementController" class="movement-controller">
+          <div id="toggleGroupMovement">
+            <span id="toggleLabel" class="toggleLabel">Movimentos Básicos</span>
+            <label class="switch">
+              <input id="toggleMovementType" type="checkbox">
+              <span id="toggleMovementTypeSlider" class="slider"></span>
+            </label>
+          </div>
+          <div class="movement-view-toggle">
+            <span id="btnMoveCardView" class="btnMovementTab">card</span>
+            <span id="btnMoveListView" class="btnMovementTab">lista</span>
+          </div>
+          <div id="movementFilter">
+            <input type="text" id="movementSearch" placeholder="Pesquisar movimentos..." />
+          </div>
+        </div>
+        <!-- Controllers de Magias -->
+        <div id="spellController" class="spells-controller">
+          <div class="spell-view-toggle">
+            <span id="btnSpellCardView" class="btnMovementTab">card</span>
+            <span id="btnSpellListView" class="btnMovementTab">lista</span>
+          </div>
+        </div>
       </div>
-      <div id="consumablePanel">
-        <h2>Consumíveis</h2>
-        <button id="addConsumable" class='addConsumable'>&#x2b</button>
-        <div id="consumablesContainer"></div>
-      </div>
-      </div>
-    </article>
+      <div class="sheet-container">
+        <aside id="movementContainer" class="movement-available">
 
-    <article class="pagina">
-      <div id="4th-Page" class="sheet">
-        <aside class="charNotes-container">
-          <h2>Historia e Anotações</h2>
-          <div id="charNotes" placeholder="Anotações do personagem" class="charNotes"></div>
+          <div id="classMoves" class="movement-list">
+            <!-- Movimentos da classe serão exibidos aqui -->
+          </div>
+
+          <span>Carrosel</span>
+          
+          <div id="basicMoves" class="markers">
+            
+          </div>
+
         </aside>
-        <aside>
-          <h2>Vinculos Completos</h2>
-          <div id="finishedBondsContainer"></div>
+        <aside id="spellContainer" class="spell-available">
+          <div id="classSpells" class="">
+            <!-- Magias da classe serão exibidas aqui -->
+          </div>
         </aside>
       </div>
-    </article>
+    </div>
+  </article>
 
-    <div id="modalsContainer">
-      <!-- Modal: exibir código gerado -->
-      <div id="codeModal" class="dw-overlay" style="display:none">
-        <div class="dw-modal">
-          <h3>Código da ficha</h3>
-          <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
-          <textarea id="codeModalText" rows="6" readonly></textarea>
-          <div class="dw-modal-actions">
-            <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
-            <button id="btnFecharModal" class="secondary">Fechar</button>
-          </div>
-        </div>
-      </div>
+  <article class="pagina">
+    <div id="4th-Page" class="sheet">
+      <aside class="charNotes-container">
+        <h2>Historia e Anotações</h2>
+        <div id="charNotes" placeholder="Anotações do personagem" class="charNotes"></div>
+      </aside>
+      <aside>
+        <h2>Vinculos Completos</h2>
+        <div id="finishedBondsContainer"></div>
+      </aside>
+    </div>
+  </article>
 
-      <!-- Modal: restaurar ficha por código -->
-      <div id="restoreModal" class="dw-overlay" style="display:none">
-        <div class="dw-modal">
-          <h3>Restaurar ficha</h3>
-          <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
-          <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
-          <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
-          <div class="dw-modal-actions">
-            <button id="btnConfirmarRestaurar">Restaurar</button>
-            <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal: confirmar limpeza da ficha -->
-      <div id="clearModal" class="dw-overlay" style="display:none">
-        <div class="dw-modal">
-          <h3>Limpar ficha</h3>
-          <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
-          <div class="dw-modal-actions">
-            <button id="btnConfirmarLimpeza">Limpar</button>
-            <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
-          </div>
+  <div id="modalsContainer">
+    <!-- Modal: exibir código gerado -->
+    <div id="codeModal" class="dw-overlay" style="display:none">
+      <div class="dw-modal">
+        <h3>Código da ficha</h3>
+        <p>Copie este código e guarde-o. Use-o para restaurar sua ficha quando recarregar a página.</p>
+        <textarea id="codeModalText" rows="6" readonly></textarea>
+        <div class="dw-modal-actions">
+          <button id="btnCopiarCodigo">&#x1F4CB; Copiar</button>
+          <button id="btnFecharModal" class="secondary">Fechar</button>
         </div>
       </div>
     </div>
 
-    <footer class="rodape">
-      <p><a href="https://www.dungeon-world.com/" target="_blank"><strong class="gold_filling">Dungeon World</strong></a> é um jogo de RPG criado por Sage LaTorra e Adam Koebel e pertence à Phinlos LLC.</p>
-      <p>Ficha de personagem para <strong>Dungeon World</strong> criada a partir dos materiais disponíveis publicamente em <a href="https://www.dungeonworldsrd.com/" target="_blank"><strong>Dungeon World SRD</strong></a></p>
-      <p>Desenvolvido por <a href="https://github.com/DennisCCunha" target="_blank"><strong>Bocolis.ninja</strong></a></p>
-    </footer>
+    <!-- Modal: restaurar ficha por código -->
+    <div id="restoreModal" class="dw-overlay" style="display:none">
+      <div class="dw-modal">
+        <h3>Restaurar ficha</h3>
+        <p>Cole o código da ficha abaixo e clique em <strong>Restaurar</strong>.</p>
+        <textarea id="restoreCodeInput" rows="6" placeholder="Cole o código aqui..."></textarea>
+        <p id="restoreError">Código inválido. Verifique e tente novamente.</p>
+        <div class="dw-modal-actions">
+          <button id="btnConfirmarRestaurar">Restaurar</button>
+          <button id="btnCancelarRestaurar" class="secondary">Cancelar</button>
+        </div>
+      </div>
+    </div>
 
-    <script type="module" src="./js/script.js"></script>
-    <script>
-        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-          const favicon = document.querySelector("link[rel='icon']");
-          if (favicon) {
-            favicon.setAttribute("href", "./assets/dev-favicon.png");
-          }
-        }
-    </script>
-  </body>
+    <!-- Modal: confirmar limpeza da ficha -->
+    <div id="clearModal" class="dw-overlay" style="display:none">
+      <div class="dw-modal">
+        <h3>Limpar ficha</h3>
+        <p>Tem certeza que deseja limpar a ficha? Esta ação não pode ser desfeita.</p>
+        <div class="dw-modal-actions">
+          <button id="btnConfirmarLimpeza">Limpar</button>
+          <button id="btnCancelarLimpeza" class="secondary">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="rodape">
+    <p><a href="https://www.dungeon-world.com/" target="_blank"><strong class="gold_filling">Dungeon World</strong></a>
+      é um jogo de RPG criado por Sage LaTorra e Adam Koebel e pertence à Phinlos LLC.</p>
+    <p>Ficha de personagem para <strong>Dungeon World</strong> criada a partir dos materiais disponíveis publicamente em
+      <a href="https://www.dungeonworldsrd.com/" target="_blank"><strong>Dungeon World SRD</strong></a></p>
+    <p>Desenvolvido por <a href="https://github.com/DennisCCunha" target="_blank"><strong>Brocolis.ninja</strong></a>
+    </p>
+  </footer>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+  <script type="module" src="./js/script.js"></script>
+  <script>
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      const favicon = document.querySelector("link[rel='icon']");
+      if (favicon) {
+        favicon.setAttribute("href", "./assets/dev-favicon.png");
+      }
+    }
+  </script>
+</body>
+
 </html>

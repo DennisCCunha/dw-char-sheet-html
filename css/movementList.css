@@ -1,10 +1,11 @@
 :root{
-    --card-border:#b4b4b4;
+    --card-border:rgb(180, 180, 180);
     --card-description:#ececec;
-    --card-description-even:#cccccc;
+    --card-description-even:rgb(204, 204, 204);
     --card-roll-badge:#6d6d6d;
     --card-roll-shadow:#525252;
     --ultra:#00ff00;
+
 }
 
 .movement-list {
@@ -13,43 +14,13 @@
     margin: 0;
 }
 
-.movement-list li {
-    margin-bottom: 6px;
-    font-family: var(--font);
-    font-size: 16px;
-    border-bottom: 1px dotted var(--border-color);
-    padding-bottom: 4px;
-}
-
-.movement-list li input[type="checkbox"]:disabled {
-    color: var(--card-roll-shadow);
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.movement-list li:nth-child(odd) {
-    background-color: var(--card-description);
-}
-
-.movement-list li:nth-child(even) {
-    background-color: var(--card-description-even);
-}
-
-.movement-list li:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-
 /* Movement Panel Styles */
 .movement-panel{
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 600px;
-    overflow-y: auto;
-    padding-bottom: 0.8rem;
+    /* overflow-y: auto; */
+    padding-bottom: 1.563rem;
 }
 
 .movement-panel-header{
@@ -57,7 +28,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
+    
 }
 .movement-panel-title{
     display: flex;
@@ -67,15 +38,15 @@
 }
 
 .movement-panel-title input[type="checkbox"]:disabled:checked {
-    color: var(--ultra) !important;
-    cursor: not-allowed;
-    opacity: 0.6;
+    background-color: var(--green) !important;
+    border-top-color: var(--ultra);
+    border-left-color: var(--ultra);
+    box-shadow: 0.1rem 0.1rem 0.1rem inset var(--ultra);
+    cursor: not-allowed;    
 }
 
 
-.movement-panel-roll{
-    
-}
+
 .movement-panel-info{
     display: flex;
     flex-direction: row;
@@ -88,21 +59,47 @@
     gap: 12px;
 }
 
+.movement-panel-roll{
+    
+}
+
 .movement-panel-description{
-    background: rgba(216, 216, 216, 0.301);
+    background: rgba(204, 204, 204,0.8);
+    font-family: var(--secondary-font);
+    font-size: 1.09rem;
     padding: 0.5rem;
     padding-left: 1rem;
+        
+}
+
+.movement-panel-description .badge{
+    font-weight: 800;
+} 
+
+.movement-panel:has(input[type="checkbox"]:disabled:checked){
+    .movement-panel-description {
+        box-shadow: 0.3125rem 0.3125rem 1.2rem inset rgb(82, 82, 82,0.55);
+    }
+    
 }
 
 .movement-select{
     appearance: none;
     width: 15px;
     height: 15px;
-    border: 2px solid black;
+    border: 2px solid var(--blue);
     background: white;
     cursor: pointer;
     position: relative;
 }
 .movement-select:checked{
-    background: black;  
+    background: black;
+    box-shadow: 0.2rem 0.2rem 0.25rem inset var(--blue);
+    border-bottom-color: black;
+    border-right-color: black;
+}
+
+.movement-panel:has(input[type="checkbox"]:checked)
+    .movement-panel-description {
+        box-shadow: 0.3125rem 0.3125rem 1.2rem inset rgb(36, 66, 86,0.7);
 }

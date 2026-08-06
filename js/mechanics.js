@@ -72,29 +72,41 @@ export class Consumable {
 
 export class Equipment {
 
-    static create(id = 0, nome = "", descricao = "", usos = 0, peso = 0, tags = [], notes = "") {
+    static getEquipmentList() {
+        return dungeonworld.lista_itens;
+    }
+
+    static getTagsList() {
+        return dungeonworld.lista_tags;
+    }
+
+    static create(id = 0, nome = "", descricao = "", usos = 0, peso = 0, moedas = 0, tags = [], notes = "") {
         return {
             nome: nome,
             descricao: descricao,
             peso: peso,
+            moedas: moedas,
             tags: tags
         };
     }
-    static render(equipment = {nome: "", descricao: "", peso: 0, tags: [], notes: ""}) {
-        let eqp = `<div class='list-item equipment-item'>"
-            "<input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />"
-            "<input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />"
-            "<input class='spell-name' type='text' placeholder='Descrição' style='flex:3' />"
-            "<input class='spell-name' type='text' placeholder='Notas' style='flex:3' />"
-        "<select multiple></select>`;
-        for (let i = 0; i < 5; i++) {
-            eqp += "<option value='" + i + "'>Tag " + (i + 1) + "</option>";
-        }
 
-        eqp += "<button class='addItem'>&#215</button>" +
-        "</div>";
+    static render(equipment = {nome: "", descricao: "", peso: 0, moedas: 0, tags: [], notes: ""}) {
+        let eqp = `<div class='list-item equipment-item'>
+            <input class='spell-name' type='text' placeholder='Nome do equipamento' style='flex:2' />
+            <input class='spell-name' type='number' placeholder='Peso' min='0' style='width:60px' />
+            <input class='spell-name' type='text' placeholder='Descrição' style='flex:3' />
+            <div class="multiselect">
+                <div id="selected-tags" class="tags"></div>
+                <input id="search" type="text" placeholder="Search..."/>
+                <div id="results" class="results"></div>
+            </div>
+                <input class='spell-name' type='text' placeholder='Notas' style='flex:3' />
+            </div>`;
         return eqp;
     }
+
+    
+
 }
 
 export class Movement {
@@ -269,7 +281,7 @@ export class Movement {
             icon = "avançado2";
         }
 
-        return `<div class="movement-card">
+        return `<div class="movement-card movement-${movement.tipo}">
                     <div class="movement-card-header">
                         <div class="movement-card-title">
                             <img class="movement-card-icon" src="../assets/icons/${icon}.png" alt="${icon}" />
@@ -290,7 +302,7 @@ export class Movement {
                     <section class="movement-card-result">
                     </section>
 
-                    <div class="movement-card-footer">
+                    <div class="movement-card-footer ">
                         <strong>MOVIMENTO</strong>
                         <strong>${movement.tipo.toUpperCase()}</strong>
                     </div>
@@ -345,9 +357,7 @@ export class Movement {
         return Movement.render(movement, format, true);
     }
 
-
     static renderFormattedCard(movement) {
-        console.log(movement);
 
         let criteirios = movement.parsedMovement.criteriosRolagem.map(criterio => `<span>${criterio.criterio}</span>`).join('');
   
@@ -388,6 +398,45 @@ export class Movement {
                         <strong>${movement.tipo.toUpperCase()}</strong>
                     </div>
                 </div>`;
+    }
+
+
+    static movementRooster (character) {
+        let roostersizer = character.movimentos.length;
+        if(character.classe.value){
+            getMovementListByClass(character.classe.value).forEach(movement => {
+                if(!character.movimentos.some(m => m.id === movement.id)){
+                     if(movement.tipo.includes("Inicial")){
+                        if(!movement.exclusivo){
+                            character.movimentos.push(movement);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // WIP - Seleciona um movimento de outra classe,
+    // TargetClass: classe de onde o movimento será selecionado Se vazio listará todos os movimentos de todas as classes.
+    static selectFromOtherClass(targetClass = "", character) {
+    
+    }
+
+    // WIP - Seleciona um movimento exclusivo, removendo outros movimentos exclusivos do personagem
+    static selectExclusiveMovement(movement, character) {
+        if (movement.exclusivo) {
+            character.movimentos = character.movimentos.filter(m => m.id !== movement.id);
+            character.movimentos.push(movement);
+        }
+    }
+    
+    static selectReplacementMovement(movement, character) {
+
+    }
+
+    // WIP - Seleciona um feitiço de outra classe,
+    static selectSpellFromOtherClass(targetClass = "", character) {
+
     }
 
 }
@@ -453,6 +502,7 @@ export class Spell {
     static renderSpellList(spells, format) {
         spellListContainer.innerHTML = '';
         spells.forEach(spell => {
+            
             const spellElement = document.createElement('div');
             spellElement.classList.add(`spell ${format}`);
             spellElement.innerHTML = Spell.render(spell, format);
@@ -462,10 +512,11 @@ export class Spell {
     }
 
     static renderSpellCard(spell) {
-        return `<div class="spell-card">
+        let classe = spell.classe[0].toLowerCase();
+        return `<div class="spell-card ${classe}-spell-card" id="spell-card-${spell.id}">
                     <div class="spell-card-header">
                         <div class="spell-card-title">
-                            <img class="movement-card-icon" src="../assets/icons/spell.png" alt="spell" />
+                            <img class="spell-card-icon" src="../assets/icons/spell.png" alt="spell" />
                             <h2>${spell.nome}</h2>
                         </div>
                         <div class="spell-card-school">
@@ -495,9 +546,7 @@ export class Spell {
         </div>`;
     }
 
-    static renderSpellGroupbyLevel(lista_spells, nivel, format="card") {
-        
-
+    static renderSpellGroupbyLevel(lista_spells,format="card", nivel) {
         const groupedSpells = [];
         for (const spell of lista_spells) {
             if (!groupedSpells[spell.nivel]) {
@@ -506,14 +555,14 @@ export class Spell {
             groupedSpells[spell.nivel].push(spell);
         }
 
-        const spellGroupContainer = document.createElement('div');
-
+        const spellGroupContainer = document.createElement('div');   
+        
         for (const [nivel, spells] of Object.entries(groupedSpells)) {
-
+            
             //Crei o Spell-Group para conter as magias de Cada Nivel
             const containerA = document.createElement('div');
-            containerA.classList.add('spell-card-group');
-            containerA.id = `spell-group-${nivel}`;
+            containerA.classList.add('spell-level-group');
+            containerA.id = `spell-group-${nivel}`;            
             
             //Cabeçalhos das Magias
             const header = document.createElement('h3');
@@ -522,17 +571,30 @@ export class Spell {
             containerA.appendChild(header);
             
             //Container para dos Cards de Magias
-            const spellCardContainer = document.createElement('div');
-            spellCardContainer.classList.add('spell-card-container');
-            spellCardContainer.id = `spell-card-container-${nivel}`;
+            const spellContainer = document.createElement('div');
+            if (format == "card"){
+                
+                spellContainer.classList.add('spell-card-container');
+                spellContainer.id = `spell-card-container-${nivel}`;
+            }
+            else{
+                spellContainer.classList.add('spell-list-container');
+                spellContainer.id = `spell-list-container-${nivel}`;
+            }
+
+            
+            
             
             spells.forEach(spell => {
-                spellCardContainer.innerHTML += Spell.render(spell, format);
+                               
+                spellContainer.innerHTML += Spell.render(spell, format);
+                
             });
 
-            containerA.appendChild(spellCardContainer);
+            containerA.appendChild(spellContainer);
 
             spellGroupContainer.appendChild(containerA);
+            
         }
         return spellGroupContainer.innerHTML;
     }

@@ -4,6 +4,8 @@
     --card-description-even:#cccccc;
     --card-roll-badge:#6d6d6d;
     --card-roll-shadow:#525252;
+    --wizard:#A6808C;
+    --cleric:#B7D5D4;
 }
 
 .spell-cardbox{
@@ -38,10 +40,11 @@
 }
 
 .spell-card{
+    --cardColor: var(--card-border);
     width:20rem;
     min-height: 36rem;
     height:fit-content;
-    background: var(--card-border);
+    background: var(--cardColor);
     border-radius:14px;
     overflow:hidden;
     border:1px solid #4e4d4d;
@@ -50,10 +53,19 @@
     justify-content: space-between;
     align-items:stretch;
     box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
+    align-self: flex-start;
+}
+
+.mago-spell-card{
+    --cardColor: var(--wizard);
+}
+
+.clérigo-spell-card{
+    --cardColor: var(--cleric);
 }
 
 .spell-card-header{
-    background: var(--card-border);
+    background: inherit;
     padding: 10px 5px 5px 10px;
     display:flex;
     flex-direction:column;
@@ -102,18 +114,21 @@
 .spell-card-school span{
     font-size:0.8rem;
     text-align:center;
-    color:var(--card-description);
+    color:var(--yellow);
 }
 
 .spell-card-description{
     /* padding:15px; */
     margin:8px;
+
     font-size:0.8rem;
     text-align:justify;
     background:var(--card-description);
     flex-basis: 320px;
     flex-grow: 1;
     border-radius: 10px 33px 10px 10px;
+
+
 }
 
 .spell-card-description p{
@@ -124,7 +139,6 @@
     margin: 10px;
     text-align: justify;
 }
-
 
 .spell-card-result{
     display:flex;
@@ -165,13 +179,19 @@
     font-weight:bold;
 }
 
-.spell-card-footer{
-    background:var(--card-border);
-    color:white;
+.spell-card-footer{    
     padding:5px 15px 10px 15px;
     text-transform:uppercase;
     font-size:0.6rem;
     /* align-self:flex-end; */
+
+    background: linear-gradient(45deg, var(--danger), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    z-index: 1;
+    color: transparent;
+    /* Para alguns navegadores */
+    -webkit-text-fill-color: transparent;
 }
 
 .spell-card-description .badge {
