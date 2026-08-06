@@ -1,0 +1,70 @@
+.equipment-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 0.75rem;
+}
+
+
+.custom-equip-container{
+    display: flex;
+    flex: 1 1 100%;
+    gap: 1rem;
+    flex-direction: row;
+    flex-grow: 1; 
+}
+
+.custom-form{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.custom-action{
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.custom-equip{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 1 1 100%;
+    gap: 0.5rem;
+}
+
+.custom-equip label{
+    font-size: 0.675rem;
+    font-weight: bold;
+    text-align: right;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.form-group label{
+    font-size: 0.675rem;
+    font-weight: bold;
+    text-align: right;
+}
+
+.custom-equip-field{
+    flex: 1 1 auto;
+    font-size: 0.75rem;
+    padding: 0.25rem;
+    border-bottom: 1px solid #ccc;
+}
+

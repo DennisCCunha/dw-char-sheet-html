@@ -1,16 +1,20 @@
-:root {
-    --card-border: #696969;
-    --card-description: #ececec;
-    --card-description-even: #cccccc;
-    --card-roll-badge: #6d6d6d;
-    --card-roll-shadow: #525252;
-    --laranja: #F08700;
-    --azul1: #2708A0;
-    --azul2: #4316F3;
-    --azul3: #28AFB0;
-    --rosa: #F00699;
+:root{
+    --card-border:#696969;
+    --card-description:#ececec;
+    --card-description-even:#cccccc;
+    --card-roll-badge:#6d6d6d;
+    --card-roll-shadow:#525252;
 
+    --movement-card-width:20rem;
+    --movement-card-min-height:36rem;
+
+    --basic: var(--danger);
+    --class: var(--gold);
 }
+
+
+
+
 
 .movement-cardbox{
     display: flex;
@@ -21,168 +25,180 @@
     overflow-y: auto;
 }
 
-.movement-card {
-    width: 20rem;
-    height: fit-content;
-    min-height: 36rem;
-    background: var(--gold);
+.movement-card{
+    --cardColor: var(--card-border);
+    width: var(--movement-card-width);
+    min-height: var(--movement-card-min-height);
+    background:linear-gradient( to bottom, 
+    color-mix(in srgb, var(--cardColor), #fff 10%), /* Tinted with 40% White */
+    color-mix(in srgb, var(--cardColor), #000 20%)  /* Shaded with 40% Black */
+    );
+
     border-radius:14px;
     overflow:hidden;
     border:1px solid #4e4d4d;
     display:flex;
     flex-direction:column;
     justify-content: space-between;
-    align-items: stretch;
+    align-items:stretch;
     box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
 }
 
+.class-movement-card{
+    --cardColor: var(--class);
+}
+
+.basic-movement-card{
+    --cardColor: var(--basic);
+}
+
 .movement-card-header{
-    /* background: var(--card-border); */
-    padding: 10px 5px 5px 10px;
-    display: flex;
-    align-items: flex-start;
+    padding: 10px 5px 0px 10px;
+    display:flex;
+    align-items:flex-start;
     justify-content: space-between;
-    height: 67px;
+    height: 4rem;
     flex-grow: 0;
 }
 
-.movement-card-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.movement-card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.movement-card-icon {
-    display: flex;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
+.movement-card-icon{
+    display:flex;
+    width:2.5rem;
+    height:2.5rem;
+    border-radius:50%;
+    align-self:flex-start;
 }
 
-.movement-card-title h2 {
-    flex: 1;
-    flex-wrap: wrap;
-    font-size: 1rem;
-    margin: 0;
+.movement-card-title h3{
+    flex:1;
+    flex-wrap:wrap;
+    /* font-size: 1rem; */
+    margin:0;
     margin-left: 10px;
-    color: white;
-    font-weight: bold;
-    text-align: left;
+    color:white;
+    font-weight:bold;
+    text-align:left;
     max-width: 200px;
 }
 
-.movement-card-roll {
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--card-roll-badge);
+.movement-card-roll{
+    font-size:1rem;
+    font-weight:bold;
+    color:var(--card-roll-badge);
 
 }
 
-.movement-card-roll-detail {
+.movement-card-roll-detail{
+    min-width:65px;
     font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
+    display:flex;
+    flex-direction:column;
     justify-content: space-between;
-    align-items: center;
+    align-items:center;
 }
 
-.movement-card-roll-detail-icon {
-    width: 2.6rem;
-    height: 2.6rem;
-    border-radius: 5%;
+.movement-card-roll-detail-icon{
+    width:2.5rem;
+    height:2.5rem;
+    border-radius:5%;
 }
 
-.movement-card-roll-detail span {
-    font-size: 1rem;
-    text-align: center;
-    background: linear-gradient(45deg, var(--danger), var(--red));
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
-    /* Para alguns navegadores */
-    -webkit-text-fill-color: transparent;
-    z-index: 1;
+.movement-card-roll-detail span{
+    font-size:0.8rem;
+    width:105%;
+    text-align:center;
+    color:var(--card-description);
+    padding:2px;
+    border: 1px solid var(--gold);
+    background:var(--card-roll-shadow);
+    clip-path: polygon(100% 0%, 100% 51%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
 
-.movement-card-description {
-    margin: 0.5em;
-    padding: 0.75rem;
-    font-family: var(--secondary-font);
-    font-size: 0.9rem;
-    text-align: justify;
-    background: var(--card-description);
-    flex: 1 1 auto;
+.movement-card-description{
+    /* padding:15px; */
+    margin:8px 8px 4px 10px;
+    text-align:justify;
+    background:var(--card-description);
+    flex-basis: 320px;
+    flex-grow: 1;
     border-radius: 10px 33px 10px 10px;
-    overflow-wrap: anywhere;
-    word-break: break-word;
 }
 
-.movement-card-description p {
+.movement-card-description p{
+    font-size:0.736rem;
+    font-family: "outfit", sans-serif;
     padding-top: 1px;
-    padding-left: 10px;
-    padding-right: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
     padding-bottom: 1px;
-    margin: 10px;
+    margin-left: 10px;
     text-align: justify;
+    line-height: 1.1rem;
+}
+
+.movement-card-description :has(.badge){
 
 }
 
-
-.movement-card-result {
-    display: flex;
-    align-items: center;
-    background: transparent;
+.movement-card-result{
+    display:flex;
+    align-items:center;
+    background:transparent;
 }
 
-.even {
-    background: var(--card-description-even);
+.even{
+    background:var(--card-description-even);
 }
 
-.movement-card-result-badge {
-    background: var(--card-roll-badge);
-    color: white;
-    font-weight: bold;
-    border-radius: 50px;
-    margin-right: 12px;
+.movement-card-result-badge{
+    background:var(--card-roll-badge);
+    color:white;
+    font-weight:bold;
+    border-radius:50px;
+    margin-right:12px;
 }
 
-.movement-card-result img {
-    width: 27px;
-    height: 27px;
-    border-radius: 12%;
+.movement-card-result img{
+    width:27px;
+    height:27px;
+    border-radius:12%;
     padding-top: 50px;
-    margin-left: -12px;
+    margin-left:-12px;
 }
 
-.movement-card-info {
-    background: black;
-    color: white;
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 12px;
-    font-weight: bold;
+.movement-card-info{
+    background:black;
+    color:white;
+    border-radius:50%;
+    width:42px;
+    height:42px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-right:12px;
+    font-weight:bold;
 }
 
-.movement-card-footer {
-    font-family: var(--tertiary-font);
-    font-weight: 350;
-    background: var(--card-border);
-    color: var(--yellow);
-    padding: 5px 15px 10px 15px;
-    text-transform: uppercase;
-    font-size: 0.7rem;
+.movement-card-footer{
+    background:var(--card-roll-shadow);
+    background: linear-gradient(to top, var(--card-roll-shadow) 80%, transparent);
+    color:white;
+    padding:5px 15px 10px 15px;
+    text-transform:uppercase;
+    font-size:0.6rem;
     /* align-self:flex-end; */
-    
 }
 
 .movement-card-description .badge {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+    position: relative;
     background-color: #292929;
     border-radius: 50%;
     display: flex;

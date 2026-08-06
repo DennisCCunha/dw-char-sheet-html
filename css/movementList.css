@@ -1,7 +1,7 @@
 :root{
-    --card-border:rgb(180, 180, 180);
+    --card-border:#b4b4b4;
     --card-description:#ececec;
-    --card-description-even:rgb(204, 204, 204);
+    --card-description-even:#cccccc;
     --card-roll-badge:#6d6d6d;
     --card-roll-shadow:#525252;
     --ultra:#00ff00;
@@ -12,6 +12,38 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+
+}
+
+.movement-list li {
+    margin-bottom: 6px;
+    font-family: var(--main_font);
+    font-size: 16px;
+    border-bottom: 1px dotted var(--border-color);
+    padding-bottom: 4px;
+}
+
+.movement-list li input[type="checkbox"]:disabled {
+    color: var(--green);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.movement-list li:nth-child(odd) {
+    background-color: var(--card-description);
+}
+
+.movement-list li:nth-child(even) {
+    background-color: var(--card-description-even);
+}
+
+.movement-list li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 /* Movement Panel Styles */
@@ -19,8 +51,10 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    /* overflow-y: auto; */
-    padding-bottom: 1.563rem;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--card-border);
 }
 
 .movement-panel-header{
@@ -28,7 +62,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
+
 }
 .movement-panel-title{
     display: flex;
@@ -37,16 +71,12 @@
     gap: 12px;
 }
 
-.movement-panel-title input[type="checkbox"]:disabled:checked {
-    background-color: var(--green) !important;
-    border-top-color: var(--ultra);
-    border-left-color: var(--ultra);
-    box-shadow: 0.1rem 0.1rem 0.1rem inset var(--ultra);
-    cursor: not-allowed;    
+
+
+
+.movement-panel-roll{
+    
 }
-
-
-
 .movement-panel-info{
     display: flex;
     flex-direction: row;
@@ -59,47 +89,32 @@
     gap: 12px;
 }
 
-.movement-panel-roll{
-    
-}
-
 .movement-panel-description{
-    background: rgba(204, 204, 204,0.8);
-    font-family: var(--secondary-font);
+    font-family: var(--secondary_font);
     font-size: 1.09rem;
+    background: rgba(216, 216, 216, 0.301);
+    
     padding: 0.5rem;
     padding-left: 1rem;
-        
+    
 }
 
 .movement-panel-description .badge{
     font-weight: 800;
 } 
 
-.movement-panel:has(input[type="checkbox"]:disabled:checked){
-    .movement-panel-description {
-        box-shadow: 0.3125rem 0.3125rem 1.2rem inset rgb(82, 82, 82,0.55);
-    }
-    
-}
 
 .movement-select{
     appearance: none;
     width: 15px;
     height: 15px;
-    border: 2px solid var(--blue);
+    border: 2px solid black;
     background: white;
     cursor: pointer;
     position: relative;
 }
 .movement-select:checked{
     background: black;
-    box-shadow: 0.2rem 0.2rem 0.25rem inset var(--blue);
-    border-bottom-color: black;
-    border-right-color: black;
-}
-
-.movement-panel:has(input[type="checkbox"]:checked)
-    .movement-panel-description {
-        box-shadow: 0.3125rem 0.3125rem 1.2rem inset rgb(36, 66, 86,0.7);
+    border-top-color: var(--blue);
+    border-left-color: var(--blue);
 }

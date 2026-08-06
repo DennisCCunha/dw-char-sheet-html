@@ -1,5 +1,5 @@
 export default class Utils {
-    // Canonicalização: remove acentos e normaliza para lower-case
+// Canonicalização: remove acentos e normaliza para lower-case
     static canonical(text) {
         return (text || '')
             .toString()
@@ -10,7 +10,7 @@ export default class Utils {
     }
 
     static capitalize(s) {
-        if (!s) return s;
+    if (!s) return s;
         return s[0].toUpperCase() + s.slice(1).toLowerCase();
     }
 
@@ -29,5 +29,4 @@ export default class Utils {
         }
         return false;
     }
-
 }
