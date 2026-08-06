@@ -311,7 +311,7 @@ class CharacterSheet {
     }
 
     #registerSpellEvents() {
-
+        //TODO: Implement spell events if needed
     }
 
     #registerCarouselEvents() {
@@ -442,6 +442,81 @@ class CharacterSheet {
     }
 
 
+     /** Refreshes both dropdowns so they reflect each other's current selection. */
+    #syncClassRaceSelectors() {
+        console.log('Sincronizando seletores de classe e raça...');
+        this.#updateClassOptions();
+        this.#updateRaceOptions();
+    }
+
+    #findClassByName(name) {
+        if (!name) return null;
+        const normalized = Utils.canonical(name);
+        return this.classDetails.find((cd) => Utils.canonical(cd.nome) === normalized) ?? null;
+    }
+
+    #findAllowedClasses(race) {
+        if (!race) return null;
+        const normalized = Utils.canonical(race);
+        const allowed = this.classDetails
+            .filter((cd) => (cd.racas || []).some((r) => Utils.canonical(r) === normalized))
+            .map((cd) => cd.nome);
+        return allowed.length ? allowed : null;
+    }
+
+    #findAllowedRaces(className) {
+        if (!className) return null;
+        const cls = this.classDetails.find((cd) => Utils.canonical(cd.nome) === Utils.canonical(className));
+        return cls?.racas?.length ? cls.racas : null;
+    }
+
+    /** Disables class options incompatible with the currently selected race. */
+    #updateClassOptions() {
+        const allowed = this.#findAllowedClasses(this.charRace.value);
+        const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
+
+        Array.from(this.charClass.options).forEach((option) => {
+            if (!option.value) return;
+            const disabled = allowedSet !== null && !allowedSet.has(Utils.canonical(option.value));
+            option.disabled = disabled;
+            option.classList.toggle('disabled-by-race', disabled);
+        });
+
+        const selected = this.charClass.value;
+        if (selected && this.charClass.querySelector(`option[value="${selected}"]`)?.disabled) {
+            this.charClass.value = '';
+        }
+        this.applyClassEffects();
+    }
+
+    /** Disables race options incompatible with the currently selected class. */
+    #updateRaceOptions() {
+        const allowed = this.#findAllowedRaces(this.charClass.value);
+        const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
+
+        Array.from(this.charRace.options).forEach((option) => {
+            if (!option.value) return;
+            const disabled = allowedSet !== null && !allowedSet.has(Utils.canonical(option.value));
+            option.disabled = disabled;
+            option.classList.toggle('disabled-by-race', disabled);
+        });
+
+        const selected = this.charRace.value;
+        if (selected && this.charRace.querySelector(`option[value="${selected}"]`)?.disabled) {
+            this.charRace.value = '';
+        }
+    }
+
+    #renderBondsList() {
+        const listEl = document.getElementById('bondsArea');
+        if (!listEl) return;
+        listEl.innerHTML = this.character.bonds.length
+            ? this.character.bonds.map(Mechanics.Bond.render).join('')
+            : '<em>Não há vínculos ativos.</em>';
+    }
+
+
+
     // ─── Modal helpers ────────────────────────────────────────────────────────
 
     #openModal(id) { document.getElementById(id).style.display = 'flex'; }
@@ -519,16 +594,13 @@ class CharacterSheet {
             movementList = this.searchItems(movementList, searchQuery);
         }
 
-        const movementContainer = document.createElement('div');
-        
-        
         if(this.movementListFormat === 'list'){
             const listContainer = document.createElement('div');
             listContainer.classList.add('movement-list');
             for (const move of movementList) {
                 listContainer.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
             }
-            container.appendChild(listContainer);
+            movementContainer.appendChild(listContainer);
         }
         else {
             this.renderMovementCard(movementList, movementContainer, this.movementListFormat);
@@ -662,70 +734,7 @@ class CharacterSheet {
 
     // ─── Class / race selectors ───────────────────────────────────────────────
 
-    /** Refreshes both dropdowns so they reflect each other's current selection. */
-    #syncClassRaceSelectors() {
-        console.log('Sincronizando seletores de classe e raça...');
-        this.#updateClassOptions();
-        this.#updateRaceOptions();
-    }
-
-    #findClassByName(name) {
-        if (!name) return null;
-        const normalized = Utils.canonical(name);
-        return this.classDetails.find((cd) => Utils.canonical(cd.nome) === normalized) ?? null;
-    }
-
-    #findAllowedClasses(race) {
-        if (!race) return null;
-        const normalized = Utils.canonical(race);
-        const allowed = this.classDetails
-            .filter((cd) => (cd.racas || []).some((r) => Utils.canonical(r) === normalized))
-            .map((cd) => cd.nome);
-        return allowed.length ? allowed : null;
-    }
-
-    #findAllowedRaces(className) {
-        if (!className) return null;
-        const cls = this.classDetails.find((cd) => Utils.canonical(cd.nome) === Utils.canonical(className));
-        return cls?.racas?.length ? cls.racas : null;
-    }
-
-    /** Disables class options incompatible with the currently selected race. */
-    #updateClassOptions() {
-        const allowed = this.#findAllowedClasses(this.charRace.value);
-        const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
-
-        Array.from(this.charClass.options).forEach((option) => {
-            if (!option.value) return;
-            const disabled = allowedSet !== null && !allowedSet.has(Utils.canonical(option.value));
-            option.disabled = disabled;
-            option.classList.toggle('disabled-by-race', disabled);
-        });
-
-        const selected = this.charClass.value;
-        if (selected && this.charClass.querySelector(`option[value="${selected}"]`)?.disabled) {
-            this.charClass.value = '';
-        }
-        this.applyClassEffects();
-    }
-
-    /** Disables race options incompatible with the currently selected class. */
-    #updateRaceOptions() {
-        const allowed = this.#findAllowedRaces(this.charClass.value);
-        const allowedSet = allowed ? new Set(allowed.map(Utils.canonical)) : null;
-
-        Array.from(this.charRace.options).forEach((option) => {
-            if (!option.value) return;
-            const disabled = allowedSet !== null && !allowedSet.has(Utils.canonical(option.value));
-            option.disabled = disabled;
-            option.classList.toggle('disabled-by-race', disabled);
-        });
-
-        const selected = this.charRace.value;
-        if (selected && this.charRace.querySelector(`option[value="${selected}"]`)?.disabled) {
-            this.charRace.value = '';
-        }
-    }
+   
 
     updateAlignmentOptions() {
         const charAlignment = document.getElementById('charAlignment');
@@ -856,13 +865,7 @@ class CharacterSheet {
         this.save();
     }
 
-    #renderBondsList() {
-        const listEl = document.getElementById('bondsArea');
-        if (!listEl) return;
-        listEl.innerHTML = this.character.bonds.length
-            ? this.character.bonds.map(Mechanics.Bond.render).join('')
-            : '<em>Não há vínculos ativos.</em>';
-    }
+
 
     updateBondOptions() {
         const bonds = Mechanics.Bond.getBondListByClass(this.charClass.value);
