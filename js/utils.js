@@ -29,4 +29,22 @@ export default class Utils {
         }
         return false;
     }
+
+
+    static combobox(comboId, optionsList, selectedOptions = [], placeholder = "Select options...") {
+
+        return `
+            <div class="combobox-wrapper">
+                <div class="combobox-container" id="${comboId}">
+                    <div class="pill-list" id="${comboId}_pillList">
+                        <input type="text" id="${comboId}_searchInput" placeholder="${placeholder}" autocomplete="off" />
+                    </div>
+                    <span class="arrow" id="${comboId}_dropdownArrow">▼</span>
+                </div>
+                <ul class="dropdown-menu" id="${comboId}_dropdownMenu">
+                    
+                </ul>
+            </div>
+    `;
+    }
 }

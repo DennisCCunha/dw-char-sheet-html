@@ -269,26 +269,27 @@
               <input type="text" id="movementSearch" placeholder="Pesquisar movimentos..."/>
             </div>
           </div>
-          <!-- Controllers de Magias -->
-          <div id="spellController" class="spells-controller">
-            <div class="spell-view-toggle">
-              <span id="btnSpellCardView" class="btnMovementTab">card</span>
-              <span id="btnSpellListView" class="btnMovementTab">lista</span>
-            </div>
-          </div>
+
         </div>
         <div class="sheet-container">
-          <aside id="movementContainer" class="movement-available">
+          <section id="movementContainer" class="movement-available">
+          
+          </section>
 
-          </aside>
-          <aside id="spellContainer" class="spell-available">
+          <section id="spellContainer" class="spell-available" style="display:none">
             <div>
               <input type="text" id="spellSearch" placeholder="Pesquisar magias..."/>
+              <div id="spellController" class="spells-controller">
+                <div class="spell-view-toggle">
+                  <span id="btnSpellCardView" class="btnMovementTab">card</span>
+                  <span id="btnSpellListView" class="btnMovementTab">lista</span>
+                </div>
+              </div>
             </div>
             <div id="classSpells" class="">
               <!-- Magias da classe serão exibidas aqui -->
             </div>
-          </aside>
+          </section>
         </div>
       </div>
     </article>
