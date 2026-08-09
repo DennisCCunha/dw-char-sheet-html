@@ -30,21 +30,40 @@ export default class Utils {
         return false;
     }
 
-
     static combobox(comboId, optionsList, selectedOptions = [], placeholder = "Select options...") {
+        const comboBoxWrapper = document.createElement('div');
+        comboBoxWrapper.classList.add('combobox-wrapper');
 
-        return `
-            <div class="combobox-wrapper">
-                <div class="combobox-container" id="${comboId}">
-                    <div class="pill-list" id="${comboId}_pillList">
-                        <input type="text" id="${comboId}_searchInput" placeholder="${placeholder}" autocomplete="off" />
-                    </div>
-                    <span class="arrow" id="${comboId}_dropdownArrow">▼</span>
-                </div>
-                <ul class="dropdown-menu" id="${comboId}_dropdownMenu">
-                    
-                </ul>
-            </div>
-    `;
+        const comboBox = document.createElement('div');
+        comboBox.classList.add('combobox');
+        comboBox.id = comboId;
+
+        const pillList = document.createElement('div');
+        pillList.classList.add('pill-list');
+        pillList.id = `${comboId}_pillList`;
+
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.id = `${comboId}_searchInput`;
+        searchInput.placeholder = placeholder;
+        searchInput.autocomplete = 'off';
+
+        pillList.appendChild(searchInput);
+        comboBox.appendChild(pillList);
+
+        const dropdownArrow = document.createElement('span');
+        dropdownArrow.classList.add('arrow');
+        dropdownArrow.id = `${comboId}_dropdownArrow`;
+        dropdownArrow.textContent = '▼';
+        comboBox.appendChild(dropdownArrow);
+
+        comboBoxWrapper.appendChild(comboBox);
+
+        const dropdownMenu = document.createElement('ul');
+        dropdownMenu.classList.add('dropdown-menu');
+        dropdownMenu.id = `${comboId}_dropdownMenu`;
+        comboBoxWrapper.appendChild(dropdownMenu);
+
+        return comboBoxWrapper;
     }
 }

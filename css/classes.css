@@ -1,0 +1,64 @@
+.basico{
+    --cardColor: var(--danger);
+    --cardAccentColor: var(--red);
+    --icon: url('../assets/icons/basic.png');
+}
+
+.barbaro{
+    --cardColor: var(--gold);
+    --cardAccentColor: var(--amber);
+    --icon: url('../assets/icons/barbaro.png');
+}
+.bardo{
+    --cardColor: var(--silver);
+    --cardAccentColor: var(--amethyst);
+    --icon: url('../assets/icons/bardo.png');
+}
+
+.clerigo{
+    --cardColor: var(--mithril);
+    --cardAccentColor: var(--sapphire);
+    --icon: url('../assets/icons/clerigo.png');
+}
+
+.druida{
+    --cardColor: var(--gold);
+    --cardAccentColor: var(--emerald);
+    --icon: url('../assets/icons/druida.png');
+}
+
+.guerreiro{
+    --cardColor: var(--opal);
+    --cardAccentColor: var(--steel);
+    --icon: url('../assets/icons/guerreiro.png');
+}
+
+.imolador{
+    --cardColor: var(--copper);
+    --cardAccentColor: var(--ruby);
+    --icon: url('../assets/icons/imolador.png');
+}
+
+.paladino{
+    --cardColor: var(--silver);
+    --cardAccentColor: var(--topaz);
+    --icon: url('../assets/icons/paladino.png');
+}
+.ranger{
+    --cardColor: var(--green);
+    --cardAccentColor: var(--bronze);
+    --icon: url('../assets/icons/ranger.png');
+}
+
+.ladrao{
+    --cardColor: var(--adamantine);
+    --cardAccentColor: var(--amethyst);
+    --icon: url('../assets/icons/ladrao.png');
+}
+
+.mago{
+    --cardColor: var(--purple);
+    --cardAccentColor: var(--amber);
+    --icon: url('../assets/icons/mago.png');
+}
+

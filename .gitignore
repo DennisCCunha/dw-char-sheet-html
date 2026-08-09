@@ -42,3 +42,5 @@ utilities/*.pyc
 
 package.json
 package-lock.json
+
+AGENTS.md

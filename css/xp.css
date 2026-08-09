@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
 }
@@ -16,7 +17,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     margin-top: 12px;
     gap: 1rem;
@@ -25,6 +26,7 @@
 .xp-container strong {
   margin-bottom: 8px;
   font-size: 14px;
+  align-self: center;
 }
 
 .nivel-box {
@@ -52,7 +54,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 0.5rem;
 }
 
@@ -64,6 +66,7 @@
         calc(140 / 17 * (var(--idx) - 1))
         calc(17 + 43 / 17 * (var(--idx) - 1))
     );
+    align-self: center;
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.2s ease;
@@ -72,8 +75,20 @@
 
 .circle.active {
     background: rgb(
-        calc(143 + 37 / 17 * (var(--idx) - 1))
-        calc(140 / 17 * (var(--idx) - 1))
-        calc(17 + 43 / 17 * (var(--idx) - 1))
+        calc(143 + 37 / 17 * (sibling-index() - 1))
+        calc(140 / 17 * (sibling-index() - 1))
+        calc(17 + 43 / 17 * (sibling-index() - 1))
     );
+}
+
+
+@media (max-width: 870px) {
+    .xp-circles-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex: 0 0 calc(4% -0.5rem);
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 }

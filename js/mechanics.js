@@ -303,26 +303,25 @@ export class Movement {
         return dungeonworld.lista_movimentos.filter(movement => movement.classe === "basico").sort((a, b) => a.nome.localeCompare(b.nome));;
     }
 
-    static renderCard(movement) {
+    static renderCard(movement) {   
         let icon = "basico";
-        let cardColor = "basic-movement-card";
+        let cardColor = Utils.canonical(movement.classe);
+        let footerText = (movement.classe === "basico") ? `MOVIMENTO ${movement.tipo.toUpperCase()}` : `Movimento ${movement.tipo.toUpperCase()} do ${movement.classe.toUpperCase()}`;
 
         if (movement.tipo.includes("Especial")) {
             icon = "especial";
-            cardColor = "basic-movement-card";
-        }
-        else if (movement.tipo.includes("Racial") || movement.tipo.includes("Inicial")) {
-            icon = "avançado";
-            cardColor = "class-movement-card";
-        }
-        else if (movement.tipo.includes("Avançado 2-5")) {
-            icon = "avançado";
-            cardColor = "class-movement-card";
         }
         else if (movement.tipo.includes("Avançado 6-10")) {
             icon = "avançado2";
-            cardColor = "class-movement-card";
         }
+        else if (movement.tipo.includes("Racial") || movement.tipo.includes("Inicial")) {
+            icon = "avançado";
+        }
+        else if (movement.tipo.includes("Avançado 2-5")) {
+            icon = "avançado";
+        }
+
+
         // Create the card element
         let card = document.createElement('div');
         card.classList.add('movement-card', cardColor);
@@ -388,11 +387,9 @@ export class Movement {
         // Create the card footer
         let cardFooter = document.createElement('div');
         cardFooter.classList.add('movement-card-footer');
-        let cardFooterType = document.createElement('strong');
-        cardFooterType.textContent = "MOVIMENTO ";
-        cardFooter.appendChild(cardFooterType);
+
         let cardFooterClass = document.createElement('strong');
-        cardFooterClass.textContent = movement.tipo.toUpperCase();
+        cardFooterClass.textContent = footerText;
         cardFooter.appendChild(cardFooterClass);
 
         card.appendChild(cardFooter);

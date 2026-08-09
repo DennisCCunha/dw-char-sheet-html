@@ -47,14 +47,15 @@
 
 .spell-card{
     --cardColor: var(--card-border);
+    --cardAccentColor: var(--card-border);
     width: var(--spell-card-width);
     min-height: var(--spell-card-min-height);
     background:linear-gradient( to bottom, 
-    color-mix(in srgb, var(--cardColor), #fff 20%), /* Tinted with 40% White */
-    color-mix(in srgb, var(--cardColor), var(--amber) 70%), /* Tinted with 40% White */
-    color-mix(in srgb, var(--cardColor), #000 40%)  /* Shaded with 40% Black */
+        color-mix(in srgb, var(--cardColor), #fff 20%), /* Tinted with 40% White */
+        color-mix(in srgb, var(--cardColor), var(--cardAccentColor) 70%), /* Tinted with 40% White */
+        color-mix(in srgb, var(--cardColor), #000 40%)  /* Shaded with 40% Black */
     );
-    border-radius:14px;
+    border-radius:14px; 
     overflow:hidden;
     border:1px solid #4e4d4d;
     display:flex;
