@@ -96,6 +96,7 @@ class CharacterSheet {
         this.#registerMovementEvents();
         this.#registerSpellEvents();
         this.#registerCarouselEvents();
+        this.#updateName();
     }
 
     /** Attribute value inputs update the character model, modifiers, and derived fields. */
@@ -515,6 +516,16 @@ class CharacterSheet {
             : '<em>Não há vínculos ativos.</em>';
     }
 
+    #updateName(){
+        document.getElementById('charName').addEventListener('change', (e) => {
+            if(this.character.nome != ""){
+                document.getElementById('pageTitle').textContent = `${this.character.nome}`;
+            }
+            else{
+                document.getElementById('pageTitle').textContent = `Dungeon World - Ficha de personagem`;
+            }
+        });
+    }
 
 
     // ─── Modal helpers ────────────────────────────────────────────────────────
@@ -609,7 +620,6 @@ class CharacterSheet {
 
 
     renderMovementList(movementList, container, searchQuery = '') {
-
         const listContainer = document.createElement('div');
         listContainer.classList.add('movement-list');
         
@@ -621,7 +631,6 @@ class CharacterSheet {
     }
 
     renderMovementCard(movementList, container, searchQuery = '') {
-        
         const carouselContainer = document.createElement('div');
         carouselContainer.classList.add('carousel-container');
 
@@ -733,9 +742,6 @@ class CharacterSheet {
     }
 
     // ─── Class / race selectors ───────────────────────────────────────────────
-
-   
-
     updateAlignmentOptions() {
         const charAlignment = document.getElementById('charAlignment');
         charAlignment.innerHTML = '<option value="">Selecione</option>';
@@ -788,7 +794,6 @@ class CharacterSheet {
     }
 
     // ─── Movements ───────────────────────────────────────────────────────────
-
     addMovement(movement) {
         if (!movement) return;
         this.character.addMovement(movement);
@@ -797,7 +802,6 @@ class CharacterSheet {
     }
 
     // ─── Inventory ───────────────────────────────────────────────────────────
-
     addItemToCharacter(id) {
         const item = Mechanics.Equipment.getEquipmentById(id);
         if (!item) return;
@@ -856,7 +860,6 @@ class CharacterSheet {
     }
 
     // ─── Bonds ───────────────────────────────────────────────────────────────
-
     addBondToActiveList(id, origin, bondName, bondTarget) {
         if (!bondName || !bondTarget) return;
         let bondId = id || this.character.bonds.length;
@@ -864,8 +867,6 @@ class CharacterSheet {
         this.#renderBondsList();
         this.save();
     }
-
-
 
     updateBondOptions() {
         const bonds = Mechanics.Bond.getBondListByClass(this.charClass.value);
@@ -881,7 +882,6 @@ class CharacterSheet {
     }
 
     // ─── Sheet lifecycle ──────────────────────────────────────────────────────
-
     clearInputs() {
         this.allInputs.forEach((input) => {
             if (input.type === 'checkbox') input.checked = false;
@@ -965,7 +965,6 @@ class CharacterSheet {
 
 
 function devIcon() {
-
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
         const favicon = document.querySelector("link[rel='icon']");
         if (favicon) {
