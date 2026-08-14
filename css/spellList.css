@@ -4,7 +4,6 @@
     --card-description-even:#cccccc;
     --card-roll-badge:#6d6d6d;
     --card-roll-shadow:#525252;
-    --ultra:#00ff00;
 }
 
 .spell-list {
@@ -76,12 +75,14 @@
 .spell-panel-roll{
     
 }
+
 .spell-panel-info{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 12px;
 }
+
 .spell-panel-details{
     display: flex;
     flex-direction: row-reverse;
@@ -103,6 +104,7 @@
     cursor: pointer;
     position: relative;
 }
+
 .spell-select:checked{
     background: black;  
 }

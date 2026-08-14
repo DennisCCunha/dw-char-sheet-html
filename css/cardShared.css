@@ -1,0 +1,181 @@
+:root {
+    --card-border: #696969;
+    --card-description: #ececec;
+    --card-description-even: #cccccc;
+    --card-roll-badge: #6d6d6d;
+    --card-roll-shadow: #525252;
+}
+
+.movement-cardbox,
+.spell-cardbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+.movement-card,
+.spell-card {
+    --cardColor: var(--card-border);
+    --cardAccentColor: var(--card-border);
+    width: var(--card-width, 20rem);
+    min-height: var(--card-min-height, 36rem);
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--cardColor), #fff 20%),
+        color-mix(in srgb, var(--cardColor), var(--cardAccentColor) 70%),
+        color-mix(in srgb, var(--cardColor), #000 40%)
+    );
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #4e4d4d;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
+}
+
+.movement-card-header,
+.spell-card-header {
+    padding: 10px 5px 0 10px;
+    height: 4rem;
+    flex-grow: 0;
+}
+
+.movement-card-title,
+.spell-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.movement-card-icon,
+.spell-card-icon {
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    align-self: flex-start;
+}
+
+.movement-card-title h3,
+.spell-card-title h3 {
+    flex: 1;
+    flex-wrap: wrap;
+    font-size: var(--card-title-size, 1rem);
+    margin: 0;
+    margin-left: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    max-width: 200px;
+}
+
+.movement-card-description,
+.spell-card-description {
+    margin: 8px 8px 4px 10px;
+    text-align: justify;
+    background: var(--card-description);
+    flex-basis: 320px;
+    flex-grow: 1;
+    border-radius: 10px 33px 10px 10px;
+}
+
+.movement-card-description p,
+.spell-card-description p {
+    display: block;
+    font-size: 0.8rem;
+    font-family: "outfit", sans-serif;
+    padding-top: 1px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 1px;
+    margin: 10px;
+    text-align: justify;
+    line-height: 1.15rem;
+}
+
+.movement-card-result,
+.spell-card-result {
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
+
+.even {
+    background: var(--card-description-even);
+}
+
+.movement-card-result-badge,
+.spell-card-result-badge {
+    background: var(--card-roll-badge);
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    margin-right: 12px;
+}
+
+.movement-card-result img,
+.spell-card-result img {
+    width: 27px;
+    height: 27px;
+    border-radius: 12%;
+    padding-top: 50px;
+    margin-left: -12px;
+}
+
+.movement-card-info,
+.spell-card-info {
+    background: black;
+    color: white;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+.movement-card-footer,
+.spell-card-footer {
+    background: var(--card-roll-shadow);
+    color: white;
+    padding: 5px 15px 10px 15px;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+}
+
+.movement-card-description .badge,
+.spell-card-description .badge {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #292929;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 100;
+    box-shadow: 0 0 0 3px var(--card-description);
+    margin-left: -0.8rem;
+}
+
+.badge-inside {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #292929;
+    border-radius: 50%;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 100;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.5rem;
+}

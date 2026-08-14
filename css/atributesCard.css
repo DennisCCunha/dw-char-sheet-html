@@ -24,6 +24,9 @@
     font-weight: bold;
     text-align: center;
 }
+.atrib-card-header h6{
+    margin-left: 0.2rem;
+}
 
 .atrib-card-value input{
     width: 100%;
@@ -56,6 +59,38 @@
     text-align: center;
     vertical-align: middle;
     color: var(--danger, #f00);
+}
+
+.lock-toggle input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+    display: none;
+}
+.lock-icon{
+    width: 13px;
+    height: 13px;
+    float: right;
+    cursor: pointer;
+    font-size: 12px;
+    content: "🔒";
+    transition: transform 0.2s ease;
+    
+}
+.lock-icon::before {
+    content: "🔒";
+}
+
+
+/* The magic: when clicked/checked, change the icon image */
+.lock-toggle input:checked + .lock-icon {
+  content: "🔓";
+  /* background-image: url('/assets/icons/lockoff.webp'); */
+  transform: scale(1.1);
+  /* background-color: var(--danger); */
+}
+.lock-toggle input:checked + .lock-icon::before {
+  content: "🔓";
 }
 
 @media (max-width: 870px) {

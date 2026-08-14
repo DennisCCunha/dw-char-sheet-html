@@ -403,7 +403,6 @@ class CharacterSheet {
         const cardBtn = document.getElementById(cardBtnId);
         const listBtn = document.getElementById(listBtnId);
         cardBtn.classList.add('selected'); // card is the default
-
         cardBtn.addEventListener('click', () => {
             cardBtn.classList.add('selected');
             listBtn.classList.remove('selected');
@@ -618,7 +617,6 @@ class CharacterSheet {
         }
     }
 
-
     renderMovementList(movementList, container, searchQuery = '') {
         const listContainer = document.createElement('div');
         listContainer.classList.add('movement-list');
@@ -692,8 +690,12 @@ class CharacterSheet {
                 lista_spells = this.searchItems(lista_spells, searchQuery);
             }
 
-            box.appendChild(Mechanics.Spell.renderSpellGroupbyLevel(lista_spells));
-
+            if (this.spellListFormat === 'list') {
+                this.renderSpellList(lista_spells, box, searchQuery);
+            }
+            else {
+                box.appendChild(Mechanics.Spell.renderSpellGroupbyLevel(lista_spells));
+            }
             container.appendChild(box);
         }
         else {
@@ -918,7 +920,22 @@ class CharacterSheet {
             header.className = 'atrib-card-header';
             const h6 = document.createElement('span');
             h6.textContent = atrib.label;
+
+            const modbound = document.createElement('label');
+            modbound.classList.add('lock-toggle');
+
+            const modboundInput = document.createElement('input');
+            modboundInput.type = 'checkbox';
+            modboundInput.id = `lock-${atrib.key}`;
+
+            const lock = document.createElement('div');
+            lock.className = 'lock-icon';
+            modbound.appendChild(modboundInput);
+            modbound.appendChild(lock);
+            header.appendChild(modbound);
+            
             header.appendChild(h6);
+            header.appendChild(modbound);
             card.appendChild(header);
 
             const valueDiv = document.createElement('div');

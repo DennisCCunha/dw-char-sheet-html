@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 
 @import url('./xp.css');
+@import url('./cardShared.css');
 @import url('./movementCard.css');
 @import url('./movementList.css');
 @import url('./spellCard.css');

@@ -1,25 +1,8 @@
 :root{
-    --card-border:#696969;
-    --card-description:#ececec;
-    --card-description-even:#cccccc;
-    --card-roll-badge:#6d6d6d;
-    --card-roll-shadow:#525252;
-
-    --spell-card-width:20rem;
-    --spell-card-min-height:36rem;
-
-    /* --wizard:#A6808C; */
+    --spell-card-width: 20rem;
+    --spell-card-min-height: 36rem;
     --wizard: var(--purple);
-    --cleric:#B7D5D4;
-}
-
-.spell-cardbox{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 1rem;
-    overflow-y: auto;
+    --cleric: #B7D5D4;
 }
 
 .spell-card-group{
@@ -45,24 +28,10 @@
     padding-bottom: 1rem;
 }
 
-.spell-card{
-    --cardColor: var(--card-border);
-    --cardAccentColor: var(--card-border);
-    width: var(--spell-card-width);
-    min-height: var(--spell-card-min-height);
-    background:linear-gradient( to bottom, 
-        color-mix(in srgb, var(--cardColor), #fff 20%), /* Tinted with 40% White */
-        color-mix(in srgb, var(--cardColor), var(--cardAccentColor) 70%), /* Tinted with 40% White */
-        color-mix(in srgb, var(--cardColor), #000 40%)  /* Shaded with 40% Black */
-    );
-    border-radius:14px; 
-    overflow:hidden;
-    border:1px solid #4e4d4d;
-    display:flex;
-    flex-direction:column;
-    justify-content: space-between;
-    align-items:stretch;
-    box-shadow: 2px 2px 5px 1px var(--card-roll-shadow);
+.spell-card {
+    --card-width: var(--spell-card-width);
+    --card-min-height: var(--spell-card-min-height);
+    --card-title-size: 1rem;
 }
 
 .mago-spell-card{
@@ -74,39 +43,10 @@
 }
 
 .spell-card-header{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
-    padding: 10px 5px 0px 10px;
-    height: 4rem;
-    flex-grow: 0;
-}
-
-.spell-card-title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.spell-card-icon{
-    display:flex;
-    width:2.5rem;
-    height:2.5rem;
-    border-radius:50%;
-    align-self:flex-start;
-}
-
-.spell-card-title h3{
-    flex:1;
-    flex-wrap:wrap;
-    font-size: 1rem;
-    margin:0;
-    margin-left: 10px;
-    color:white;
-    font-weight:bold;
-    text-align:left;
-    max-width: 200px;
 }
 
 .spell-card-school{
@@ -135,85 +75,23 @@
 }
 
 .spell-card-description{
-    margin:8px 8px 4px 10px;
-    font-size:0.8rem;
-    text-align:justify;
-    background:var(--card-description);
-    flex-basis: 320px;
-    flex-grow: 1;
-    border-radius: 10px 33px 10px 10px;
+    font-size: 0.8rem;
     font-family: "outfit", sans-serif;
     line-height: 1.2rem;
 }
 
 .spell-card-description p{ 
+    display: block;
     padding-top: 1px;
     padding-left: 10px;
     padding-right: 5px;
     padding-bottom: 1px;
-    margin: 10px;
     text-align: justify;
-}
-
-.spell-card-result{
-    display:flex;
-    align-items:center;
-    background:transparent;
-}
-
-.even{
-    background:var(--card-description-even);
-}
-
-.spell-card-result-badge{
-    background:var(--card-roll-badge);
-    color:white;
-    font-weight:bold;
-    border-radius:50px;
-    margin-right:12px;
-}
-
-.spell-card-result img{
-    width:27px;
-    height:27px;
-    border-radius:12%;
-    padding-top: 50px;
-    margin-left:-12px;
-}
-
-.spell-card-info{
-    background:black;
-    color:white;
-    border-radius:50%;
-    width:42px;
-    height:42px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-right:12px;
-    font-weight:bold;
-}
-
-.spell-card-footer{
-    background:var(--card-roll-shadow);
-    color:white;
-    padding:5px 15px 10px 15px;
-    text-transform:uppercase;
-    font-size:0.6rem;
-    /* align-self:flex-end; */
 }
 
 .spell-card-description .badge {
     width: 30px;
     height: 30px;
-    background-color: #292929;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
     font-size: 14px;
-    font-weight: 100;
-    box-shadow: 0px 0px 0px 3px var(--card-description);
     margin-left: -23px;
 }

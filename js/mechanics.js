@@ -528,7 +528,6 @@ export class Movement {
                 </div>`;
     }
 
-
     static movementRooster (character) {
         let roostersizer = character.movimentos.length;
         if(character.classe.value){
@@ -547,7 +546,7 @@ export class Movement {
     // WIP - Seleciona um movimento de outra classe,
     // TargetClass: classe de onde o movimento será selecionado Se vazio listará todos os movimentos de todas as classes.
     static selectFromOtherClass(targetClass = "", character) {
-    
+        
     }
 
     // WIP - Seleciona um movimento exclusivo, removendo outros movimentos exclusivos do personagem
@@ -559,7 +558,6 @@ export class Movement {
     }
     
     static selectReplacementMovement(movement, character) {
-
     }
 
     // WIP - Seleciona um feitiço de outra classe,
