@@ -1,9 +1,18 @@
 :root {
     --card-border: #696969;
-    --card-description: #ececec;
     --card-description-even: #cccccc;
     --card-roll-badge: #6d6d6d;
     --card-roll-shadow: #525252;
+    --card-description: rgba(236, 236, 236);
+    --card-requirement: rgb(146, 146, 146);
+    --movement-card-width: 21.1rem;
+    --movement-card-min-height: 36rem;
+    --basic: var(--danger);
+    --class: var(--gold);
+    --card-width: var(--movement-card-width);
+    --card-min-height: var(--movement-card-min-height);
+    --card-title-size: clamp(.7rem, 1.1rem, 1.5rem);
+    --cardColor: var(--basic);
 }
 
 .movement-cardbox,
@@ -43,6 +52,9 @@
     padding: 10px 5px 0 10px;
     height: 4rem;
     flex-grow: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .movement-card-title,
@@ -51,6 +63,8 @@
     align-items: center;
     justify-content: space-between;
 }
+
+
 
 .movement-card-icon,
 .spell-card-icon {
@@ -72,6 +86,39 @@
     font-weight: bold;
     text-align: left;
     max-width: 200px;
+}
+
+.movement-card-roll{
+    font-size:1rem;
+    font-weight:bold;
+    color:var(--card-roll-badge);
+
+}
+
+.movement-card-roll-detail{
+    min-width:65px;
+    font-size: 0.9rem;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.movement-card-roll-detail-icon{
+    width:2.5rem;
+    height:2.5rem;
+    border-radius:5%;
+}
+
+.movement-card-roll-detail span{
+    font-size:0.8rem;
+    width:105%;
+    text-align:center;
+    color:var(--card-description);
+    padding:2px;
+    border: 1px solid var(--gold);
+    background:var(--card-roll-shadow);
+    clip-path: polygon(100% 0%, 100% 51%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
 
 .movement-card-description,
@@ -96,6 +143,17 @@
     margin: 10px;
     text-align: justify;
     line-height: 1.15rem;
+}
+
+.movement-card-description p:has(.badge){
+    padding-left: 0px;
+}
+
+.movement-card-description input{
+    width:10rem;
+    font-size:0.9rem;
+    font-family: "outfit", sans-serif;
+    text-align: start;
 }
 
 .movement-card-result,
@@ -148,22 +206,26 @@
     padding: 5px 15px 10px 15px;
     text-transform: uppercase;
     font-size: 0.6rem;
+    background: linear-gradient(to top, var(--card-roll-shadow) 80%, transparent);
 }
 
-.movement-card-description .badge,
-.spell-card-description .badge {
-    width: 1.5rem;
-    height: 1.5rem;
+.badge {
+    width: 1.7rem;
+    height: 1.7rem;
     background-color: #292929;
     border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: flex;
     color: white;
     font-size: 0.875rem;
     font-weight: 100;
     box-shadow: 0 0 0 3px var(--card-description);
-    margin-left: -0.8rem;
+    margin-left: -0.9rem;   
+
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5rem;
+
 }
 
 .badge-inside {
@@ -178,4 +240,23 @@
     text-align: center;
     vertical-align: middle;
     line-height: 1.5rem;
+}
+
+.badge-requirement{
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.8rem;
+    line-height: 1.5rem;
+    color: var(--card-description);
+    background-color: var(--card-requirement);
+    padding-left: 5px;
+    padding-right: 1rem;
+    font-family: "outfit", sans-serif;
+    border-radius: 10px 33px 0 0;
+}
+.badge-requirement em{
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--gold);
+    font-weight: bold;
 }

@@ -1,9 +1,9 @@
 :root{
-    --card-border:#b4b4b4;
-    --card-description:#ececec;
-    --card-description-even:#cccccc;
-    --card-roll-badge:#6d6d6d;
-    --card-roll-shadow:#525252;
+    --list-border:#b4b4b4;
+    --list-description:#ececec;
+    --list-description-even:#cccccc;
+    --list-roll-badge:#6d6d6d;
+    --list-roll-shadow:#525252;
 }
 
 .spell-list {
@@ -21,17 +21,17 @@
 }
 
 .spell-list li input[type="checkbox"]:disabled {
-    color: var(--card-roll-shadow);
+    color: var(--list-roll-shadow);
     cursor: not-allowed;
     opacity: 0.6;
 }
 
 .spell-list li:nth-child(odd) {
-    background-color: var(--card-description);
+    background-color: var(--list-description);
 }
 
 .spell-list li:nth-child(even) {
-    background-color: var(--card-description-even);
+    background-color: var(--list-description-even);
 }
 
 .spell-list li:last-child {

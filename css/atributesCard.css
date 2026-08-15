@@ -93,6 +93,52 @@
   content: "🔓";
 }
 
+
+.lock {
+    position: relative;
+    width: 1.2rem;
+    height: 1rem;
+    background: currentColor;
+    border-radius: 0.15rem;
+    color: #d4af37;
+}
+
+/* Shackle */
+.lock::before {
+    content: "";
+    position: absolute;
+    width: 0.65rem;
+    height: 0.65rem;
+    left: 50%;
+    top: -0.5rem;
+    transform: translateX(-50%);
+    border: 0.15rem solid currentColor;
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+    transition: transform 0.2s ease;
+}
+
+/* Keyhole */
+.lock::after {
+    content: "";
+    position: absolute;
+    width: 0.2rem;
+    height: 0.3rem;
+    left: 50%;
+    top: 0.3rem;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 50%;
+}
+
+.lock.unlocked::before {
+    transform: translateX(-10%) rotate(25deg);
+    transform-origin: left bottom;
+}
+
+
+
+
 @media (max-width: 870px) {
     .atrib-card {
         flex: 0 0 calc(25.3333% - 10px);

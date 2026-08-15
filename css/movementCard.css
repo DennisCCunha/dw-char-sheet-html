@@ -1,11 +1,3 @@
-:root{
-    --card-description: rgba(236, 236, 236, 0.2);
-    --movement-card-width: 21.1rem;
-    --movement-card-min-height: 36rem;
-    --basic: var(--danger);
-    --class: var(--gold);
-}
-
 .movement-card {
     --card-width: var(--movement-card-width);
     --card-min-height: var(--movement-card-min-height);
@@ -16,11 +8,6 @@
     --cardColor: var(--basic);
 }
 
-.movement-card-header{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-}
 
 .movement-card-roll{
     font-size:1rem;
@@ -66,13 +53,4 @@
     margin-left: 10px;
     text-align: start;
     line-height: 1.1rem;
-}
-
-.movement-card-description p:has(.badge){
-    padding-left: 0px;
-}
-
-.movement-card-footer{
-    background:var(--card-roll-shadow);
-    background: linear-gradient(to top, var(--card-roll-shadow) 80%, transparent);
 }

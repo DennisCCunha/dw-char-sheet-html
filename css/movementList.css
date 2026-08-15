@@ -1,9 +1,9 @@
 :root{
-    --card-border:#b4b4b4;
-    --card-description:#ececec;
-    --card-description-even:#cccccc;
-    --card-roll-badge:#6d6d6d;
-    --card-roll-shadow:#525252;
+    --list-border:#b4b4b4;
+    --list-description:#ececec;
+    --list-description-even:#cccccc;
+    --list-roll-badge:#6d6d6d;
+    --list-roll-shadow:#525252;
     --ultra:#00ff00;
 
 }
@@ -33,11 +33,11 @@
 }
 
 .movement-list li:nth-child(odd) {
-    background-color: var(--card-description);
+    background-color: var(--list-description);
 }
 
 .movement-list li:nth-child(even) {
-    background-color: var(--card-description-even);
+    background-color: var(--list-description-even);
 }
 
 .movement-list li:last-child {
@@ -54,7 +54,7 @@
     max-height: 600px;
     overflow-y: auto;
     padding: 0.8rem ;
-    border-bottom: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--list-border);
 }
 
 .movement-panel-header{

@@ -321,7 +321,6 @@ export class Movement {
             icon = "avançado";
         }
 
-
         // Create the card element
         let card = document.createElement('div');
         card.classList.add('movement-card', cardColor);
@@ -352,7 +351,8 @@ export class Movement {
 
         let cardRoll = document.createElement('div');
         cardRoll.classList.add('movement-card-roll');
-        if (movement.rolagem) {
+        if (movement.hasOwnProperty("rolagem")) {
+            console.log("roll" + movement.nome);
             let cardRollDetail = document.createElement('div');
             cardRollDetail.classList.add('movement-card-roll-detail');
             let cardRollIcon = document.createElement('img');
@@ -372,6 +372,19 @@ export class Movement {
         // Create the card description
         let cardDescription = document.createElement('section');
         cardDescription.classList.add('movement-card-description');
+    
+        if (movement.hasOwnProperty("requer") || movement.hasOwnProperty("substitui") || movement.hasOwnProperty("multiclasse") || movement.hasOwnProperty("exclusivo")) {
+            let cardDescriptionRequirements = document.createElement('div');
+            cardDescriptionRequirements.classList.add('movement-card-requirements');
+            cardDescriptionRequirements.innerHTML = `
+                ${movement.requer ? `<span class="badge-requirement"><em>Requer:</em> ${movement.requer}</span>` : ''}
+                ${movement.substitui ? `<span class="badge-requirement"><em>Substitui:</em> ${movement.substitui}</span>` : ''}
+                ${movement.multiclasse ? `<span class="badge-requirement"><em>Multiclasse:</em> ${movement.multiclasse}</span>` : ''}
+                ${movement.exclusivo ? `<span class="badge-requirement"><em>Exclusivo:</em> ${movement.exclusivo}</span>` : ''}
+            `;
+            cardDescription.appendChild(cardDescriptionRequirements);
+        }
+
         let cardDescriptionText = document.createElement('p');
         cardDescriptionText.innerHTML = movement.descricao;
         cardDescription.appendChild(cardDescriptionText);
@@ -546,7 +559,7 @@ export class Movement {
     // WIP - Seleciona um movimento de outra classe,
     // TargetClass: classe de onde o movimento será selecionado Se vazio listará todos os movimentos de todas as classes.
     static selectFromOtherClass(targetClass = "", character) {
-        
+
     }
 
     // WIP - Seleciona um movimento exclusivo, removendo outros movimentos exclusivos do personagem

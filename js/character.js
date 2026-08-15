@@ -22,6 +22,13 @@
             forca: 0, destreza: 0, constituicao: 0,
             inteligencia: 0, sabedoria: 0, carisma: 0,
         };
+
+        // Se os atributos forem desvinculados o modificador é considerado desse objeto;
+        this.modificadores = {
+            forca: {vinculado:true, valor:0}, destreza: {vinculado:true, valor:0}, constituicao: {vinculado:true, valor:0},
+            inteligencia: {vinculado:true, valor:0}, sabedoria: {vinculado:true, valor:0}, carisma: {vinculado:true, valor:0},
+        };
+
         this.debilidade = {
             forca: false, destreza: false, constituicao: false,
             inteligencia: false, sabedoria: false, carisma: false,
@@ -106,12 +113,30 @@
         return state;
     }
 
+    static fromJSON(json) {
+        const c = new Character();
+        Object.assign(c, json);
+        return c;
+    }
+
+    static toJSON(char) {
+        return JSON.stringify(char);
+    }
     // ─── Ability modifier ────────────────────────────────────────────────────
 
     /** Returns the DW modifier for a given attribute value, applying -1 if debilitated. */
-    abilityModifier(atributo, debilitado = false) {
-        const v = parseInt(atributo, 10);
-        if (isNaN(v)) return 0;
+    abilityModifier(atributo, debilitado = false) { 
+        const m = this.calculateModificador(atributo);
+        return debilitado ? m - 1 : m;
+    }
+
+    vincularModificador(atributo) {
+        this.modificadores[atributo].vinculado = !this.modificadores[atributo].vinculado;
+    }
+
+    calculateModificador(value) {
+        const v = parseInt(value, 10);
+        if (isNaN(v)) return "X";
         let m;
         if      (v <= 3)  m = -3;
         else if (v <= 5)  m = -2;
@@ -120,7 +145,7 @@
         else if (v <= 15) m =  1;
         else if (v <  18) m =  2;
         else              m =  3;
-        return debilitado ? m - 1 : m;
+        return m;
     }
 
     // ─── Bonds ───────────────────────────────────────────────────────────────
@@ -143,4 +168,7 @@
     removeConsumable(consumable) { this.consumiveis.splice(this.consumiveis.indexOf(consumable), 1); }
 
     addSpell(spell) { this.spells.push(spell); }
+
+
+
 }

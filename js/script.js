@@ -980,7 +980,6 @@ class CharacterSheet {
 
 }
 
-
 function devIcon() {
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
         const favicon = document.querySelector("link[rel='icon']");
