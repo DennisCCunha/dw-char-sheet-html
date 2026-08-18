@@ -119,6 +119,16 @@ class CharacterSheet {
                 this.save();
             });
         });
+
+        ATTR_MAP.forEach(({ deb, key }) => {
+            document.getElementById(`lock-${key}`).addEventListener('change', (e) => {
+                this.character.vincularModificador(key);
+                const checked = this.character.modificadores[key].vinculado;
+                e.target.checked = checked;
+                this.updateModifiers();
+                this.save();
+            });
+        });
     }
 
     /**
@@ -422,6 +432,12 @@ class CharacterSheet {
             () => this.addConsumableToList('consumablesContainer'));
         document.getElementById('btnAddMovement')?.addEventListener('click',
             () => this.character.addEquipment());
+
+        document.getElementById('btnAddCustomEquip')?.addEventListener('click',
+            () =>{ this.addCustomEquipment(); console.log(this.character.equipamentos); }
+            
+        );
+
         
         document.getElementById('equipSelectCombo')?.addEventListener('change', (e) => {
             console.log(`Selected value: ${e.target.value}`);
@@ -576,6 +592,11 @@ class CharacterSheet {
             setVal(val, character.atributos[key] || '');
             const debEl = document.getElementById(deb);
             if (debEl) debEl.checked = character.debilidade[key];
+            const linked = this.character.modificadores[key].vinculado;
+            if (linked !== undefined) {
+                const lockEl = document.getElementById(`lock-${key}`);
+                if (lockEl) lockEl.checked = linked;
+            }
         });
 
         character.xp.forEach((active, i) => {
@@ -600,21 +621,27 @@ class CharacterSheet {
         let movementContainer = document.getElementById('movementContainer');
         movementContainer.innerHTML = '';
 
-        if (searchQuery) {
-            movementList = this.searchItems(movementList, searchQuery);
-        }
-
-        if(this.movementListFormat === 'list'){
-            const listContainer = document.createElement('div');
-            listContainer.classList.add('movement-list');
-            for (const move of movementList) {
-                listContainer.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
+        if (movementList.length) {
+            if (searchQuery) {
+                movementList = this.searchItems(movementList, searchQuery);
             }
-            movementContainer.appendChild(listContainer);
+
+            if(this.movementListFormat === 'list'){
+                const listContainer = document.createElement('div');
+                listContainer.classList.add('movement-list');
+                for (const move of movementList) {
+                    listContainer.appendChild(Mechanics.Movement.render(move, this.movementListFormat, true));
+                }
+                movementContainer.appendChild(listContainer);
+            }
+            else {
+                this.renderMovementCard(movementList, movementContainer, this.movementListFormat);
+            }
         }
         else {
-            this.renderMovementCard(movementList, movementContainer, this.movementListFormat);
+            movementContainer.innerHTML = '<div class="movement-list"><em>Selecione uma classe para ver os movimentos disponíveis.</em></div>';
         }
+
     }
 
     renderMovementList(movementList, container, searchQuery = '') {
@@ -630,6 +657,7 @@ class CharacterSheet {
 
     renderMovementCard(movementList, container, searchQuery = '') {
         const carouselContainer = document.createElement('div');
+
         carouselContainer.classList.add('carousel-container');
 
         const carousel = document.createElement('div');
@@ -670,7 +698,7 @@ class CharacterSheet {
     }
 
     renderClassSpells(searchQuery) {
-        if (!this.charClass.value) return;
+        if (!this.charClass.value) return ;
 
         const cls = this.#findClassByName(this.charClass.value);
 
@@ -702,8 +730,6 @@ class CharacterSheet {
             document.getElementById('classSpells').style.display = 'none';
             document.getElementById('spellContainer').style.display = 'none';
         }
-
-
     }
 
     // Search Movements and Spells
@@ -720,13 +746,16 @@ class CharacterSheet {
 
     // ─── Attributes & modifiers ───────────────────────────────────────────────
     updateModifiers() {
-        ATTR_MAP.forEach(({ val, mod, deb }) => {
+        ATTR_MAP.forEach(({ val, mod, deb, key }) => {
             const valEl = document.getElementById(val);
             const modEl = document.getElementById(mod);
             const debEl = document.getElementById(deb);
+
             if (!valEl || !modEl) return;
+
             const debValue = debEl?.checked ? -1 : 0;
-            const modifier = this.character.abilityModifier(valEl.value, debValue);
+
+            const modifier = this.character.abilityModifier(valEl.value, modEl.value, debValue === -1, key);
             modEl.value = modifier >= 0 ? `+${modifier}` : `${modifier}`;
         });
     }
@@ -840,6 +869,21 @@ class CharacterSheet {
             </div>`
         );
         this.#initTagCombo(listEl.lastElementChild);
+    }
+
+    addCustomEquipment (){
+        const listEl = document.getElementById('custom-equip');
+        
+        if (!listEl) return;
+        for (const child of listEl.children) {
+            console.log(child);
+            const nameInput = child.querySelector('input[placeholder="Nome do equipamento"]');
+            const weightInput = child.querySelector('input[placeholder="Peso"]');
+            const tagsDiv = child.querySelector('.selected-tags');
+            const coinInput = child.querySelector('input[placeholder="Moeda"]');
+            const quantityInput = child.querySelector('input[placeholder="Quantidade"]');
+        }
+
     }
 
     addConsumableToList(listId) {

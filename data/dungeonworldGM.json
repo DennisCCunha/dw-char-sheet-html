@@ -1,0 +1,18 @@
+{
+    "frentes": {},
+    "GM": {
+        "nome": "",
+        "descricao": "",
+        "frentes": []
+    },
+    "monstros": [
+        {
+            "nome": "",
+            "descricao": "",
+            "tags": [],
+            "movimentos": [],
+            "tesouros": [],
+            "notas": ""
+        }
+    ]
+}

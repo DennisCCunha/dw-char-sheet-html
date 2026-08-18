@@ -352,7 +352,6 @@ export class Movement {
         let cardRoll = document.createElement('div');
         cardRoll.classList.add('movement-card-roll');
         if (movement.hasOwnProperty("rolagem")) {
-            console.log("roll" + movement.nome);
             let cardRollDetail = document.createElement('div');
             cardRollDetail.classList.add('movement-card-roll-detail');
             let cardRollIcon = document.createElement('img');

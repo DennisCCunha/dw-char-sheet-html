@@ -18,6 +18,16 @@
         // xp: array of booleans, one per circle
         this.xp = Array(Character.XP_MAX).fill(false);
 
+        this.Atr = {
+            forca: {valor: 0, mod: 0, deb: false, vinculado: true},
+            destreza: {valor: 0, mod: 0, deb: false, vinculado: true},
+            constituicao: {valor: 0, mod: 0, deb: false, vinculado: true},
+            inteligencia: {valor: 0, mod: 0, deb: false, vinculado: true},
+            sabedoria: {valor: 0, mod: 0, deb: false, vinculado: true},
+            carisma: {valor: 0, mod: 0, deb: false, vinculado: true},
+        };
+
+
         this.atributos = {
             forca: 0, destreza: 0, constituicao: 0,
             inteligencia: 0, sabedoria: 0, carisma: 0,
@@ -68,6 +78,16 @@
             sabedoria:    parseInt(state.valSab, 10) || 0,
             carisma:      parseInt(state.valCar, 10) || 0,
         };
+
+        c.modificadores = {
+            forca:        { vinculado: true, valor: 0 },
+            destreza:     { vinculado: true, valor: 0 },
+            constituicao: { vinculado: true, valor: 0 },
+            inteligencia: { vinculado: true, valor: 0 },
+            sabedoria:    { vinculado: true, valor: 0 },
+            carisma:      { vinculado: true, valor: 0 },
+        };
+
         c.debilidade = {
             forca:        state.debFor === '1',
             destreza:     state.debDes === '1',
@@ -107,9 +127,22 @@
             debInt: c.debilidade.inteligencia  ? '1' : '0',
             debSab: c.debilidade.sabedoria     ? '1' : '0',
             debCar: c.debilidade.carisma       ? '1' : '0',
+            modificadores: {
+            forca:        { vinculado: true, valor: 0 },
+            destreza:     { vinculado: true, valor: 0 },
+            constituicao: { vinculado: true, valor: 0 },
+            inteligencia: { vinculado: true, valor: 0 },
+            sabedoria:    { vinculado: true, valor: 0 },
+            carisma:      { vinculado: true, valor: 0 }
+        },
             charBonds: JSON.stringify(c.bonds),
         };
         c.xp.forEach((active, i) => { state[`xp_${i}`] = active ? '1' : '0'; });
+        c.movimentos.forEach((movement, i) => { state[`movement_${i}`] = JSON.stringify(movement); });
+        c.equipamentos.forEach((equipment, i) => { state[`equipment_${i}`] = JSON.stringify(equipment); });
+        c.consumiveis.forEach((consumable, i) => { state[`consumable_${i}`] = JSON.stringify(consumable); });
+        c.spells.forEach((spell, i) => { state[`spell_${i}`] = JSON.stringify(spell); });
+
         return state;
     }
 
@@ -123,15 +156,25 @@
         return JSON.stringify(char);
     }
     // ─── Ability modifier ────────────────────────────────────────────────────
+    abilityModifier(valorAtributo = null, valorModificador = null, debilitado = false, atributo = null) {
+        console.log(`Calculando modificador para ${valorAtributo}: valorModificador=${valorModificador}, debilitado=${debilitado}`);
 
-    /** Returns the DW modifier for a given attribute value, applying -1 if debilitated. */
-    abilityModifier(atributo, debilitado = false) { 
-        const m = this.calculateModificador(atributo);
+        if (valorAtributo === undefined || valorModificador === undefined || atributo === null) {
+            console.error(`Atributo ou valor do modificador não definido: atributo=${valorAtributo}, valorModificador=${valorModificador}, atributo=${atributo}`);
+            return "X";
+        }
+
+        if (this.modificadores[atributo].vinculado) {
+            return this.calculateModificador(this.atributos[atributo]);
+        }
+        this.modificadores[atributo].valor = parseInt(valorModificador, 10) || "X";
+        let m = this.modificadores[atributo].valor;
         return debilitado ? m - 1 : m;
     }
 
     vincularModificador(atributo) {
         this.modificadores[atributo].vinculado = !this.modificadores[atributo].vinculado;
+        console.log(`Modificador de ${atributo} vinculado: ${this.modificadores[atributo].vinculado}`);
     }
 
     calculateModificador(value) {
@@ -149,25 +192,30 @@
     }
 
     // ─── Bonds ───────────────────────────────────────────────────────────────
-
     addBond(bond)    { this.bonds.push(bond); }
     removeBond(bond) { this.bonds.splice(this.bonds.indexOf(bond), 1); }
     endBond(bond)    { this.removeBond(bond); this.finishedBonds.push({ ...bond, finalizado: true }); }
-
-    // ─── Inventory ───────────────────────────────────────────────────────────
-
+    
+    // ─── Movements & Spells ─────────────────────────────────────────────────
     addMovement(movement)    { this.movimentos.push(movement); }
     removeMovement(movement) { this.movimentos.splice(this.movimentos.indexOf(movement), 1); }
     clearMovement() { this.movimentos = []; }
 
+    addSpell(spell) { this.spells.push(spell); }
+    removeSpell(spell) { this.spells.splice(this.spells.indexOf(spell), 1); }
+    clearSpell() { this.spells = []; }
+
+    // ─── Inventory ───────────────────────────────────────────────────────────
     addEquipment(equipment)    { this.equipamentos.push(equipment); }
     removeEquipment(equipment) { this.equipamentos.splice(this.equipamentos.indexOf(equipment), 1); }
     clearEquipment() { this.equipamentos = []; }
 
     addConsumable(consumable)    { this.consumiveis.push(consumable); }
     removeConsumable(consumable) { this.consumiveis.splice(this.consumiveis.indexOf(consumable), 1); }
+    consumeConsumable(consumable) { this.removeConsumable(consumable); }
+    clearConsumable() { this.consumiveis = []; }
 
-    addSpell(spell) { this.spells.push(spell); }
+    
 
 
 
